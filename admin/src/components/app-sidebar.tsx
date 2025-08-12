@@ -68,7 +68,7 @@ const data = {
       ],
     },
     {
-      title: "Models",
+      title: "Users & Access",
       url: "#",
       icon: Bot,
       items: [
@@ -87,7 +87,7 @@ const data = {
       ],
     },
     {
-      title: "Documentation",
+      title: "Groups",
       url: "#",
       icon: BookOpen,
       items: [
@@ -110,7 +110,53 @@ const data = {
       ],
     },
     {
-      title: "Settings",
+      title: "Messaging",
+      url: "#",
+      icon: Settings2,
+      items: [
+        {
+          title: "General",
+          url: "#",
+        },
+        {
+          title: "Team",
+          url: "#",
+        },
+        {
+          title: "Billing",
+          url: "#",
+        },
+        {
+          title: "Limits",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Geolocation & Geofencing",
+      url: "#",
+      icon: Settings2,
+      items: [
+        {
+          title: "General",
+          url: "#",
+        },
+        {
+          title: "Team",
+          url: "#",
+        },
+        {
+          title: "Billing",
+          url: "#",
+        },
+        {
+          title: "Limits",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Messaging",
       url: "#",
       icon: Settings2,
       items: [
