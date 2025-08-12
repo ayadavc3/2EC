@@ -42,7 +42,7 @@ export function NavProjects({
       <SidebarMenu>
         {projects.map((item) => (
           <SidebarMenuItem key={item.name}>
-            <SidebarMenuButton asChild size="lg" className="[&>svg+span]:inline group-data-[collapsible=icon]:[&>svg+span]:hidden">
+            <SidebarMenuButton asChild>
               <a href={item.url}>
                 <item.icon />
                 <span>{item.name}</span>
@@ -78,10 +78,7 @@ export function NavProjects({
           </SidebarMenuItem>
         ))}
         <SidebarMenuItem>
-          <SidebarMenuButton
-            size="lg"
-            className="text-sidebar-foreground/70 [&>svg+span]:inline group-data-[collapsible=icon]:[&>svg+span]:hidden"
-          >
+          <SidebarMenuButton className="text-sidebar-foreground/70">
             <MoreHorizontal className="text-sidebar-foreground/70" />
             <span>More</span>
           </SidebarMenuButton>
