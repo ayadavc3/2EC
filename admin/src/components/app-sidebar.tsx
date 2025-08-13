@@ -9,8 +9,9 @@ import {
   GalleryVerticalEnd,
   Map,
   PieChart,
-  Settings2,
+  MessageCircle,
   SquareTerminal,
+  Settings2,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -24,6 +25,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import { Separator } from "@/components/ui/separator"
 
 // This is sample data.
 const data = {
@@ -68,7 +70,6 @@ const data = {
         { title: "Users", url: "/users" },
         { title: "Invites", url: "/users/invites" },
         { title: "Roles & Permissions", url: "/users/roles" },
-        { title: "MFA & Security", url: "/users/security" },
       ],
     },
     {
@@ -84,105 +85,37 @@ const data = {
     {
       title: "Messaging",
       url: "/messaging",
-      icon: Settings2,
-      items: [
-        { title: "Compose / Schedule", url: "/messaging/compose" },
-        { title: "Approvals Queue", url: "/messaging/approvals" },
-        { title: "Outbox & History", url: "/messaging/history" },
-        { title: "Templates", url: "/messaging/templates" },
-        { title: "Attachments", url: "/messaging/attachments" },
-      ],
+      icon: MessageCircle,
     },
     {
-      title: "Geolocation & Geofencing",
+      title: "Geolocation",
       url: "/geo",
       icon: Map,
-      items: [
-        { title: "Geofences", url: "/geo/geofences" },
-        { title: "Live Monitoring", url: "/geo/live" },
-        { title: "Entry/Exit Logs", url: "/geo/logs" },
-        { title: "Device/Location Settings", url: "/geo/settings" },
-        { title: "Vault (Location Data)", url: "/geo/vault" },
-        { title: "Access Requests", url: "/geo/access-requests" },
-        { title: "Access History", url: "/geo/access-history" },
-      ],
     },
     {
-      title: "Notifications",
-      url: "/notifications",
-      icon: PieChart,
-      items: [
-        { title: "Push Settings", url: "/notifications/push" },
-        { title: "Delivery Log", url: "/notifications/delivery" },
-        { title: "Preferences", url: "/notifications/preferences" },
-      ],
-    },
-    {
-      title: "Reports & Analytics",
-      url: "/reports",
-      icon: PieChart,
-      items: [
-        { title: "User Engagement", url: "/reports/user-engagement" },
-        { title: "Message Analytics", url: "/reports/message-analytics" },
-        { title: "Geolocation Compliance", url: "/reports/geolocation-compliance" },
-        { title: "Group Metrics", url: "/reports/group-metrics" },
-        { title: "Audit Logs (viewer)", url: "/reports/audit-logs" },
-      ],
-    },
-    {
-      title: "Audit & Compliance",
+      title: "Audit Log",
       url: "/audit",
       icon: Command,
-      items: [
-        { title: "Audit Log", url: "/audit/log" },
-        { title: "User Data & Consent", url: "/audit/consent" },
-        { title: "Data Export", url: "/audit/export" },
-      ],
-    },
-    {
-      title: "Organization",
-      url: "/org",
-      icon: Settings2,
-      items: [
-        { title: "Org Profile", url: "/org/profile" },
-        { title: "Branding", url: "/org/branding" },
-        { title: "Localization", url: "/org/localization" },
-        { title: "Integrations", url: "/org/integrations" },
-        { title: "API Keys / Secrets", url: "/org/api-keys" },
-      ],
     },
     {
       title: "Admin",
       url: "/admin",
       icon: Frame,
-      items: [
-        { title: "Admins Management", url: "/admin/admins" },
-        { title: "Billing", url: "/admin/billing" },
-      ],
-    },
-    {
-      title: "Help",
-      url: "/help",
-      icon: BookOpen,
-      items: [
-        { title: "Docs & Guides", url: "/help/docs" },
-        { title: "Support", url: "/help/support" },
-      ],
     },
   ],
   projects: [
     {
-      name: "Design Engineering",
+      name: "Docs & Guides",
       url: "#",
       icon: Frame,
     },
     {
-      name: "Sales & Marketing",
+      name: "Support",
       url: "#",
       icon: PieChart,
     },
     {
-      name: "Travel",
+      name: "About",
       url: "#",
       icon: Map,
     },
@@ -195,6 +128,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
+      <Separator />
       <SidebarContent>
         <NavMain items={data.navMain} />
         <NavProjects projects={data.projects} />
