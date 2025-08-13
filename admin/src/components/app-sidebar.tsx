@@ -131,6 +131,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <Separator />
       <SidebarContent>
         <NavMain items={data.navMain} />
+        <Separator />
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
