@@ -28,9 +28,9 @@ export default function UsersPage() {
           <div className="flex items-center gap-2 px-4 w-full">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />
-            <div className="text-sm font-medium">Users</div>
+            <div className="text-sm font-medium">Messaging</div>
             <div className="ml-auto w-64">
-              <Input placeholder="Search users" />
+              <Input placeholder="Search messaging" />
             </div>
           </div>
         </header>

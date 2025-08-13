@@ -32,7 +32,8 @@ export default function GroupsPage() {
             </div>
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+        <Separator />
+        <div className="flex flex-1 flex-col gap-4 p-4">
           <div className="grid gap-4 md:grid-cols-3">
             {groups.map((group) => (
               <Card key={group.id} className="">
