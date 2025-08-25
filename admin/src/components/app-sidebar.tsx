@@ -3,7 +3,6 @@
 import {
   AudioWaveform,
   BookOpen,
-  Bot,
   Command,
   Frame,
   GalleryVerticalEnd,
@@ -11,7 +10,8 @@ import {
   PieChart,
   MessageCircle,
   SquareTerminal,
-  Settings2,
+  BabyIcon,
+  UsersIcon,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -63,13 +63,21 @@ const data = {
       ],
     },
     {
-      title: "Users & Access",
-      url: "/users",
-      icon: Bot,
+      title: "Students",
+      url: "/students",
+      icon: BabyIcon,
       items: [
-        { title: "Users", url: "/users" },
-        { title: "Invites", url: "/users/invites" },
-        { title: "Roles & Permissions", url: "/users/roles" },
+        { title: "Students", url: "/students" },
+        { title: "Invites", url: "/students/invites" },
+      ],
+    },
+    {
+      title: "Guardians",
+      url: "/guardians",
+      icon: UsersIcon,
+      items: [
+        { title: "Guardians", url: "/guardians" },
+        { title: "Invites", url: "/guardians/invites" },
       ],
     },
     {

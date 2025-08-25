@@ -9,15 +9,15 @@ import (
 	"github.com/google/uuid"
 )
 
-// User holds the schema definition for the User entity.
-type User struct {
+// Student holds the schema definition for the Student entity.
+type Student struct {
 	ent.Schema
 }
 
-// Fields of the User.
-func (User) Fields() []ent.Field {
+// Fields of the Student.
+func (Student) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("uid").DefaultFunc(func() string {
+		field.String("id").DefaultFunc(func() string {
 			return uuid.New().String()
 		}),
 		field.String("photo_url").Optional(),
@@ -33,11 +33,11 @@ func (User) Fields() []ent.Field {
 	}
 }
 
-// Edges of the User.
-func (User) Edges() []ent.Edge {
+// Edges of the Student.
+func (Student) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.From("organization", Organization.Type).
-			Ref("users").
+			Ref("students").
 			Unique().
 			Field("organization_id"),
 	}

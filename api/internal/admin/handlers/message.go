@@ -9,21 +9,21 @@ import (
 )
 
 // UserHandler handles user-specific endpoints
-type UserHandler struct {
+type MessageHandler struct {
 	db     *database.Database
 	logger *slog.Logger
 }
 
 // NewUserHandler creates a new user handler
-func NewUserHandler(db *database.Database, logger *slog.Logger) *UserHandler {
-	return &UserHandler{
+func NewMessageHandler(db *database.Database, logger *slog.Logger) *MessageHandler {
+	return &MessageHandler{
 		db:     db,
 		logger: logger,
 	}
 }
 
 // Home returns welcome message for user API
-func (h *UserHandler) Home(c *fiber.Ctx) error {
+func (h *MessageHandler) Home(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{
 		"message": "Welcome to the User API!",
 		"service": "user",
@@ -31,7 +31,7 @@ func (h *UserHandler) Home(c *fiber.Ctx) error {
 }
 
 // Health check endpoint
-func (h *UserHandler) Health(c *fiber.Ctx) error {
+func (h *MessageHandler) Health(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{
 		"status":  "healthy",
 		"service": "user-api",
