@@ -43,7 +43,7 @@ export function ActionMenu(params: CustomCellRendererProps) {
             </DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            Manage guardians
+            Manage students
             <DropdownMenuShortcut>
               <UsersIcon />
             </DropdownMenuShortcut>

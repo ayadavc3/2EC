@@ -9,6 +9,8 @@ import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
 import { AvatarCell } from "@/components/CellRenderer/AvatarCell";
 import { GridDateFormatter } from "@/utils/formatter/grid-date";
 
+import { ActionMenu } from "./ActionMenu";
+
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -80,6 +82,17 @@ export function DataGrid() {
       created_at: "2024-01-22T12:00:00Z",
       updated_at: "2024-01-25T15:20:00Z",
     },
+    {
+      uid: "STU006",
+      photo_url:
+        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
+      first_name: "David",
+      last_name: "Brown",
+      middle_name: "Christopher",
+      phone_number: "+1-555-0654",
+      created_at: "2024-01-22T12:00:00Z",
+      updated_at: "2024-01-25T15:20:00Z",
+    },
   ]);
 
   // Column Definitions: Defines the columns to be displayed.
@@ -93,23 +106,18 @@ export function DataGrid() {
     {
       field: "photo_url",
       headerName: "Photo",
-      width: 100,
+      width: 60,
+      filter: false,
+      sortable: false,
       cellRenderer: AvatarCell,
     },
     {
-      field: "first_name",
-      headerName: "First Name",
+      colId: "display_name",
+      headerName: "Display Name",
       width: 140,
-    },
-    {
-      field: "last_name",
-      headerName: "Last Name",
-      width: 140,
-    },
-    {
-      field: "middle_name",
-      headerName: "Middle Name",
-      width: 140,
+      valueGetter: (params) => {
+        return `${params?.data?.first_name} ${params?.data?.last_name}`;
+      },
     },
     {
       field: "phone_number",
@@ -128,6 +136,16 @@ export function DataGrid() {
       width: 180,
       valueFormatter: GridDateFormatter,
     },
+    {
+      colId: "actions",
+      headerName: "",
+      width: 60,
+      pinned: "right",
+      filter: false,
+      sortable: false,
+      resizable: false,
+      cellRenderer: ActionMenu,
+    },
   ]);
 
   return (
@@ -135,7 +153,7 @@ export function DataGrid() {
       <AgGridReact<Student>
         autoSizeStrategy={{
           type: "fitGridWidth",
-          defaultMinWidth: 100,
+          defaultMinWidth: 60,
         }}
         rowData={rowData}
         columnDefs={colDefs}

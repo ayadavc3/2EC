@@ -4,10 +4,12 @@ import React, { useState } from "react";
 
 import type { ColDef } from "ag-grid-community";
 import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
-import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
+import { AgGridReact } from "ag-grid-react";
 
 import { AvatarCell } from "@/components/CellRenderer/AvatarCell";
 import { GridDateFormatter } from "@/utils/formatter/grid-date";
+
+import { ActionMenu } from "./ActionMenu";
 
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -93,23 +95,16 @@ export function DataGrid() {
     {
       field: "photo_url",
       headerName: "Photo",
-      width: 100,
+      width: 60,
       cellRenderer: AvatarCell,
     },
     {
-      field: "first_name",
-      headerName: "First Name",
+      colId: "display_name",
+      headerName: "Display Name",
       width: 140,
-    },
-    {
-      field: "last_name",
-      headerName: "Last Name",
-      width: 140,
-    },
-    {
-      field: "middle_name",
-      headerName: "Middle Name",
-      width: 140,
+      valueGetter: (params) => {
+        return `${params?.data?.first_name} ${params?.data?.last_name}`;
+      },
     },
     {
       field: "phone_number",
@@ -128,6 +123,16 @@ export function DataGrid() {
       width: 180,
       valueFormatter: GridDateFormatter,
     },
+    {
+      colId: "actions",
+      headerName: "",
+      width: 60,
+      pinned: "right",
+      filter: false,
+      sortable: false,
+      resizable: false,
+      cellRenderer: ActionMenu,
+    },
   ]);
 
   return (
@@ -135,7 +140,7 @@ export function DataGrid() {
       <AgGridReact<Guardian>
         autoSizeStrategy={{
           type: "fitGridWidth",
-          defaultMinWidth: 100,
+          defaultMinWidth: 60,
         }}
         rowData={rowData}
         columnDefs={colDefs}
