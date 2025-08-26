@@ -1,15 +1,37 @@
-import { Button } from '@/components/ui/button'
-import { PlusIcon } from 'lucide-react'
-import React from 'react'
+import { EllipsisVerticalIcon } from "lucide-react";
 
-function ActionMenu() {
-    return (
-        <div>
-            <Button variant="default" >
-    <PlusIcon /> New Student
-            </Button>
-        </div>
-    )
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuItem,
+  DropdownMenuGroup,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+} from "@/components/ui/dropdown-menu";
+
+export function ActionMenu() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline">
+          <EllipsisVerticalIcon />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56" align="end">
+        <DropdownMenuGroup>
+          <DropdownMenuItem>
+            Import students
+            <DropdownMenuShortcut>⌘I</DropdownMenuShortcut>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>
+            Export students
+            <DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
 }
-
-export { ActionMenu }

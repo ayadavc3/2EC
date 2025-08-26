@@ -1,5 +1,6 @@
-import { Button } from "@/components/ui/button"
-import { EllipsisVerticalIcon } from "lucide-react"
+import { EllipsisVerticalIcon } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 
 export function GuardianMenu() {
   return (
@@ -32,5 +33,5 @@ export function GuardianMenu() {
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }
