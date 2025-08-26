@@ -1,5 +1,6 @@
 "use client";
 
+import { SignedIn, UserButton } from "@clerk/nextjs";
 import {
   AudioWaveform,
   BookOpen,
@@ -54,30 +55,30 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "/dashboard",
+      url: "/admin/dashboard",
       icon: SquareTerminal,
       isActive: true,
       items: [
-        { title: "Overview", url: "/dashboard" },
-        { title: "System Health", url: "/dashboard/health" },
+        { title: "Overview", url: "/admin/dashboard" },
+        { title: "System Health", url: "/admin/dashboard/health" },
       ],
     },
     {
       title: "Students",
-      url: "/students",
+      url: "/admin/students",
       icon: BabyIcon,
       items: [
-        { title: "Students", url: "/students" },
-        { title: "Invites", url: "/students/invites" },
+        { title: "Students", url: "/admin/students" },
+        { title: "Invites", url: "/admin/students/invites" },
       ],
     },
     {
       title: "Guardians",
-      url: "/guardians",
+      url: "/admin/guardians",
       icon: UsersIcon,
       items: [
-        { title: "Guardians", url: "/guardians" },
-        { title: "Invites", url: "/guardians/invites" },
+        { title: "Guardians", url: "/admin/guardians" },
+        { title: "Invites", url: "/admin/guardians/invites" },
       ],
     },
     {
@@ -85,9 +86,9 @@ const data = {
       url: "/groups",
       icon: BookOpen,
       items: [
-        { title: "Groups", url: "/groups" },
-        { title: "Members", url: "/groups/members" },
-        { title: "Moderation Rules", url: "/groups/moderation" },
+        { title: "Groups", url: "/admin/groups" },
+        { title: "Members", url: "/admin/groups/members" },
+        { title: "Moderation Rules", url: "/admin/groups/moderation" },
       ],
     },
     {
@@ -102,12 +103,12 @@ const data = {
     },
     {
       title: "Audit Log",
-      url: "/audit",
+      url: "/admin/audit",
       icon: Command,
     },
     {
       title: "Admin",
-      url: "/admin",
+      url: "/admin/users",
       icon: Frame,
     },
   ],
@@ -143,7 +144,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
