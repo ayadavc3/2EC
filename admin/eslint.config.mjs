@@ -48,8 +48,7 @@ const eslintConfig = [
     ],
     rules: {
       "import/order": ["error", importOrder],
-      // ESLint rules start here
-      semi: ["error"],
+      "semi": ["error"],
       "react/no-unescaped-entities": "off",
       "@next/next/no-page-custom-font": "off",
     },

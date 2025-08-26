@@ -5,6 +5,8 @@ import { CustomCellRendererProps } from "ag-grid-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export function StudentCell(params: CustomCellRendererProps) {
+  console.log(params);
+
   return (
     <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 pt-1">
       <Avatar>
