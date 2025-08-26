@@ -2,9 +2,11 @@
 
 import React, { useState } from 'react'
 import { AgGridReact } from 'ag-grid-react'; // React Data Grid Component
-
-import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
 import type { ColDef } from 'ag-grid-community';
+import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
+
+import { AvatarCell } from '@/components/CellRenderer/AvatarCell';
+import { GridDateFormatter } from '@/utils/formatter/grid-date';
 
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -86,9 +88,7 @@ export default function DataGrid() {
             field: "photo_url", 
             headerName: "Photo",
             width: 100,
-            cellRenderer: (params: any) => {
-                return `<img src="${params.value}" alt="Student photo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;" />`;
-            }
+            cellRenderer: AvatarCell
         },
         { 
             field: "first_name", 
@@ -114,35 +114,23 @@ export default function DataGrid() {
             field: "created_at", 
             headerName: "Created At",
             width: 180,
-            valueFormatter: (params: any) => {
-                return new Date(params.value).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'short', 
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-            }
+            valueFormatter: GridDateFormatter
         },
         { 
             field: "updated_at", 
             headerName: "Updated At", 
             width: 180,
-            valueFormatter: (params: any) => {
-                return new Date(params.value).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric', 
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-            }
+            valueFormatter: GridDateFormatter
         }
     ]);
 
     return (
         <div style={{ height: "80vh", width: '100%' }}>
             <AgGridReact<Student>
+                autoSizeStrategy={{
+                    type: 'fitGridWidth',
+                    defaultMinWidth: 100
+                }}
                 rowData={rowData}
                 columnDefs={colDefs}
                 defaultColDef={{
@@ -150,7 +138,6 @@ export default function DataGrid() {
                     filter: true,
                     resizable: true
                 }}
-                domLayout="autoHeight"
                 pagination={true}
                 paginationPageSize={20}
             />

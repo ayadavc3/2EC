@@ -21,6 +21,7 @@ func (Guardian) Fields() []ent.Field {
 			return uuid.New().String()
 		}),
 		field.String("photo_url").Optional(),
+		field.String("title").NotEmpty(),
 		field.String("first_name").NotEmpty(),
 		field.String("last_name").NotEmpty().Optional(),
 		field.String("middle_name").Optional(),
