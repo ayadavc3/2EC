@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 interface PageTitleProps {
     title: string
@@ -21,7 +21,7 @@ const PageTitle = ({ title, description, children }: PageTitleProps) => {
                 {children}
             </div>
         </div>
-    )
-}
+    );
+};
 
-export { PageTitle }
+export { PageTitle };

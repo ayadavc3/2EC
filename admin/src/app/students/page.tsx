@@ -11,7 +11,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 
-import DataGrid from "./components/DataGrid";
+import { DataGrid } from "./components/DataGrid";
 import { StudentMenu } from "./components/StudentMenu";
 
 export default function StudentsPage() {

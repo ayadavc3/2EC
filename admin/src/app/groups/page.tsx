@@ -1,8 +1,8 @@
-import { AppSidebar } from "@/components/app-sidebar"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Separator } from "@/components/ui/separator"
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/app-sidebar";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
 type Group = {
   id: string
@@ -15,7 +15,7 @@ const groups: Group[] = [
   { id: "grp_1", name: "Admins", members: 3, description: "Administrative users with full access" },
   { id: "grp_2", name: "Editors", members: 8, description: "Can edit content and manage drafts" },
   { id: "grp_3", name: "Viewers", members: 24, description: "Read-only access to resources" },
-]
+];
 
 export default function GroupsPage() {
   return (
@@ -50,7 +50,7 @@ export default function GroupsPage() {
         </div>
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }
 
 

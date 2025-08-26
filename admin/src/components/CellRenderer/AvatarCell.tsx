@@ -1,7 +1,8 @@
-import React from 'react'
+import React from 'react';
+
 import type { CustomCellRendererProps } from 'ag-grid-react';
 
-import { Avatar, AvatarImage, AvatarFallback } from '../ui/avatar'
+import { Avatar, AvatarImage, AvatarFallback } from '../ui/avatar';
 
 const AvatarCell = (params: CustomCellRendererProps) => {
   return (
@@ -9,7 +10,7 @@ const AvatarCell = (params: CustomCellRendererProps) => {
         <AvatarImage src={params.value} />
         <AvatarFallback>{params.data.first_name.charAt(0)}{params.data.last_name.charAt(0)}</AvatarFallback>
     </Avatar>
-  )
-}
+  );
+};
 
-export { AvatarCell }
+export { AvatarCell };

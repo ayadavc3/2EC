@@ -1,9 +1,9 @@
-import { AppSidebar } from "@/components/app-sidebar"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Separator } from "@/components/ui/separator"
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/app-sidebar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
 type User = {
   id: string
@@ -17,7 +17,7 @@ const users: User[] = [
   { id: "usr_1", name: "Anita Borg", email: "anita@example.com", avatar: "/avatars/shadcn.jpg", role: "Admin" },
   { id: "usr_2", name: "Grace Hopper", email: "grace@example.com", avatar: "/avatars/shadcn.jpg", role: "Editor" },
   { id: "usr_3", name: "Ada Lovelace", email: "ada@example.com", avatar: "/avatars/shadcn.jpg", role: "Viewer" },
-]
+];
 
 export default function UsersPage() {
   return (
@@ -58,7 +58,7 @@ export default function UsersPage() {
         </div>
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }
 
 

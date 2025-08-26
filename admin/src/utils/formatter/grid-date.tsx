@@ -8,6 +8,6 @@ const GridDateFormatter = (params: ValueFormatterParams) => {
         hour: '2-digit',
         minute: '2-digit'
     });
-}
+};
 
-export { GridDateFormatter }
+export { GridDateFormatter };
