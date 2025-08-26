@@ -1,8 +1,5 @@
-import { PlusIcon } from "lucide-react";
-
 import { PageTitle } from "@/components/PageTitle";
 import { AppSidebar } from "@/components/app-sidebar";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -12,6 +9,7 @@ import {
 } from "@/components/ui/sidebar";
 
 import { DataGrid } from "./components/DataGrid";
+import { NewStudent } from "./components/NewStudent";
 import { StudentMenu } from "./components/StudentMenu";
 
 export default function StudentsPage() {
@@ -38,9 +36,7 @@ export default function StudentsPage() {
             title="Students List"
             description="Here's a list of all your students in the current organization."
           >
-            <Button variant="default">
-              <PlusIcon /> New Student
-            </Button>
+            <NewStudent />
             <StudentMenu />
           </PageTitle>
           <DataGrid />

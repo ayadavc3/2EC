@@ -1,8 +1,5 @@
-import { PlusIcon } from "lucide-react";
-
 import { PageTitle } from "@/components/PageTitle";
 import { AppSidebar } from "@/components/app-sidebar";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -13,6 +10,7 @@ import {
 
 import { DataGrid } from "./components/DataGrid";
 import { GuardianMenu } from "./components/GuardianMenu";
+import { NewGuardian } from "./components/NewGuardian";
 
 export default function GuardiansPage() {
   return (
@@ -38,9 +36,7 @@ export default function GuardiansPage() {
             title="Guardians List"
             description="Here's a list of all your guardians in the current organization."
           >
-            <Button variant="default">
-              <PlusIcon /> New Guardian
-            </Button>
+            <NewGuardian />
             <GuardianMenu />
           </PageTitle>
           <DataGrid />
