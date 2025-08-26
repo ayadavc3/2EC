@@ -10,6 +10,7 @@ import { AvatarCell } from "@/components/CellRenderer/AvatarCell";
 import { GridDateFormatter } from "@/utils/formatter/grid-date";
 
 import { ActionMenu } from "./ActionMenu";
+import { StudentCell } from "./StudentCell";
 
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -96,6 +97,7 @@ export function DataGrid() {
       field: "photo_url",
       headerName: "Photo",
       width: 60,
+      minWidth: 100,
       cellRenderer: AvatarCell,
     },
     {
@@ -110,6 +112,12 @@ export function DataGrid() {
       field: "phone_number",
       headerName: "Phone Number",
       width: 160,
+    },
+    {
+      colId: "students",
+      headerName: "Students",
+      width: 100,
+      cellRenderer: StudentCell,
     },
     {
       field: "created_at",
