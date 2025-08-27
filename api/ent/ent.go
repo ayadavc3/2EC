@@ -6,8 +6,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"goapi/ent/organization"
-	"goapi/ent/user"
+	"goapi/ent/guardian"
+	"goapi/ent/role"
+	"goapi/ent/student"
 	"reflect"
 	"sync"
 
@@ -74,8 +75,9 @@ var (
 func checkColumn(t, c string) error {
 	initCheck.Do(func() {
 		columnCheck = sql.NewColumnCheck(map[string]func(string) bool{
-			organization.Table: organization.ValidColumn,
-			user.Table:         user.ValidColumn,
+			guardian.Table: guardian.ValidColumn,
+			role.Table:     role.ValidColumn,
+			student.Table:  student.ValidColumn,
 		})
 	})
 	return columnCheck(t, c)

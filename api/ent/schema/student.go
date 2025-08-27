@@ -27,6 +27,7 @@ func (Student) Fields() []ent.Field {
 		field.String("phone_number").NotEmpty().Unique(),
 		field.String("email").Optional(),
 
+		field.Bool("deleted").Default(false),
 		field.Time("deleted_at").Optional(),
 		field.Time("created_at").Default(time.Now),
 		field.Time("updated_at").Default(time.Now).UpdateDefault(time.Now),
@@ -36,9 +37,6 @@ func (Student) Fields() []ent.Field {
 // Edges of the Student.
 func (Student) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.From("organization", Organization.Type).
-			Ref("students").
-			Unique().
-			Field("organization_id"),
+		edge.From("guardians", Guardian.Type).Ref("students"),
 	}
 }

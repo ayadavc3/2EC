@@ -4,11 +4,9 @@ package ent
 
 import (
 	"context"
-	"database/sql/driver"
 	"fmt"
-	"goapi/ent/organization"
 	"goapi/ent/predicate"
-	"goapi/ent/user"
+	"goapi/ent/role"
 	"math"
 
 	"entgo.io/ent"
@@ -17,87 +15,64 @@ import (
 	"entgo.io/ent/schema/field"
 )
 
-// OrganizationQuery is the builder for querying Organization entities.
-type OrganizationQuery struct {
+// RoleQuery is the builder for querying Role entities.
+type RoleQuery struct {
 	config
 	ctx        *QueryContext
-	order      []organization.OrderOption
+	order      []role.OrderOption
 	inters     []Interceptor
-	predicates []predicate.Organization
-	withUsers  *UserQuery
+	predicates []predicate.Role
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
 }
 
-// Where adds a new predicate for the OrganizationQuery builder.
-func (_q *OrganizationQuery) Where(ps ...predicate.Organization) *OrganizationQuery {
+// Where adds a new predicate for the RoleQuery builder.
+func (_q *RoleQuery) Where(ps ...predicate.Role) *RoleQuery {
 	_q.predicates = append(_q.predicates, ps...)
 	return _q
 }
 
 // Limit the number of records to be returned by this query.
-func (_q *OrganizationQuery) Limit(limit int) *OrganizationQuery {
+func (_q *RoleQuery) Limit(limit int) *RoleQuery {
 	_q.ctx.Limit = &limit
 	return _q
 }
 
 // Offset to start from.
-func (_q *OrganizationQuery) Offset(offset int) *OrganizationQuery {
+func (_q *RoleQuery) Offset(offset int) *RoleQuery {
 	_q.ctx.Offset = &offset
 	return _q
 }
 
 // Unique configures the query builder to filter duplicate records on query.
 // By default, unique is set to true, and can be disabled using this method.
-func (_q *OrganizationQuery) Unique(unique bool) *OrganizationQuery {
+func (_q *RoleQuery) Unique(unique bool) *RoleQuery {
 	_q.ctx.Unique = &unique
 	return _q
 }
 
 // Order specifies how the records should be ordered.
-func (_q *OrganizationQuery) Order(o ...organization.OrderOption) *OrganizationQuery {
+func (_q *RoleQuery) Order(o ...role.OrderOption) *RoleQuery {
 	_q.order = append(_q.order, o...)
 	return _q
 }
 
-// QueryUsers chains the current query on the "users" edge.
-func (_q *OrganizationQuery) QueryUsers() *UserQuery {
-	query := (&UserClient{config: _q.config}).Query()
-	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := _q.prepareQuery(ctx); err != nil {
-			return nil, err
-		}
-		selector := _q.sqlQuery(ctx)
-		if err := selector.Err(); err != nil {
-			return nil, err
-		}
-		step := sqlgraph.NewStep(
-			sqlgraph.From(organization.Table, organization.FieldID, selector),
-			sqlgraph.To(user.Table, user.FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, organization.UsersTable, organization.UsersColumn),
-		)
-		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
-		return fromU, nil
-	}
-	return query
-}
-
-// First returns the first Organization entity from the query.
-// Returns a *NotFoundError when no Organization was found.
-func (_q *OrganizationQuery) First(ctx context.Context) (*Organization, error) {
+// First returns the first Role entity from the query.
+// Returns a *NotFoundError when no Role was found.
+func (_q *RoleQuery) First(ctx context.Context) (*Role, error) {
 	nodes, err := _q.Limit(1).All(setContextOp(ctx, _q.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
 	if len(nodes) == 0 {
-		return nil, &NotFoundError{organization.Label}
+		return nil, &NotFoundError{role.Label}
 	}
 	return nodes[0], nil
 }
 
 // FirstX is like First, but panics if an error occurs.
-func (_q *OrganizationQuery) FirstX(ctx context.Context) *Organization {
+func (_q *RoleQuery) FirstX(ctx context.Context) *Role {
 	node, err := _q.First(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
@@ -105,22 +80,22 @@ func (_q *OrganizationQuery) FirstX(ctx context.Context) *Organization {
 	return node
 }
 
-// FirstID returns the first Organization ID from the query.
-// Returns a *NotFoundError when no Organization ID was found.
-func (_q *OrganizationQuery) FirstID(ctx context.Context) (id string, err error) {
+// FirstID returns the first Role ID from the query.
+// Returns a *NotFoundError when no Role ID was found.
+func (_q *RoleQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
 	if ids, err = _q.Limit(1).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
-		err = &NotFoundError{organization.Label}
+		err = &NotFoundError{role.Label}
 		return
 	}
 	return ids[0], nil
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (_q *OrganizationQuery) FirstIDX(ctx context.Context) string {
+func (_q *RoleQuery) FirstIDX(ctx context.Context) string {
 	id, err := _q.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
@@ -128,10 +103,10 @@ func (_q *OrganizationQuery) FirstIDX(ctx context.Context) string {
 	return id
 }
 
-// Only returns a single Organization entity found by the query, ensuring it only returns one.
-// Returns a *NotSingularError when more than one Organization entity is found.
-// Returns a *NotFoundError when no Organization entities are found.
-func (_q *OrganizationQuery) Only(ctx context.Context) (*Organization, error) {
+// Only returns a single Role entity found by the query, ensuring it only returns one.
+// Returns a *NotSingularError when more than one Role entity is found.
+// Returns a *NotFoundError when no Role entities are found.
+func (_q *RoleQuery) Only(ctx context.Context) (*Role, error) {
 	nodes, err := _q.Limit(2).All(setContextOp(ctx, _q.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
@@ -140,14 +115,14 @@ func (_q *OrganizationQuery) Only(ctx context.Context) (*Organization, error) {
 	case 1:
 		return nodes[0], nil
 	case 0:
-		return nil, &NotFoundError{organization.Label}
+		return nil, &NotFoundError{role.Label}
 	default:
-		return nil, &NotSingularError{organization.Label}
+		return nil, &NotSingularError{role.Label}
 	}
 }
 
 // OnlyX is like Only, but panics if an error occurs.
-func (_q *OrganizationQuery) OnlyX(ctx context.Context) *Organization {
+func (_q *RoleQuery) OnlyX(ctx context.Context) *Role {
 	node, err := _q.Only(ctx)
 	if err != nil {
 		panic(err)
@@ -155,10 +130,10 @@ func (_q *OrganizationQuery) OnlyX(ctx context.Context) *Organization {
 	return node
 }
 
-// OnlyID is like Only, but returns the only Organization ID in the query.
-// Returns a *NotSingularError when more than one Organization ID is found.
+// OnlyID is like Only, but returns the only Role ID in the query.
+// Returns a *NotSingularError when more than one Role ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (_q *OrganizationQuery) OnlyID(ctx context.Context) (id string, err error) {
+func (_q *RoleQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
 	if ids, err = _q.Limit(2).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
@@ -167,15 +142,15 @@ func (_q *OrganizationQuery) OnlyID(ctx context.Context) (id string, err error) 
 	case 1:
 		id = ids[0]
 	case 0:
-		err = &NotFoundError{organization.Label}
+		err = &NotFoundError{role.Label}
 	default:
-		err = &NotSingularError{organization.Label}
+		err = &NotSingularError{role.Label}
 	}
 	return
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (_q *OrganizationQuery) OnlyIDX(ctx context.Context) string {
+func (_q *RoleQuery) OnlyIDX(ctx context.Context) string {
 	id, err := _q.OnlyID(ctx)
 	if err != nil {
 		panic(err)
@@ -183,18 +158,18 @@ func (_q *OrganizationQuery) OnlyIDX(ctx context.Context) string {
 	return id
 }
 
-// All executes the query and returns a list of Organizations.
-func (_q *OrganizationQuery) All(ctx context.Context) ([]*Organization, error) {
+// All executes the query and returns a list of Roles.
+func (_q *RoleQuery) All(ctx context.Context) ([]*Role, error) {
 	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryAll)
 	if err := _q.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
-	qr := querierAll[[]*Organization, *OrganizationQuery]()
-	return withInterceptors[[]*Organization](ctx, _q, qr, _q.inters)
+	qr := querierAll[[]*Role, *RoleQuery]()
+	return withInterceptors[[]*Role](ctx, _q, qr, _q.inters)
 }
 
 // AllX is like All, but panics if an error occurs.
-func (_q *OrganizationQuery) AllX(ctx context.Context) []*Organization {
+func (_q *RoleQuery) AllX(ctx context.Context) []*Role {
 	nodes, err := _q.All(ctx)
 	if err != nil {
 		panic(err)
@@ -202,20 +177,20 @@ func (_q *OrganizationQuery) AllX(ctx context.Context) []*Organization {
 	return nodes
 }
 
-// IDs executes the query and returns a list of Organization IDs.
-func (_q *OrganizationQuery) IDs(ctx context.Context) (ids []string, err error) {
+// IDs executes the query and returns a list of Role IDs.
+func (_q *RoleQuery) IDs(ctx context.Context) (ids []string, err error) {
 	if _q.ctx.Unique == nil && _q.path != nil {
 		_q.Unique(true)
 	}
 	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryIDs)
-	if err = _q.Select(organization.FieldID).Scan(ctx, &ids); err != nil {
+	if err = _q.Select(role.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (_q *OrganizationQuery) IDsX(ctx context.Context) []string {
+func (_q *RoleQuery) IDsX(ctx context.Context) []string {
 	ids, err := _q.IDs(ctx)
 	if err != nil {
 		panic(err)
@@ -224,16 +199,16 @@ func (_q *OrganizationQuery) IDsX(ctx context.Context) []string {
 }
 
 // Count returns the count of the given query.
-func (_q *OrganizationQuery) Count(ctx context.Context) (int, error) {
+func (_q *RoleQuery) Count(ctx context.Context) (int, error) {
 	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryCount)
 	if err := _q.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return withInterceptors[int](ctx, _q, querierCount[*OrganizationQuery](), _q.inters)
+	return withInterceptors[int](ctx, _q, querierCount[*RoleQuery](), _q.inters)
 }
 
 // CountX is like Count, but panics if an error occurs.
-func (_q *OrganizationQuery) CountX(ctx context.Context) int {
+func (_q *RoleQuery) CountX(ctx context.Context) int {
 	count, err := _q.Count(ctx)
 	if err != nil {
 		panic(err)
@@ -242,7 +217,7 @@ func (_q *OrganizationQuery) CountX(ctx context.Context) int {
 }
 
 // Exist returns true if the query has elements in the graph.
-func (_q *OrganizationQuery) Exist(ctx context.Context) (bool, error) {
+func (_q *RoleQuery) Exist(ctx context.Context) (bool, error) {
 	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryExist)
 	switch _, err := _q.FirstID(ctx); {
 	case IsNotFound(err):
@@ -255,7 +230,7 @@ func (_q *OrganizationQuery) Exist(ctx context.Context) (bool, error) {
 }
 
 // ExistX is like Exist, but panics if an error occurs.
-func (_q *OrganizationQuery) ExistX(ctx context.Context) bool {
+func (_q *RoleQuery) ExistX(ctx context.Context) bool {
 	exist, err := _q.Exist(ctx)
 	if err != nil {
 		panic(err)
@@ -263,34 +238,22 @@ func (_q *OrganizationQuery) ExistX(ctx context.Context) bool {
 	return exist
 }
 
-// Clone returns a duplicate of the OrganizationQuery builder, including all associated steps. It can be
+// Clone returns a duplicate of the RoleQuery builder, including all associated steps. It can be
 // used to prepare common query builders and use them differently after the clone is made.
-func (_q *OrganizationQuery) Clone() *OrganizationQuery {
+func (_q *RoleQuery) Clone() *RoleQuery {
 	if _q == nil {
 		return nil
 	}
-	return &OrganizationQuery{
+	return &RoleQuery{
 		config:     _q.config,
 		ctx:        _q.ctx.Clone(),
-		order:      append([]organization.OrderOption{}, _q.order...),
+		order:      append([]role.OrderOption{}, _q.order...),
 		inters:     append([]Interceptor{}, _q.inters...),
-		predicates: append([]predicate.Organization{}, _q.predicates...),
-		withUsers:  _q.withUsers.Clone(),
+		predicates: append([]predicate.Role{}, _q.predicates...),
 		// clone intermediate query.
 		sql:  _q.sql.Clone(),
 		path: _q.path,
 	}
-}
-
-// WithUsers tells the query-builder to eager-load the nodes that are connected to
-// the "users" edge. The optional arguments are used to configure the query builder of the edge.
-func (_q *OrganizationQuery) WithUsers(opts ...func(*UserQuery)) *OrganizationQuery {
-	query := (&UserClient{config: _q.config}).Query()
-	for _, opt := range opts {
-		opt(query)
-	}
-	_q.withUsers = query
-	return _q
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -303,15 +266,15 @@ func (_q *OrganizationQuery) WithUsers(opts ...func(*UserQuery)) *OrganizationQu
 //		Count int `json:"count,omitempty"`
 //	}
 //
-//	client.Organization.Query().
-//		GroupBy(organization.FieldName).
+//	client.Role.Query().
+//		GroupBy(role.FieldName).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
-func (_q *OrganizationQuery) GroupBy(field string, fields ...string) *OrganizationGroupBy {
+func (_q *RoleQuery) GroupBy(field string, fields ...string) *RoleGroupBy {
 	_q.ctx.Fields = append([]string{field}, fields...)
-	grbuild := &OrganizationGroupBy{build: _q}
+	grbuild := &RoleGroupBy{build: _q}
 	grbuild.flds = &_q.ctx.Fields
-	grbuild.label = organization.Label
+	grbuild.label = role.Label
 	grbuild.scan = grbuild.Scan
 	return grbuild
 }
@@ -325,23 +288,23 @@ func (_q *OrganizationQuery) GroupBy(field string, fields ...string) *Organizati
 //		Name string `json:"name,omitempty"`
 //	}
 //
-//	client.Organization.Query().
-//		Select(organization.FieldName).
+//	client.Role.Query().
+//		Select(role.FieldName).
 //		Scan(ctx, &v)
-func (_q *OrganizationQuery) Select(fields ...string) *OrganizationSelect {
+func (_q *RoleQuery) Select(fields ...string) *RoleSelect {
 	_q.ctx.Fields = append(_q.ctx.Fields, fields...)
-	sbuild := &OrganizationSelect{OrganizationQuery: _q}
-	sbuild.label = organization.Label
+	sbuild := &RoleSelect{RoleQuery: _q}
+	sbuild.label = role.Label
 	sbuild.flds, sbuild.scan = &_q.ctx.Fields, sbuild.Scan
 	return sbuild
 }
 
-// Aggregate returns a OrganizationSelect configured with the given aggregations.
-func (_q *OrganizationQuery) Aggregate(fns ...AggregateFunc) *OrganizationSelect {
+// Aggregate returns a RoleSelect configured with the given aggregations.
+func (_q *RoleQuery) Aggregate(fns ...AggregateFunc) *RoleSelect {
 	return _q.Select().Aggregate(fns...)
 }
 
-func (_q *OrganizationQuery) prepareQuery(ctx context.Context) error {
+func (_q *RoleQuery) prepareQuery(ctx context.Context) error {
 	for _, inter := range _q.inters {
 		if inter == nil {
 			return fmt.Errorf("ent: uninitialized interceptor (forgotten import ent/runtime?)")
@@ -353,7 +316,7 @@ func (_q *OrganizationQuery) prepareQuery(ctx context.Context) error {
 		}
 	}
 	for _, f := range _q.ctx.Fields {
-		if !organization.ValidColumn(f) {
+		if !role.ValidColumn(f) {
 			return &ValidationError{Name: f, err: fmt.Errorf("ent: invalid field %q for query", f)}
 		}
 	}
@@ -367,21 +330,17 @@ func (_q *OrganizationQuery) prepareQuery(ctx context.Context) error {
 	return nil
 }
 
-func (_q *OrganizationQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Organization, error) {
+func (_q *RoleQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Role, error) {
 	var (
-		nodes       = []*Organization{}
-		_spec       = _q.querySpec()
-		loadedTypes = [1]bool{
-			_q.withUsers != nil,
-		}
+		nodes = []*Role{}
+		_spec = _q.querySpec()
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
-		return (*Organization).scanValues(nil, columns)
+		return (*Role).scanValues(nil, columns)
 	}
 	_spec.Assign = func(columns []string, values []any) error {
-		node := &Organization{config: _q.config}
+		node := &Role{config: _q.config}
 		nodes = append(nodes, node)
-		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
 	for i := range hooks {
@@ -393,49 +352,10 @@ func (_q *OrganizationQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
-	if query := _q.withUsers; query != nil {
-		if err := _q.loadUsers(ctx, query, nodes,
-			func(n *Organization) { n.Edges.Users = []*User{} },
-			func(n *Organization, e *User) { n.Edges.Users = append(n.Edges.Users, e) }); err != nil {
-			return nil, err
-		}
-	}
 	return nodes, nil
 }
 
-func (_q *OrganizationQuery) loadUsers(ctx context.Context, query *UserQuery, nodes []*Organization, init func(*Organization), assign func(*Organization, *User)) error {
-	fks := make([]driver.Value, 0, len(nodes))
-	nodeids := make(map[string]*Organization)
-	for i := range nodes {
-		fks = append(fks, nodes[i].ID)
-		nodeids[nodes[i].ID] = nodes[i]
-		if init != nil {
-			init(nodes[i])
-		}
-	}
-	query.withFKs = true
-	query.Where(predicate.User(func(s *sql.Selector) {
-		s.Where(sql.InValues(s.C(organization.UsersColumn), fks...))
-	}))
-	neighbors, err := query.All(ctx)
-	if err != nil {
-		return err
-	}
-	for _, n := range neighbors {
-		fk := n.organization_users
-		if fk == nil {
-			return fmt.Errorf(`foreign-key "organization_users" is nil for node %v`, n.ID)
-		}
-		node, ok := nodeids[*fk]
-		if !ok {
-			return fmt.Errorf(`unexpected referenced foreign-key "organization_users" returned %v for node %v`, *fk, n.ID)
-		}
-		assign(node, n)
-	}
-	return nil
-}
-
-func (_q *OrganizationQuery) sqlCount(ctx context.Context) (int, error) {
+func (_q *RoleQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := _q.querySpec()
 	_spec.Node.Columns = _q.ctx.Fields
 	if len(_q.ctx.Fields) > 0 {
@@ -444,8 +364,8 @@ func (_q *OrganizationQuery) sqlCount(ctx context.Context) (int, error) {
 	return sqlgraph.CountNodes(ctx, _q.driver, _spec)
 }
 
-func (_q *OrganizationQuery) querySpec() *sqlgraph.QuerySpec {
-	_spec := sqlgraph.NewQuerySpec(organization.Table, organization.Columns, sqlgraph.NewFieldSpec(organization.FieldID, field.TypeString))
+func (_q *RoleQuery) querySpec() *sqlgraph.QuerySpec {
+	_spec := sqlgraph.NewQuerySpec(role.Table, role.Columns, sqlgraph.NewFieldSpec(role.FieldID, field.TypeString))
 	_spec.From = _q.sql
 	if unique := _q.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
@@ -454,9 +374,9 @@ func (_q *OrganizationQuery) querySpec() *sqlgraph.QuerySpec {
 	}
 	if fields := _q.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
-		_spec.Node.Columns = append(_spec.Node.Columns, organization.FieldID)
+		_spec.Node.Columns = append(_spec.Node.Columns, role.FieldID)
 		for i := range fields {
-			if fields[i] != organization.FieldID {
+			if fields[i] != role.FieldID {
 				_spec.Node.Columns = append(_spec.Node.Columns, fields[i])
 			}
 		}
@@ -484,12 +404,12 @@ func (_q *OrganizationQuery) querySpec() *sqlgraph.QuerySpec {
 	return _spec
 }
 
-func (_q *OrganizationQuery) sqlQuery(ctx context.Context) *sql.Selector {
+func (_q *RoleQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	builder := sql.Dialect(_q.driver.Dialect())
-	t1 := builder.Table(organization.Table)
+	t1 := builder.Table(role.Table)
 	columns := _q.ctx.Fields
 	if len(columns) == 0 {
-		columns = organization.Columns
+		columns = role.Columns
 	}
 	selector := builder.Select(t1.Columns(columns...)...).From(t1)
 	if _q.sql != nil {
@@ -516,28 +436,28 @@ func (_q *OrganizationQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	return selector
 }
 
-// OrganizationGroupBy is the group-by builder for Organization entities.
-type OrganizationGroupBy struct {
+// RoleGroupBy is the group-by builder for Role entities.
+type RoleGroupBy struct {
 	selector
-	build *OrganizationQuery
+	build *RoleQuery
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
-func (_g *OrganizationGroupBy) Aggregate(fns ...AggregateFunc) *OrganizationGroupBy {
+func (_g *RoleGroupBy) Aggregate(fns ...AggregateFunc) *RoleGroupBy {
 	_g.fns = append(_g.fns, fns...)
 	return _g
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (_g *OrganizationGroupBy) Scan(ctx context.Context, v any) error {
+func (_g *RoleGroupBy) Scan(ctx context.Context, v any) error {
 	ctx = setContextOp(ctx, _g.build.ctx, ent.OpQueryGroupBy)
 	if err := _g.build.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*OrganizationQuery, *OrganizationGroupBy](ctx, _g.build, _g, _g.build.inters, v)
+	return scanWithInterceptors[*RoleQuery, *RoleGroupBy](ctx, _g.build, _g, _g.build.inters, v)
 }
 
-func (_g *OrganizationGroupBy) sqlScan(ctx context.Context, root *OrganizationQuery, v any) error {
+func (_g *RoleGroupBy) sqlScan(ctx context.Context, root *RoleQuery, v any) error {
 	selector := root.sqlQuery(ctx).Select()
 	aggregation := make([]string, 0, len(_g.fns))
 	for _, fn := range _g.fns {
@@ -564,28 +484,28 @@ func (_g *OrganizationGroupBy) sqlScan(ctx context.Context, root *OrganizationQu
 	return sql.ScanSlice(rows, v)
 }
 
-// OrganizationSelect is the builder for selecting fields of Organization entities.
-type OrganizationSelect struct {
-	*OrganizationQuery
+// RoleSelect is the builder for selecting fields of Role entities.
+type RoleSelect struct {
+	*RoleQuery
 	selector
 }
 
 // Aggregate adds the given aggregation functions to the selector query.
-func (_s *OrganizationSelect) Aggregate(fns ...AggregateFunc) *OrganizationSelect {
+func (_s *RoleSelect) Aggregate(fns ...AggregateFunc) *RoleSelect {
 	_s.fns = append(_s.fns, fns...)
 	return _s
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (_s *OrganizationSelect) Scan(ctx context.Context, v any) error {
+func (_s *RoleSelect) Scan(ctx context.Context, v any) error {
 	ctx = setContextOp(ctx, _s.ctx, ent.OpQuerySelect)
 	if err := _s.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*OrganizationQuery, *OrganizationSelect](ctx, _s.OrganizationQuery, _s, _s.inters, v)
+	return scanWithInterceptors[*RoleQuery, *RoleSelect](ctx, _s.RoleQuery, _s, _s.inters, v)
 }
 
-func (_s *OrganizationSelect) sqlScan(ctx context.Context, root *OrganizationQuery, v any) error {
+func (_s *RoleSelect) sqlScan(ctx context.Context, root *RoleQuery, v any) error {
 	selector := root.sqlQuery(ctx)
 	aggregation := make([]string, 0, len(_s.fns))
 	for _, fn := range _s.fns {

@@ -6,8 +6,11 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// Organization is the predicate function for organization builders.
-type Organization func(*sql.Selector)
+// Guardian is the predicate function for guardian builders.
+type Guardian func(*sql.Selector)
 
-// User is the predicate function for user builders.
-type User func(*sql.Selector)
+// Role is the predicate function for role builders.
+type Role func(*sql.Selector)
+
+// Student is the predicate function for student builders.
+type Student func(*sql.Selector)

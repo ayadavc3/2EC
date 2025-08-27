@@ -8,51 +8,98 @@ import (
 )
 
 var (
-	// OrganizationsColumns holds the columns for the "organizations" table.
-	OrganizationsColumns = []*schema.Column{
+	// GuardiansColumns holds the columns for the "guardians" table.
+	GuardiansColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeString},
-		{Name: "name", Type: field.TypeString},
-		{Name: "logo", Type: field.TypeString},
-		{Name: "website", Type: field.TypeString},
-		{Name: "description", Type: field.TypeString},
+		{Name: "photo_url", Type: field.TypeString, Nullable: true},
+		{Name: "title", Type: field.TypeString, Default: "Mr."},
+		{Name: "first_name", Type: field.TypeString},
+		{Name: "last_name", Type: field.TypeString, Nullable: true},
+		{Name: "middle_name", Type: field.TypeString, Nullable: true},
+		{Name: "phone_number", Type: field.TypeString, Unique: true},
+		{Name: "email", Type: field.TypeString, Nullable: true},
+		{Name: "deleted", Type: field.TypeBool, Default: false},
+		{Name: "deleted_at", Type: field.TypeTime, Nullable: true},
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "updated_at", Type: field.TypeTime},
 	}
-	// OrganizationsTable holds the schema information for the "organizations" table.
-	OrganizationsTable = &schema.Table{
-		Name:       "organizations",
-		Columns:    OrganizationsColumns,
-		PrimaryKey: []*schema.Column{OrganizationsColumns[0]},
+	// GuardiansTable holds the schema information for the "guardians" table.
+	GuardiansTable = &schema.Table{
+		Name:       "guardians",
+		Columns:    GuardiansColumns,
+		PrimaryKey: []*schema.Column{GuardiansColumns[0]},
 	}
-	// UsersColumns holds the columns for the "users" table.
-	UsersColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+	// RolesColumns holds the columns for the "roles" table.
+	RolesColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeString},
 		{Name: "name", Type: field.TypeString},
-		{Name: "email", Type: field.TypeString, Unique: true},
-		{Name: "password", Type: field.TypeString},
-		{Name: "organization_users", Type: field.TypeString, Nullable: true},
+		{Name: "description", Type: field.TypeString},
+		{Name: "organization_id", Type: field.TypeString},
+		{Name: "permissions", Type: field.TypeString, Default: "message.create,message.read,message.update,message.delete"},
+		{Name: "created_at", Type: field.TypeTime},
+		{Name: "updated_at", Type: field.TypeTime},
 	}
-	// UsersTable holds the schema information for the "users" table.
-	UsersTable = &schema.Table{
-		Name:       "users",
-		Columns:    UsersColumns,
-		PrimaryKey: []*schema.Column{UsersColumns[0]},
+	// RolesTable holds the schema information for the "roles" table.
+	RolesTable = &schema.Table{
+		Name:       "roles",
+		Columns:    RolesColumns,
+		PrimaryKey: []*schema.Column{RolesColumns[0]},
+	}
+	// StudentsColumns holds the columns for the "students" table.
+	StudentsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeString},
+		{Name: "photo_url", Type: field.TypeString, Nullable: true},
+		{Name: "first_name", Type: field.TypeString},
+		{Name: "last_name", Type: field.TypeString, Nullable: true},
+		{Name: "middle_name", Type: field.TypeString, Nullable: true},
+		{Name: "phone_number", Type: field.TypeString, Unique: true},
+		{Name: "email", Type: field.TypeString, Nullable: true},
+		{Name: "deleted", Type: field.TypeBool, Default: false},
+		{Name: "deleted_at", Type: field.TypeTime, Nullable: true},
+		{Name: "created_at", Type: field.TypeTime},
+		{Name: "updated_at", Type: field.TypeTime},
+	}
+	// StudentsTable holds the schema information for the "students" table.
+	StudentsTable = &schema.Table{
+		Name:       "students",
+		Columns:    StudentsColumns,
+		PrimaryKey: []*schema.Column{StudentsColumns[0]},
+	}
+	// GuardianStudentsColumns holds the columns for the "guardian_students" table.
+	GuardianStudentsColumns = []*schema.Column{
+		{Name: "guardian_id", Type: field.TypeString},
+		{Name: "student_id", Type: field.TypeString},
+	}
+	// GuardianStudentsTable holds the schema information for the "guardian_students" table.
+	GuardianStudentsTable = &schema.Table{
+		Name:       "guardian_students",
+		Columns:    GuardianStudentsColumns,
+		PrimaryKey: []*schema.Column{GuardianStudentsColumns[0], GuardianStudentsColumns[1]},
 		ForeignKeys: []*schema.ForeignKey{
 			{
-				Symbol:     "users_organizations_users",
-				Columns:    []*schema.Column{UsersColumns[4]},
-				RefColumns: []*schema.Column{OrganizationsColumns[0]},
-				OnDelete:   schema.SetNull,
+				Symbol:     "guardian_students_guardian_id",
+				Columns:    []*schema.Column{GuardianStudentsColumns[0]},
+				RefColumns: []*schema.Column{GuardiansColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+			{
+				Symbol:     "guardian_students_student_id",
+				Columns:    []*schema.Column{GuardianStudentsColumns[1]},
+				RefColumns: []*schema.Column{StudentsColumns[0]},
+				OnDelete:   schema.Cascade,
 			},
 		},
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
-		OrganizationsTable,
-		UsersTable,
+		GuardiansTable,
+		RolesTable,
+		StudentsTable,
+		GuardianStudentsTable,
 	}
 )
 
 func init() {
-	UsersTable.ForeignKeys[0].RefTable = OrganizationsTable
+	GuardianStudentsTable.ForeignKeys[0].RefTable = GuardiansTable
+	GuardianStudentsTable.ForeignKeys[1].RefTable = StudentsTable
 }

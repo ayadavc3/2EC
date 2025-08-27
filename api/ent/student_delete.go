@@ -4,34 +4,34 @@ package ent
 
 import (
 	"context"
-	"goapi/ent/organization"
 	"goapi/ent/predicate"
+	"goapi/ent/student"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 )
 
-// OrganizationDelete is the builder for deleting a Organization entity.
-type OrganizationDelete struct {
+// StudentDelete is the builder for deleting a Student entity.
+type StudentDelete struct {
 	config
 	hooks    []Hook
-	mutation *OrganizationMutation
+	mutation *StudentMutation
 }
 
-// Where appends a list predicates to the OrganizationDelete builder.
-func (_d *OrganizationDelete) Where(ps ...predicate.Organization) *OrganizationDelete {
+// Where appends a list predicates to the StudentDelete builder.
+func (_d *StudentDelete) Where(ps ...predicate.Student) *StudentDelete {
 	_d.mutation.Where(ps...)
 	return _d
 }
 
 // Exec executes the deletion query and returns how many vertices were deleted.
-func (_d *OrganizationDelete) Exec(ctx context.Context) (int, error) {
+func (_d *StudentDelete) Exec(ctx context.Context) (int, error) {
 	return withHooks(ctx, _d.sqlExec, _d.mutation, _d.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (_d *OrganizationDelete) ExecX(ctx context.Context) int {
+func (_d *StudentDelete) ExecX(ctx context.Context) int {
 	n, err := _d.Exec(ctx)
 	if err != nil {
 		panic(err)
@@ -39,8 +39,8 @@ func (_d *OrganizationDelete) ExecX(ctx context.Context) int {
 	return n
 }
 
-func (_d *OrganizationDelete) sqlExec(ctx context.Context) (int, error) {
-	_spec := sqlgraph.NewDeleteSpec(organization.Table, sqlgraph.NewFieldSpec(organization.FieldID, field.TypeString))
+func (_d *StudentDelete) sqlExec(ctx context.Context) (int, error) {
+	_spec := sqlgraph.NewDeleteSpec(student.Table, sqlgraph.NewFieldSpec(student.FieldID, field.TypeString))
 	if ps := _d.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -56,32 +56,32 @@ func (_d *OrganizationDelete) sqlExec(ctx context.Context) (int, error) {
 	return affected, err
 }
 
-// OrganizationDeleteOne is the builder for deleting a single Organization entity.
-type OrganizationDeleteOne struct {
-	_d *OrganizationDelete
+// StudentDeleteOne is the builder for deleting a single Student entity.
+type StudentDeleteOne struct {
+	_d *StudentDelete
 }
 
-// Where appends a list predicates to the OrganizationDelete builder.
-func (_d *OrganizationDeleteOne) Where(ps ...predicate.Organization) *OrganizationDeleteOne {
+// Where appends a list predicates to the StudentDelete builder.
+func (_d *StudentDeleteOne) Where(ps ...predicate.Student) *StudentDeleteOne {
 	_d._d.mutation.Where(ps...)
 	return _d
 }
 
 // Exec executes the deletion query.
-func (_d *OrganizationDeleteOne) Exec(ctx context.Context) error {
+func (_d *StudentDeleteOne) Exec(ctx context.Context) error {
 	n, err := _d._d.Exec(ctx)
 	switch {
 	case err != nil:
 		return err
 	case n == 0:
-		return &NotFoundError{organization.Label}
+		return &NotFoundError{student.Label}
 	default:
 		return nil
 	}
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (_d *OrganizationDeleteOne) ExecX(ctx context.Context) {
+func (_d *StudentDeleteOne) ExecX(ctx context.Context) {
 	if err := _d.Exec(ctx); err != nil {
 		panic(err)
 	}

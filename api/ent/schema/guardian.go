@@ -21,13 +21,14 @@ func (Guardian) Fields() []ent.Field {
 			return uuid.New().String()
 		}),
 		field.String("photo_url").Optional(),
-		field.String("title").NotEmpty(),
+		field.String("title").Default("Mr.").NotEmpty(),
 		field.String("first_name").NotEmpty(),
-		field.String("last_name").NotEmpty().Optional(),
+		field.String("last_name").Optional(),
 		field.String("middle_name").Optional(),
 		field.String("phone_number").NotEmpty().Unique(),
 		field.String("email").Optional(),
 
+		field.Bool("deleted").Default(false),
 		field.Time("deleted_at").Optional(),
 		field.Time("created_at").Default(time.Now),
 		field.Time("updated_at").Default(time.Now).UpdateDefault(time.Now),
@@ -37,9 +38,6 @@ func (Guardian) Fields() []ent.Field {
 // Edges of the Guardian.
 func (Guardian) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.From("organization", Organization.Type).
-			Ref("guardians").
-			Unique().
-			Field("organization_id"),
+		edge.To("students", Student.Type),
 	}
 }
