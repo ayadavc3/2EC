@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"goapi/internal/admin/routes"
 	"goapi/internal/shared/config"
+	"goapi/internal/shared/database"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cache"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/healthcheck"
 	"github.com/gofiber/fiber/v2/middleware/helmet"
@@ -16,12 +16,12 @@ import (
 	"go.uber.org/fx"
 )
 
-func NewAdminServer(lc fx.Lifecycle, cfg *config.Config, adminRoutes *routes.AdminRoutes) *fiber.App {
+func NewAdminServer(lc fx.Lifecycle, cfg *config.Config, adminRoutes *routes.AdminRoutes, db *database.Database) *fiber.App {
 	app := fiber.New()
 
 	// Middleware
 	app.Use(cors.New())
-	app.Use(cache.New())
+	// app.Use(cache.New())
 	app.Use(logger.New())
 	app.Use(helmet.New())
 	app.Use(recover.New())
@@ -39,6 +39,7 @@ func NewAdminServer(lc fx.Lifecycle, cfg *config.Config, adminRoutes *routes.Adm
 			return nil
 		},
 		OnStop: func(ctx context.Context) error {
+			db.Close()
 			return app.Shutdown()
 		},
 	})
