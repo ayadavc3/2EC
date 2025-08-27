@@ -1,4 +1,4 @@
-package tools
+package main
 
 import (
 	"context"
@@ -29,7 +29,7 @@ func main() {
 	cfg := config.LoadConfig()
 
 	connStr := fmt.Sprintf(
-		"host=%s port=%d user=%s password=%s dbname=%s sslmode=%s",
+		"host=%s port=%d user=%s password=%s dbname=%s sslmode=%s default_query_exec_mode=cache_describe",
 		cfg.Database.Host, cfg.Database.Port, cfg.Database.User, cfg.Database.Password, cfg.Database.Database, cfg.Database.SSLMode,
 	)
 

@@ -31,6 +31,9 @@ func NewAdminServer(lc fx.Lifecycle, cfg *config.Config, adminRoutes *routes.Adm
 
 	lc.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
+			if err := db.RunMigrations(); err != nil {
+				return err
+			}
 			go func() {
 				if err := app.Listen(fmt.Sprintf(":%d", cfg.Server.Port)); err != nil {
 					panic(err)

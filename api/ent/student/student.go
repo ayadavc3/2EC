@@ -79,8 +79,6 @@ func ValidColumn(column string) bool {
 var (
 	// FirstNameValidator is a validator for the "first_name" field. It is called by the builders before save.
 	FirstNameValidator func(string) error
-	// LastNameValidator is a validator for the "last_name" field. It is called by the builders before save.
-	LastNameValidator func(string) error
 	// PhoneNumberValidator is a validator for the "phone_number" field. It is called by the builders before save.
 	PhoneNumberValidator func(string) error
 	// DefaultDeleted holds the default value on creation for the "deleted" field.

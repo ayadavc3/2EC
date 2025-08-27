@@ -237,11 +237,6 @@ func (_c *StudentCreate) check() error {
 			return &ValidationError{Name: "first_name", err: fmt.Errorf(`ent: validator failed for field "Student.first_name": %w`, err)}
 		}
 	}
-	if v, ok := _c.mutation.LastName(); ok {
-		if err := student.LastNameValidator(v); err != nil {
-			return &ValidationError{Name: "last_name", err: fmt.Errorf(`ent: validator failed for field "Student.last_name": %w`, err)}
-		}
-	}
 	if _, ok := _c.mutation.PhoneNumber(); !ok {
 		return &ValidationError{Name: "phone_number", err: errors.New(`ent: missing required field "Student.phone_number"`)}
 	}

@@ -275,11 +275,6 @@ func (_u *StudentUpdate) check() error {
 			return &ValidationError{Name: "first_name", err: fmt.Errorf(`ent: validator failed for field "Student.first_name": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.LastName(); ok {
-		if err := student.LastNameValidator(v); err != nil {
-			return &ValidationError{Name: "last_name", err: fmt.Errorf(`ent: validator failed for field "Student.last_name": %w`, err)}
-		}
-	}
 	if v, ok := _u.mutation.PhoneNumber(); ok {
 		if err := student.PhoneNumberValidator(v); err != nil {
 			return &ValidationError{Name: "phone_number", err: fmt.Errorf(`ent: validator failed for field "Student.phone_number": %w`, err)}
@@ -667,11 +662,6 @@ func (_u *StudentUpdateOne) check() error {
 	if v, ok := _u.mutation.FirstName(); ok {
 		if err := student.FirstNameValidator(v); err != nil {
 			return &ValidationError{Name: "first_name", err: fmt.Errorf(`ent: validator failed for field "Student.first_name": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.LastName(); ok {
-		if err := student.LastNameValidator(v); err != nil {
-			return &ValidationError{Name: "last_name", err: fmt.Errorf(`ent: validator failed for field "Student.last_name": %w`, err)}
 		}
 	}
 	if v, ok := _u.mutation.PhoneNumber(); ok {

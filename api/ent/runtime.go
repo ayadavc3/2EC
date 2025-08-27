@@ -88,10 +88,6 @@ func init() {
 	studentDescFirstName := studentFields[2].Descriptor()
 	// student.FirstNameValidator is a validator for the "first_name" field. It is called by the builders before save.
 	student.FirstNameValidator = studentDescFirstName.Validators[0].(func(string) error)
-	// studentDescLastName is the schema descriptor for last_name field.
-	studentDescLastName := studentFields[3].Descriptor()
-	// student.LastNameValidator is a validator for the "last_name" field. It is called by the builders before save.
-	student.LastNameValidator = studentDescLastName.Validators[0].(func(string) error)
 	// studentDescPhoneNumber is the schema descriptor for phone_number field.
 	studentDescPhoneNumber := studentFields[5].Descriptor()
 	// student.PhoneNumberValidator is a validator for the "phone_number" field. It is called by the builders before save.

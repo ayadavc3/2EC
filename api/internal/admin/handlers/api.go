@@ -21,7 +21,7 @@ func NewAdminAPIHandler(db *database.Database, logger *slog.Logger) *AdminAPIHan
 }
 
 func (h *AdminAPIHandler) Home(c *fiber.Ctx) error {
-	students, err := h.db.Client.Student.Query().All(c.Context())
+	students, err := h.db.Client.Student.Query().WithGuardians().All(c.Context())
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": err.Error(),

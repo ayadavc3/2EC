@@ -22,7 +22,7 @@ func (Student) Fields() []ent.Field {
 		}),
 		field.String("photo_url").Optional(),
 		field.String("first_name").NotEmpty(),
-		field.String("last_name").NotEmpty().Optional(),
+		field.String("last_name").Optional(),
 		field.String("middle_name").Optional(),
 		field.String("phone_number").NotEmpty().Unique(),
 		field.String("email").Optional(),
