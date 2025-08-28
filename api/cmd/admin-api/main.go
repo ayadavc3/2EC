@@ -26,7 +26,7 @@ func main() {
 		fx.Provide(handlers.NewGeolocationHandler),
 		fx.Provide(handlers.NewGroupHandler),
 		fx.Provide(handlers.NewMessageHandler),
-		fx.Provide(handlers.NewUserHandler),
+		fx.Provide(handlers.NewStudentHandler),
 		fx.Provide(handlers.NewDashboardHandler),
 		fx.Provide(routes.NewAdminRoutes),
 		fx.Provide(admin.NewAdminServer),

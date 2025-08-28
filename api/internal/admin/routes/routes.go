@@ -13,16 +13,22 @@ type AdminRoutes struct {
 	auditHandler       *handlers.AuditHandler
 	geolocationHandler *handlers.GeolocationHandler
 	groupHandler       *handlers.GroupHandler
-	userHandler        *handlers.UserHandler
+	studentHandler     *handlers.StudentHandler
 	dashboardHandler   *handlers.DashboardHandler
 	messageHandler     *handlers.MessageHandler
 }
 
 // NewUserRoutes creates a new user routes instance
-func NewAdminRoutes(adminHandler *handlers.AdminHandler, adminAPIHandler *handlers.AdminAPIHandler) *AdminRoutes {
+func NewAdminRoutes(adminHandler *handlers.AdminHandler, adminAPIHandler *handlers.AdminAPIHandler, auditHandler *handlers.AuditHandler, geolocationHandler *handlers.GeolocationHandler, groupHandler *handlers.GroupHandler, studentHandler *handlers.StudentHandler, dashboardHandler *handlers.DashboardHandler, messageHandler *handlers.MessageHandler) *AdminRoutes {
 	return &AdminRoutes{
-		adminHandler:    adminHandler,
-		adminAPIHandler: adminAPIHandler,
+		adminHandler:       adminHandler,
+		adminAPIHandler:    adminAPIHandler,
+		auditHandler:       auditHandler,
+		geolocationHandler: geolocationHandler,
+		groupHandler:       groupHandler,
+		studentHandler:     studentHandler,
+		dashboardHandler:   dashboardHandler,
+		messageHandler:     messageHandler,
 	}
 }
 
@@ -61,8 +67,11 @@ func (r *AdminRoutes) SetupRoutes(app *fiber.App) {
 	messaging.Get("/", r.messageHandler.Home)
 	messaging.Get("/health", r.messageHandler.Health)
 
-	// User routes
-	user := app.Group("/users")
-	user.Get("/", r.userHandler.Home)
-	user.Get("/health", r.userHandler.Health)
+	// Student routes
+	student := app.Group("/students")
+	student.Get("/", r.studentHandler.GetAll)
+	student.Get("/:id", r.studentHandler.GetById)
+	student.Post("/", r.studentHandler.Create)
+	student.Put("/:id", r.studentHandler.Update)
+	student.Delete("/:id", r.studentHandler.Delete)
 }

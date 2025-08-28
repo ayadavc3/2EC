@@ -6,6 +6,22 @@ import (
 	"goapi/ent"
 )
 
+type StudentCreateArgs struct {
+	FirstName   string `json:"first_name" validate:"required"`
+	LastName    string `json:"last_name" validate:"required"`
+	MiddleName  string `json:"middle_name"`
+	PhoneNumber string `json:"phone_number" validate:"required"`
+	Email       string `json:"email"`
+	PhotoURL    string `json:"photo_url"`
+}
+
+type StudentUpdateArgs struct {
+	FirstName   string `json:"first_name"`
+	LastName    string `json:"last_name"`
+	MiddleName  string `json:"middle_name"`
+	PhoneNumber string `json:"phone_number"`
+}
+
 // StudentResponse represents a clean DTO for Student API responses
 type StudentResponse struct {
 	ID          string             `json:"id"`
