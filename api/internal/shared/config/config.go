@@ -11,7 +11,6 @@ import (
 
 type Config struct {
 	Database DatabaseConfig
-	Server   ServerConfig
 	App      AppConfig
 }
 
@@ -22,11 +21,6 @@ type DatabaseConfig struct {
 	Password string
 	Database string
 	SSLMode  string
-}
-
-type ServerConfig struct {
-	Host string
-	Port int
 }
 
 type AppConfig struct {
@@ -49,10 +43,6 @@ func LoadConfig() *Config {
 			Password: getEnv("DB_PASSWORD", ""),
 			Database: getEnv("DB_NAME", "goapi"),
 			SSLMode:  getEnv("DB_SSL_MODE", "disable"),
-		},
-		Server: ServerConfig{
-			Host: getEnv("SERVER_HOST", "0.0.0.0"),
-			Port: getEnvAsInt("SERVER_PORT", 3000),
 		},
 		App: AppConfig{
 			JwtSecret:       getEnv("JWT_SECRET", "secret"),

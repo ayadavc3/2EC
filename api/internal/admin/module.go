@@ -2,7 +2,6 @@ package admin
 
 import (
 	"context"
-	"fmt"
 	"goapi/internal/admin/routes"
 	"goapi/internal/shared/config"
 	"goapi/internal/shared/database"
@@ -35,7 +34,7 @@ func NewAdminServer(lc fx.Lifecycle, cfg *config.Config, adminRoutes *routes.Adm
 				return err
 			}
 			go func() {
-				if err := app.Listen(fmt.Sprintf(":%d", cfg.Server.Port)); err != nil {
+				if err := app.Listen("0.0.0.0:3000"); err != nil {
 					panic(err)
 				}
 			}()

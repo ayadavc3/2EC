@@ -22,9 +22,6 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o admin-api ./cmd/a
 # Final stage
 FROM alpine:latest
 
-# Install ca-certificates for HTTPS requests
-RUN apk --no-cache add ca-certificates tzdata
-
 # Create non-root user
 RUN addgroup -g 1001 -S appgroup && \
     adduser -u 1001 -S appuser -G appgroup
@@ -34,6 +31,7 @@ WORKDIR /app
 
 # Copy the binary from builder stage
 COPY --from=builder /app/admin-api .
+COPY --from=builder /app/.env .
 
 # Change ownership to non-root user
 RUN chown -R appuser:appgroup /app
@@ -43,10 +41,6 @@ USER appuser
 
 # Expose port (default 3000)
 EXPOSE 3000
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost:3000/health || exit 1
 
 # Run the admin API
 CMD ["./admin-api"]
