@@ -6,6 +6,7 @@ import {
   TrashIcon,
   UsersIcon,
 } from "lucide-react";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -17,9 +18,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
 } from "@/components/ui/dropdown-menu";
+import { useDeleteStudent } from "@/hooks/useStudents";
 
 export function ActionMenu(params: CustomCellRendererProps) {
-  console.log(params.data);
+  const { id } = params.data;
+  const { mutate: deleteStudent } = useDeleteStudent();
+
+  const handleDelete = async () => {
+    try {
+      await deleteStudent(id);
+      toast.success("Student deleted successfully");
+    } catch (error) {
+      toast.error("Failed to delete student");
+    }
+  };
 
   return (
     <DropdownMenu>
@@ -49,7 +61,7 @@ export function ActionMenu(params: CustomCellRendererProps) {
             </DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem variant="destructive">
+          <DropdownMenuItem variant="destructive" onClick={handleDelete}>
             Delete
             <DropdownMenuShortcut>
               <TrashIcon />
