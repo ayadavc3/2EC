@@ -19,13 +19,7 @@ type Database struct {
 
 // New creates a new database connection pool
 func NewDatabase(cfg *config.Config) (*Database, error) {
-	// Build connection string with prepared statements disabled to avoid cache conflicts
-	connStr := fmt.Sprintf(
-		"host=%s port=%d user=%s password=%s dbname=%s sslmode=%s default_query_exec_mode=cache_describe",
-		cfg.Database.Host, cfg.Database.Port, cfg.Database.User, cfg.Database.Password, cfg.Database.Database, cfg.Database.SSLMode,
-	)
-
-	db, err := sql.Open("pgx", connStr)
+	db, err := sql.Open("pgx", cfg.DatabaseUrl)
 	if err != nil {
 		return nil, fmt.Errorf("failed to open database: %w", err)
 	}

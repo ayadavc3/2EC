@@ -43,4 +43,4 @@ USER appuser
 EXPOSE 3000
 
 # Run the admin API
-CMD ["./admin-api"]
+CMD ["doppler", "run", "--", "./admin-api"]
