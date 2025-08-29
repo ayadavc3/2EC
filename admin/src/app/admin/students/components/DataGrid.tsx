@@ -2,11 +2,13 @@
 
 import React, { useState } from "react";
 
+import { useQuery } from "@tanstack/react-query";
 import type { ColDef } from "ag-grid-community";
 import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
 
 import { AvatarCell } from "@/components/CellRenderer/AvatarCell";
+import { api, StudentResponse } from "@/service/api";
 import { GridDateFormatter } from "@/utils/formatter/grid-date";
 
 import { ActionMenu } from "./ActionMenu";
@@ -14,91 +16,16 @@ import { ActionMenu } from "./ActionMenu";
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-type Student = {
-  uid: string;
-  photo_url: string;
-  first_name: string;
-  last_name: string;
-  middle_name: string;
-  phone_number: string;
-  created_at: string;
-  updated_at: string;
-};
-
 export function DataGrid() {
-  const [rowData] = useState<Student[]>([
-    {
-      uid: "STU001",
-      photo_url:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-      first_name: "John",
-      last_name: "Doe",
-      middle_name: "Michael",
-      phone_number: "+1-555-0123",
-      created_at: "2024-01-15T10:30:00Z",
-      updated_at: "2024-01-15T10:30:00Z",
-    },
-    {
-      uid: "STU002",
-      photo_url:
-        "https://images.unsplash.com/photo-1494790108755-2616c6c2b8c0?w=150&h=150&fit=crop&crop=face",
-      first_name: "Jane",
-      last_name: "Smith",
-      middle_name: "Elizabeth",
-      phone_number: "+1-555-0456",
-      created_at: "2024-01-16T14:20:00Z",
-      updated_at: "2024-01-20T09:15:00Z",
-    },
-    {
-      uid: "STU003",
-      photo_url:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-      first_name: "Alex",
-      last_name: "Johnson",
-      middle_name: "Robert",
-      phone_number: "+1-555-0789",
-      created_at: "2024-01-18T16:45:00Z",
-      updated_at: "2024-01-22T11:30:00Z",
-    },
-    {
-      uid: "STU004",
-      photo_url:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
-      first_name: "Sarah",
-      last_name: "Williams",
-      middle_name: "Marie",
-      phone_number: "+1-555-0321",
-      created_at: "2024-01-20T08:15:00Z",
-      updated_at: "2024-01-24T13:45:00Z",
-    },
-    {
-      uid: "STU005",
-      photo_url:
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
-      first_name: "David",
-      last_name: "Brown",
-      middle_name: "Christopher",
-      phone_number: "+1-555-0654",
-      created_at: "2024-01-22T12:00:00Z",
-      updated_at: "2024-01-25T15:20:00Z",
-    },
-    {
-      uid: "STU006",
-      photo_url:
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
-      first_name: "David",
-      last_name: "Brown",
-      middle_name: "Christopher",
-      phone_number: "+1-555-0654",
-      created_at: "2024-01-22T12:00:00Z",
-      updated_at: "2024-01-25T15:20:00Z",
-    },
-  ]);
+  const { data, isLoading, error, refetch } = useQuery({
+    queryKey: ["students"],
+    queryFn: () => api.student.getAll(),
+  });
 
   // Column Definitions: Defines the columns to be displayed.
-  const [colDefs] = useState<ColDef<Student>[]>([
+  const [colDefs] = useState<ColDef<StudentResponse>[]>([
     {
-      field: "uid",
+      field: "id",
       headerName: "Student ID",
       width: 120,
       pinned: "left",
@@ -148,14 +75,26 @@ export function DataGrid() {
     },
   ]);
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  if (!data) {
+    return <div>No data</div>;
+  }
+
   return (
     <div style={{ height: "80vh", width: "100%" }}>
-      <AgGridReact<Student>
+      <AgGridReact<StudentResponse>
         autoSizeStrategy={{
           type: "fitGridWidth",
           defaultMinWidth: 60,
         }}
-        rowData={rowData}
+        rowData={data ?? []}
         columnDefs={colDefs}
         defaultColDef={{
           sortable: true,

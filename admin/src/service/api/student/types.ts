@@ -1,5 +1,6 @@
 export type StudentResponse = {
     id: string;
+    photo_url: string;
     first_name: string;
     last_name: string;
     middle_name?: string;
