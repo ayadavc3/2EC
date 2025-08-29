@@ -17,7 +17,7 @@ import { ActionMenu } from "./ActionMenu";
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 export function DataGrid() {
-  const { data, isLoading, error, refetch } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["students"],
     queryFn: () => api.student.getAll(),
   });

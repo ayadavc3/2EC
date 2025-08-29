@@ -29,6 +29,7 @@ export function ActionMenu(params: CustomCellRendererProps) {
       await deleteStudent(id);
       toast.success("Student deleted successfully");
     } catch (error) {
+      console.error(error);
       toast.error("Failed to delete student");
     }
   };
