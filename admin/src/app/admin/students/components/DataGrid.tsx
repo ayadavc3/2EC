@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 
-import { useQuery } from "@tanstack/react-query";
 import type { ColDef } from "ag-grid-community";
 import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
-import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
+import { AgGridReact } from "ag-grid-react";
 
 import { AvatarCell } from "@/components/CellRenderer/AvatarCell";
-import { api, StudentResponse } from "@/service/api";
+import { useStudents } from "@/hooks/useStudents";
+import { StudentResponse } from "@/service/api";
 import { GridDateFormatter } from "@/utils/formatter/grid-date";
 
 import { ActionMenu } from "./ActionMenu";
@@ -17,23 +17,22 @@ import { ActionMenu } from "./ActionMenu";
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 export function DataGrid() {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["students"],
-    queryFn: () => api.student.getAll(),
-  });
+  const gridRef = useRef<AgGridReact<StudentResponse>>(null);
+  const { data, isLoading, error } = useStudents();
 
   // Column Definitions: Defines the columns to be displayed.
   const [colDefs] = useState<ColDef<StudentResponse>[]>([
     {
       field: "id",
       headerName: "Student ID",
-      width: 120,
+      flex: 1,
+      minWidth: 120,
       pinned: "left",
     },
     {
       field: "photo_url",
       headerName: "Photo",
-      width: 60,
+      width: 80,
       filter: false,
       sortable: false,
       cellRenderer: AvatarCell,
@@ -41,7 +40,8 @@ export function DataGrid() {
     {
       colId: "display_name",
       headerName: "Display Name",
-      width: 140,
+      flex: 2,
+      minWidth: 140,
       valueGetter: (params) => {
         return `${params?.data?.first_name} ${params?.data?.last_name}`;
       },
@@ -49,24 +49,27 @@ export function DataGrid() {
     {
       field: "phone_number",
       headerName: "Phone Number",
-      width: 160,
+      flex: 1.5,
+      minWidth: 160,
     },
     {
       field: "created_at",
       headerName: "Created At",
-      width: 180,
+      flex: 1.5,
+      minWidth: 180,
       valueFormatter: GridDateFormatter,
     },
     {
       field: "updated_at",
       headerName: "Updated At",
-      width: 180,
+      flex: 1.5,
+      minWidth: 180,
       valueFormatter: GridDateFormatter,
     },
     {
       colId: "actions",
       headerName: "",
-      width: 60,
+      width: 80,
       pinned: "right",
       filter: false,
       sortable: false,
@@ -74,6 +77,36 @@ export function DataGrid() {
       cellRenderer: ActionMenu,
     },
   ]);
+
+  // Callback to handle grid ready event
+  const onGridReady = useCallback(() => {
+    if (gridRef.current && gridRef.current.api) {
+      // Size columns to fit the available width
+      gridRef.current.api.sizeColumnsToFit();
+    }
+  }, []);
+
+  // Callback to handle data changes
+  const onRowDataUpdated = useCallback(() => {
+    if (gridRef.current && gridRef.current.api) {
+      // Reapply sizing to fit when data updates
+      setTimeout(() => {
+        gridRef.current?.api?.sizeColumnsToFit();
+      }, 100);
+    }
+  }, []);
+
+  // Effect to handle column sizing when data changes
+  useEffect(() => {
+    if (data && gridRef.current && gridRef.current.api) {
+      // Small delay to ensure DOM is updated
+      const timeoutId = setTimeout(() => {
+        gridRef.current?.api?.sizeColumnsToFit();
+      }, 150);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [data]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -90,6 +123,7 @@ export function DataGrid() {
   return (
     <div style={{ height: "80vh", width: "100%" }}>
       <AgGridReact<StudentResponse>
+        ref={gridRef}
         autoSizeStrategy={{
           type: "fitGridWidth",
           defaultMinWidth: 60,
@@ -103,6 +137,10 @@ export function DataGrid() {
         }}
         pagination={true}
         paginationPageSize={20}
+        onGridReady={onGridReady}
+        onRowDataUpdated={onRowDataUpdated}
+        maintainColumnOrder={true}
+        suppressColumnMoveAnimation={true}
       />
     </div>
   );

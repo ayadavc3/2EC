@@ -1,7 +1,14 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { api } from '@/service/api';
 import { StudentCreateArgs, StudentUpdateArgs } from '@/service/api/student/types';
+
+export function useStudents() {
+    return useQuery({
+        queryKey: ['students'],
+        queryFn: () => api.student.getAll(),
+    });
+}
 
 // Hook to create a new student
 export function useCreateStudent() {
@@ -32,7 +39,6 @@ export function useDeleteStudent() {
 
     return useMutation({
         mutationFn: async (id: string) => {
-
             return await api.student.delete(id);;
         },
         onSuccess: () => {
