@@ -1,3 +1,5 @@
+import { Construction, Download } from "lucide-react";
+
 import { AppSidebar } from "@/components/app-sidebar";
 import {
   Breadcrumb,
@@ -7,6 +9,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
@@ -42,8 +45,55 @@ export default function ExportPage() {
           </div>
         </header>
         <Separator />
-        <div className="flex flex-1 flex-col gap-4 p-4">
-          <div className="grid gap-4 md:grid-cols-3"></div>
+        <div className="flex flex-1 flex-col gap-4 p-8">
+          <div className="flex items-center justify-center">
+            <Card className="w-full">
+              <CardContent className="flex flex-col items-center justify-center p-8 text-center">
+                <div className="relative mb-6">
+                  <Download className="h-16 w-16 text-muted-foreground mb-2" />
+                  <Construction className="h-8 w-8 text-orange-500 absolute -top-1 -right-1" />
+                </div>
+
+                <h3 className="text-xl font-semibold mb-2">Export Students</h3>
+
+                <p className="text-muted-foreground mb-6 text-sm">
+                  This feature is currently under development. Soon you'll be
+                  able to export student data in various formats for reporting
+                  and analysis.
+                </p>
+
+                <div className="w-full space-y-2 text-xs text-muted-foreground">
+                  <div className="flex items-center justify-between py-1 border-b border-dashed">
+                    <span>• CSV Export</span>
+                    <span className="text-orange-500">Coming Soon</span>
+                  </div>
+                  <div className="flex items-center justify-between py-1 border-b border-dashed">
+                    <span>• Excel Export</span>
+                    <span className="text-orange-500">Coming Soon</span>
+                  </div>
+                  <div className="flex items-center justify-between py-1 border-b border-dashed">
+                    <span>• PDF Reports</span>
+                    <span className="text-orange-500">Coming Soon</span>
+                  </div>
+                  <div className="flex items-center justify-between py-1 border-b border-dashed">
+                    <span>• Custom Filters</span>
+                    <span className="text-orange-500">Coming Soon</span>
+                  </div>
+                  <div className="flex items-center justify-between py-1">
+                    <span>• Scheduled Exports</span>
+                    <span className="text-orange-500">Coming Soon</span>
+                  </div>
+                </div>
+
+                <div className="mt-6 p-3 bg-blue-50 dark:bg-blue-950/20 rounded-lg w-full">
+                  <p className="text-xs text-blue-600 dark:text-blue-400">
+                    💡 <strong>Tip:</strong> Currently, you can view and manage
+                    student data from the main students page with the data grid.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </SidebarInset>
     </SidebarProvider>
