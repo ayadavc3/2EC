@@ -68,7 +68,8 @@ const data = {
       icon: BabyIcon,
       items: [
         { title: "Students", url: "/admin/students" },
-        { title: "Invites", url: "/admin/students/invites" },
+        { title: "Import CSV", url: "/admin/students/import" },
+        { title: "Export CSV", url: "/admin/students/export" },
       ],
     },
     {
@@ -77,7 +78,8 @@ const data = {
       icon: UsersIcon,
       items: [
         { title: "Guardians", url: "/admin/guardians" },
-        { title: "Invites", url: "/admin/guardians/invites" },
+        { title: "Import CSV", url: "/admin/guardians/import" },
+        { title: "Export CSV", url: "/admin/guardians/export" },
       ],
     },
     {
