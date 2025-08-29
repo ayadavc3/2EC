@@ -22,6 +22,10 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o admin-api ./cmd/a
 # Final stage
 FROM alpine:latest
 
+# Install required packages
+RUN apk update && apk add --no-cache curl gnupg
+RUN (curl -Ls https://cli.doppler.com/install.sh || wget -qO- https://cli.doppler.com/install.sh) | sh
+
 # Create non-root user
 RUN addgroup -g 1001 -S appgroup && \
     adduser -u 1001 -S appuser -G appgroup
