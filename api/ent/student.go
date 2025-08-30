@@ -31,8 +31,16 @@ type Student struct {
 	Email string `json:"email,omitempty"`
 	// Deleted holds the value of the "deleted" field.
 	Deleted bool `json:"deleted,omitempty"`
+	// Disabled holds the value of the "disabled" field.
+	Disabled bool `json:"disabled,omitempty"`
 	// DeletedAt holds the value of the "deleted_at" field.
 	DeletedAt time.Time `json:"deleted_at,omitempty"`
+	// DisabledAt holds the value of the "disabled_at" field.
+	DisabledAt time.Time `json:"disabled_at,omitempty"`
+	// LastSignedInAt holds the value of the "last_signed_in_at" field.
+	LastSignedInAt time.Time `json:"last_signed_in_at,omitempty"`
+	// PhoneConfirmedAt holds the value of the "phone_confirmed_at" field.
+	PhoneConfirmedAt time.Time `json:"phone_confirmed_at,omitempty"`
 	// CreatedAt holds the value of the "created_at" field.
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	// UpdatedAt holds the value of the "updated_at" field.
@@ -66,11 +74,11 @@ func (*Student) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case student.FieldDeleted:
+		case student.FieldDeleted, student.FieldDisabled:
 			values[i] = new(sql.NullBool)
 		case student.FieldID, student.FieldPhotoURL, student.FieldFirstName, student.FieldLastName, student.FieldMiddleName, student.FieldPhoneNumber, student.FieldEmail:
 			values[i] = new(sql.NullString)
-		case student.FieldDeletedAt, student.FieldCreatedAt, student.FieldUpdatedAt:
+		case student.FieldDeletedAt, student.FieldDisabledAt, student.FieldLastSignedInAt, student.FieldPhoneConfirmedAt, student.FieldCreatedAt, student.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -135,11 +143,35 @@ func (_m *Student) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.Deleted = value.Bool
 			}
+		case student.FieldDisabled:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field disabled", values[i])
+			} else if value.Valid {
+				_m.Disabled = value.Bool
+			}
 		case student.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
 			} else if value.Valid {
 				_m.DeletedAt = value.Time
+			}
+		case student.FieldDisabledAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field disabled_at", values[i])
+			} else if value.Valid {
+				_m.DisabledAt = value.Time
+			}
+		case student.FieldLastSignedInAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field last_signed_in_at", values[i])
+			} else if value.Valid {
+				_m.LastSignedInAt = value.Time
+			}
+		case student.FieldPhoneConfirmedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field phone_confirmed_at", values[i])
+			} else if value.Valid {
+				_m.PhoneConfirmedAt = value.Time
 			}
 		case student.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -215,8 +247,20 @@ func (_m *Student) String() string {
 	builder.WriteString("deleted=")
 	builder.WriteString(fmt.Sprintf("%v", _m.Deleted))
 	builder.WriteString(", ")
+	builder.WriteString("disabled=")
+	builder.WriteString(fmt.Sprintf("%v", _m.Disabled))
+	builder.WriteString(", ")
 	builder.WriteString("deleted_at=")
 	builder.WriteString(_m.DeletedAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("disabled_at=")
+	builder.WriteString(_m.DisabledAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("last_signed_in_at=")
+	builder.WriteString(_m.LastSignedInAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("phone_confirmed_at=")
+	builder.WriteString(_m.PhoneConfirmedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("created_at=")
 	builder.WriteString(_m.CreatedAt.Format(time.ANSIC))

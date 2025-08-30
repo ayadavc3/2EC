@@ -9,27 +9,32 @@ import (
 )
 
 // Role holds the schema definition for the Role entity.
-type Role struct {
+type Organization struct {
 	ent.Schema
 }
 
 // Fields of the Role.
-func (Role) Fields() []ent.Field {
+func (Organization) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("id").DefaultFunc(func() string {
 			return uuid.New().String()
 		}),
 		field.String("name").NotEmpty(),
-		field.String("slug").NotEmpty(),
 		field.String("description").Optional(),
-		field.String("organization_id").Optional(),
+		field.String("logo_url").Optional(),
+		field.String("email").Optional(),
+		field.String("website").Optional(),
+		field.String("phone_number").Optional(),
 
-		field.JSON("permissions", []string{}).
-			Default(func() []string {
-				return []string{"message.read", "message.create", "message.update", "message.delete"}
-			}),
+		field.String("address").Optional(),
+		field.String("city").Optional(),
+		field.String("state").Optional(),
+		field.String("zip_code").Optional(),
+		field.String("country").Optional(),
 
-		field.Bool("global").Default(false),
+		field.Enum("language").Default("en").Values("en", "es").Optional(),
+		field.String("timezone").Default("UTC").Optional(),
+
 		field.Bool("deleted").Default(false),
 		field.Bool("disabled").Default(false),
 

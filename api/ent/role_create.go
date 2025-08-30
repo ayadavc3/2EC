@@ -26,9 +26,23 @@ func (_c *RoleCreate) SetName(v string) *RoleCreate {
 	return _c
 }
 
+// SetSlug sets the "slug" field.
+func (_c *RoleCreate) SetSlug(v string) *RoleCreate {
+	_c.mutation.SetSlug(v)
+	return _c
+}
+
 // SetDescription sets the "description" field.
 func (_c *RoleCreate) SetDescription(v string) *RoleCreate {
 	_c.mutation.SetDescription(v)
+	return _c
+}
+
+// SetNillableDescription sets the "description" field if the given value is not nil.
+func (_c *RoleCreate) SetNillableDescription(v *string) *RoleCreate {
+	if v != nil {
+		_c.SetDescription(*v)
+	}
 	return _c
 }
 
@@ -38,16 +52,86 @@ func (_c *RoleCreate) SetOrganizationID(v string) *RoleCreate {
 	return _c
 }
 
+// SetNillableOrganizationID sets the "organization_id" field if the given value is not nil.
+func (_c *RoleCreate) SetNillableOrganizationID(v *string) *RoleCreate {
+	if v != nil {
+		_c.SetOrganizationID(*v)
+	}
+	return _c
+}
+
 // SetPermissions sets the "permissions" field.
-func (_c *RoleCreate) SetPermissions(v string) *RoleCreate {
+func (_c *RoleCreate) SetPermissions(v []string) *RoleCreate {
 	_c.mutation.SetPermissions(v)
 	return _c
 }
 
-// SetNillablePermissions sets the "permissions" field if the given value is not nil.
-func (_c *RoleCreate) SetNillablePermissions(v *string) *RoleCreate {
+// SetGlobal sets the "global" field.
+func (_c *RoleCreate) SetGlobal(v bool) *RoleCreate {
+	_c.mutation.SetGlobal(v)
+	return _c
+}
+
+// SetNillableGlobal sets the "global" field if the given value is not nil.
+func (_c *RoleCreate) SetNillableGlobal(v *bool) *RoleCreate {
 	if v != nil {
-		_c.SetPermissions(*v)
+		_c.SetGlobal(*v)
+	}
+	return _c
+}
+
+// SetDeleted sets the "deleted" field.
+func (_c *RoleCreate) SetDeleted(v bool) *RoleCreate {
+	_c.mutation.SetDeleted(v)
+	return _c
+}
+
+// SetNillableDeleted sets the "deleted" field if the given value is not nil.
+func (_c *RoleCreate) SetNillableDeleted(v *bool) *RoleCreate {
+	if v != nil {
+		_c.SetDeleted(*v)
+	}
+	return _c
+}
+
+// SetDisabled sets the "disabled" field.
+func (_c *RoleCreate) SetDisabled(v bool) *RoleCreate {
+	_c.mutation.SetDisabled(v)
+	return _c
+}
+
+// SetNillableDisabled sets the "disabled" field if the given value is not nil.
+func (_c *RoleCreate) SetNillableDisabled(v *bool) *RoleCreate {
+	if v != nil {
+		_c.SetDisabled(*v)
+	}
+	return _c
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (_c *RoleCreate) SetDeletedAt(v time.Time) *RoleCreate {
+	_c.mutation.SetDeletedAt(v)
+	return _c
+}
+
+// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
+func (_c *RoleCreate) SetNillableDeletedAt(v *time.Time) *RoleCreate {
+	if v != nil {
+		_c.SetDeletedAt(*v)
+	}
+	return _c
+}
+
+// SetDisabledAt sets the "disabled_at" field.
+func (_c *RoleCreate) SetDisabledAt(v time.Time) *RoleCreate {
+	_c.mutation.SetDisabledAt(v)
+	return _c
+}
+
+// SetNillableDisabledAt sets the "disabled_at" field if the given value is not nil.
+func (_c *RoleCreate) SetNillableDisabledAt(v *time.Time) *RoleCreate {
+	if v != nil {
+		_c.SetDisabledAt(*v)
 	}
 	return _c
 }
@@ -130,8 +214,20 @@ func (_c *RoleCreate) ExecX(ctx context.Context) {
 // defaults sets the default values of the builder before save.
 func (_c *RoleCreate) defaults() {
 	if _, ok := _c.mutation.Permissions(); !ok {
-		v := role.DefaultPermissions
+		v := role.DefaultPermissions()
 		_c.mutation.SetPermissions(v)
+	}
+	if _, ok := _c.mutation.Global(); !ok {
+		v := role.DefaultGlobal
+		_c.mutation.SetGlobal(v)
+	}
+	if _, ok := _c.mutation.Deleted(); !ok {
+		v := role.DefaultDeleted
+		_c.mutation.SetDeleted(v)
+	}
+	if _, ok := _c.mutation.Disabled(); !ok {
+		v := role.DefaultDisabled
+		_c.mutation.SetDisabled(v)
 	}
 	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := role.DefaultCreatedAt()
@@ -157,29 +253,25 @@ func (_c *RoleCreate) check() error {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Role.name": %w`, err)}
 		}
 	}
-	if _, ok := _c.mutation.Description(); !ok {
-		return &ValidationError{Name: "description", err: errors.New(`ent: missing required field "Role.description"`)}
+	if _, ok := _c.mutation.Slug(); !ok {
+		return &ValidationError{Name: "slug", err: errors.New(`ent: missing required field "Role.slug"`)}
 	}
-	if v, ok := _c.mutation.Description(); ok {
-		if err := role.DescriptionValidator(v); err != nil {
-			return &ValidationError{Name: "description", err: fmt.Errorf(`ent: validator failed for field "Role.description": %w`, err)}
-		}
-	}
-	if _, ok := _c.mutation.OrganizationID(); !ok {
-		return &ValidationError{Name: "organization_id", err: errors.New(`ent: missing required field "Role.organization_id"`)}
-	}
-	if v, ok := _c.mutation.OrganizationID(); ok {
-		if err := role.OrganizationIDValidator(v); err != nil {
-			return &ValidationError{Name: "organization_id", err: fmt.Errorf(`ent: validator failed for field "Role.organization_id": %w`, err)}
+	if v, ok := _c.mutation.Slug(); ok {
+		if err := role.SlugValidator(v); err != nil {
+			return &ValidationError{Name: "slug", err: fmt.Errorf(`ent: validator failed for field "Role.slug": %w`, err)}
 		}
 	}
 	if _, ok := _c.mutation.Permissions(); !ok {
 		return &ValidationError{Name: "permissions", err: errors.New(`ent: missing required field "Role.permissions"`)}
 	}
-	if v, ok := _c.mutation.Permissions(); ok {
-		if err := role.PermissionsValidator(v); err != nil {
-			return &ValidationError{Name: "permissions", err: fmt.Errorf(`ent: validator failed for field "Role.permissions": %w`, err)}
-		}
+	if _, ok := _c.mutation.Global(); !ok {
+		return &ValidationError{Name: "global", err: errors.New(`ent: missing required field "Role.global"`)}
+	}
+	if _, ok := _c.mutation.Deleted(); !ok {
+		return &ValidationError{Name: "deleted", err: errors.New(`ent: missing required field "Role.deleted"`)}
+	}
+	if _, ok := _c.mutation.Disabled(); !ok {
+		return &ValidationError{Name: "disabled", err: errors.New(`ent: missing required field "Role.disabled"`)}
 	}
 	if _, ok := _c.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "Role.created_at"`)}
@@ -226,6 +318,10 @@ func (_c *RoleCreate) createSpec() (*Role, *sqlgraph.CreateSpec) {
 		_spec.SetField(role.FieldName, field.TypeString, value)
 		_node.Name = value
 	}
+	if value, ok := _c.mutation.Slug(); ok {
+		_spec.SetField(role.FieldSlug, field.TypeString, value)
+		_node.Slug = value
+	}
 	if value, ok := _c.mutation.Description(); ok {
 		_spec.SetField(role.FieldDescription, field.TypeString, value)
 		_node.Description = value
@@ -235,8 +331,28 @@ func (_c *RoleCreate) createSpec() (*Role, *sqlgraph.CreateSpec) {
 		_node.OrganizationID = value
 	}
 	if value, ok := _c.mutation.Permissions(); ok {
-		_spec.SetField(role.FieldPermissions, field.TypeString, value)
+		_spec.SetField(role.FieldPermissions, field.TypeJSON, value)
 		_node.Permissions = value
+	}
+	if value, ok := _c.mutation.Global(); ok {
+		_spec.SetField(role.FieldGlobal, field.TypeBool, value)
+		_node.Global = value
+	}
+	if value, ok := _c.mutation.Deleted(); ok {
+		_spec.SetField(role.FieldDeleted, field.TypeBool, value)
+		_node.Deleted = value
+	}
+	if value, ok := _c.mutation.Disabled(); ok {
+		_spec.SetField(role.FieldDisabled, field.TypeBool, value)
+		_node.Disabled = value
+	}
+	if value, ok := _c.mutation.DeletedAt(); ok {
+		_spec.SetField(role.FieldDeletedAt, field.TypeTime, value)
+		_node.DeletedAt = value
+	}
+	if value, ok := _c.mutation.DisabledAt(); ok {
+		_spec.SetField(role.FieldDisabledAt, field.TypeTime, value)
+		_node.DisabledAt = value
 	}
 	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(role.FieldCreatedAt, field.TypeTime, value)

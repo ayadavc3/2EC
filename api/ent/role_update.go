@@ -12,6 +12,7 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
+	"entgo.io/ent/dialect/sql/sqljson"
 	"entgo.io/ent/schema/field"
 )
 
@@ -42,6 +43,20 @@ func (_u *RoleUpdate) SetNillableName(v *string) *RoleUpdate {
 	return _u
 }
 
+// SetSlug sets the "slug" field.
+func (_u *RoleUpdate) SetSlug(v string) *RoleUpdate {
+	_u.mutation.SetSlug(v)
+	return _u
+}
+
+// SetNillableSlug sets the "slug" field if the given value is not nil.
+func (_u *RoleUpdate) SetNillableSlug(v *string) *RoleUpdate {
+	if v != nil {
+		_u.SetSlug(*v)
+	}
+	return _u
+}
+
 // SetDescription sets the "description" field.
 func (_u *RoleUpdate) SetDescription(v string) *RoleUpdate {
 	_u.mutation.SetDescription(v)
@@ -53,6 +68,12 @@ func (_u *RoleUpdate) SetNillableDescription(v *string) *RoleUpdate {
 	if v != nil {
 		_u.SetDescription(*v)
 	}
+	return _u
+}
+
+// ClearDescription clears the value of the "description" field.
+func (_u *RoleUpdate) ClearDescription() *RoleUpdate {
+	_u.mutation.ClearDescription()
 	return _u
 }
 
@@ -70,17 +91,103 @@ func (_u *RoleUpdate) SetNillableOrganizationID(v *string) *RoleUpdate {
 	return _u
 }
 
+// ClearOrganizationID clears the value of the "organization_id" field.
+func (_u *RoleUpdate) ClearOrganizationID() *RoleUpdate {
+	_u.mutation.ClearOrganizationID()
+	return _u
+}
+
 // SetPermissions sets the "permissions" field.
-func (_u *RoleUpdate) SetPermissions(v string) *RoleUpdate {
+func (_u *RoleUpdate) SetPermissions(v []string) *RoleUpdate {
 	_u.mutation.SetPermissions(v)
 	return _u
 }
 
-// SetNillablePermissions sets the "permissions" field if the given value is not nil.
-func (_u *RoleUpdate) SetNillablePermissions(v *string) *RoleUpdate {
+// AppendPermissions appends value to the "permissions" field.
+func (_u *RoleUpdate) AppendPermissions(v []string) *RoleUpdate {
+	_u.mutation.AppendPermissions(v)
+	return _u
+}
+
+// SetGlobal sets the "global" field.
+func (_u *RoleUpdate) SetGlobal(v bool) *RoleUpdate {
+	_u.mutation.SetGlobal(v)
+	return _u
+}
+
+// SetNillableGlobal sets the "global" field if the given value is not nil.
+func (_u *RoleUpdate) SetNillableGlobal(v *bool) *RoleUpdate {
 	if v != nil {
-		_u.SetPermissions(*v)
+		_u.SetGlobal(*v)
 	}
+	return _u
+}
+
+// SetDeleted sets the "deleted" field.
+func (_u *RoleUpdate) SetDeleted(v bool) *RoleUpdate {
+	_u.mutation.SetDeleted(v)
+	return _u
+}
+
+// SetNillableDeleted sets the "deleted" field if the given value is not nil.
+func (_u *RoleUpdate) SetNillableDeleted(v *bool) *RoleUpdate {
+	if v != nil {
+		_u.SetDeleted(*v)
+	}
+	return _u
+}
+
+// SetDisabled sets the "disabled" field.
+func (_u *RoleUpdate) SetDisabled(v bool) *RoleUpdate {
+	_u.mutation.SetDisabled(v)
+	return _u
+}
+
+// SetNillableDisabled sets the "disabled" field if the given value is not nil.
+func (_u *RoleUpdate) SetNillableDisabled(v *bool) *RoleUpdate {
+	if v != nil {
+		_u.SetDisabled(*v)
+	}
+	return _u
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (_u *RoleUpdate) SetDeletedAt(v time.Time) *RoleUpdate {
+	_u.mutation.SetDeletedAt(v)
+	return _u
+}
+
+// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
+func (_u *RoleUpdate) SetNillableDeletedAt(v *time.Time) *RoleUpdate {
+	if v != nil {
+		_u.SetDeletedAt(*v)
+	}
+	return _u
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (_u *RoleUpdate) ClearDeletedAt() *RoleUpdate {
+	_u.mutation.ClearDeletedAt()
+	return _u
+}
+
+// SetDisabledAt sets the "disabled_at" field.
+func (_u *RoleUpdate) SetDisabledAt(v time.Time) *RoleUpdate {
+	_u.mutation.SetDisabledAt(v)
+	return _u
+}
+
+// SetNillableDisabledAt sets the "disabled_at" field if the given value is not nil.
+func (_u *RoleUpdate) SetNillableDisabledAt(v *time.Time) *RoleUpdate {
+	if v != nil {
+		_u.SetDisabledAt(*v)
+	}
+	return _u
+}
+
+// ClearDisabledAt clears the value of the "disabled_at" field.
+func (_u *RoleUpdate) ClearDisabledAt() *RoleUpdate {
+	_u.mutation.ClearDisabledAt()
 	return _u
 }
 
@@ -152,19 +259,9 @@ func (_u *RoleUpdate) check() error {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Role.name": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Description(); ok {
-		if err := role.DescriptionValidator(v); err != nil {
-			return &ValidationError{Name: "description", err: fmt.Errorf(`ent: validator failed for field "Role.description": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.OrganizationID(); ok {
-		if err := role.OrganizationIDValidator(v); err != nil {
-			return &ValidationError{Name: "organization_id", err: fmt.Errorf(`ent: validator failed for field "Role.organization_id": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Permissions(); ok {
-		if err := role.PermissionsValidator(v); err != nil {
-			return &ValidationError{Name: "permissions", err: fmt.Errorf(`ent: validator failed for field "Role.permissions": %w`, err)}
+	if v, ok := _u.mutation.Slug(); ok {
+		if err := role.SlugValidator(v); err != nil {
+			return &ValidationError{Name: "slug", err: fmt.Errorf(`ent: validator failed for field "Role.slug": %w`, err)}
 		}
 	}
 	return nil
@@ -185,14 +282,49 @@ func (_u *RoleUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(role.FieldName, field.TypeString, value)
 	}
+	if value, ok := _u.mutation.Slug(); ok {
+		_spec.SetField(role.FieldSlug, field.TypeString, value)
+	}
 	if value, ok := _u.mutation.Description(); ok {
 		_spec.SetField(role.FieldDescription, field.TypeString, value)
+	}
+	if _u.mutation.DescriptionCleared() {
+		_spec.ClearField(role.FieldDescription, field.TypeString)
 	}
 	if value, ok := _u.mutation.OrganizationID(); ok {
 		_spec.SetField(role.FieldOrganizationID, field.TypeString, value)
 	}
+	if _u.mutation.OrganizationIDCleared() {
+		_spec.ClearField(role.FieldOrganizationID, field.TypeString)
+	}
 	if value, ok := _u.mutation.Permissions(); ok {
-		_spec.SetField(role.FieldPermissions, field.TypeString, value)
+		_spec.SetField(role.FieldPermissions, field.TypeJSON, value)
+	}
+	if value, ok := _u.mutation.AppendedPermissions(); ok {
+		_spec.AddModifier(func(u *sql.UpdateBuilder) {
+			sqljson.Append(u, role.FieldPermissions, value)
+		})
+	}
+	if value, ok := _u.mutation.Global(); ok {
+		_spec.SetField(role.FieldGlobal, field.TypeBool, value)
+	}
+	if value, ok := _u.mutation.Deleted(); ok {
+		_spec.SetField(role.FieldDeleted, field.TypeBool, value)
+	}
+	if value, ok := _u.mutation.Disabled(); ok {
+		_spec.SetField(role.FieldDisabled, field.TypeBool, value)
+	}
+	if value, ok := _u.mutation.DeletedAt(); ok {
+		_spec.SetField(role.FieldDeletedAt, field.TypeTime, value)
+	}
+	if _u.mutation.DeletedAtCleared() {
+		_spec.ClearField(role.FieldDeletedAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.DisabledAt(); ok {
+		_spec.SetField(role.FieldDisabledAt, field.TypeTime, value)
+	}
+	if _u.mutation.DisabledAtCleared() {
+		_spec.ClearField(role.FieldDisabledAt, field.TypeTime)
 	}
 	if value, ok := _u.mutation.CreatedAt(); ok {
 		_spec.SetField(role.FieldCreatedAt, field.TypeTime, value)
@@ -234,6 +366,20 @@ func (_u *RoleUpdateOne) SetNillableName(v *string) *RoleUpdateOne {
 	return _u
 }
 
+// SetSlug sets the "slug" field.
+func (_u *RoleUpdateOne) SetSlug(v string) *RoleUpdateOne {
+	_u.mutation.SetSlug(v)
+	return _u
+}
+
+// SetNillableSlug sets the "slug" field if the given value is not nil.
+func (_u *RoleUpdateOne) SetNillableSlug(v *string) *RoleUpdateOne {
+	if v != nil {
+		_u.SetSlug(*v)
+	}
+	return _u
+}
+
 // SetDescription sets the "description" field.
 func (_u *RoleUpdateOne) SetDescription(v string) *RoleUpdateOne {
 	_u.mutation.SetDescription(v)
@@ -245,6 +391,12 @@ func (_u *RoleUpdateOne) SetNillableDescription(v *string) *RoleUpdateOne {
 	if v != nil {
 		_u.SetDescription(*v)
 	}
+	return _u
+}
+
+// ClearDescription clears the value of the "description" field.
+func (_u *RoleUpdateOne) ClearDescription() *RoleUpdateOne {
+	_u.mutation.ClearDescription()
 	return _u
 }
 
@@ -262,17 +414,103 @@ func (_u *RoleUpdateOne) SetNillableOrganizationID(v *string) *RoleUpdateOne {
 	return _u
 }
 
+// ClearOrganizationID clears the value of the "organization_id" field.
+func (_u *RoleUpdateOne) ClearOrganizationID() *RoleUpdateOne {
+	_u.mutation.ClearOrganizationID()
+	return _u
+}
+
 // SetPermissions sets the "permissions" field.
-func (_u *RoleUpdateOne) SetPermissions(v string) *RoleUpdateOne {
+func (_u *RoleUpdateOne) SetPermissions(v []string) *RoleUpdateOne {
 	_u.mutation.SetPermissions(v)
 	return _u
 }
 
-// SetNillablePermissions sets the "permissions" field if the given value is not nil.
-func (_u *RoleUpdateOne) SetNillablePermissions(v *string) *RoleUpdateOne {
+// AppendPermissions appends value to the "permissions" field.
+func (_u *RoleUpdateOne) AppendPermissions(v []string) *RoleUpdateOne {
+	_u.mutation.AppendPermissions(v)
+	return _u
+}
+
+// SetGlobal sets the "global" field.
+func (_u *RoleUpdateOne) SetGlobal(v bool) *RoleUpdateOne {
+	_u.mutation.SetGlobal(v)
+	return _u
+}
+
+// SetNillableGlobal sets the "global" field if the given value is not nil.
+func (_u *RoleUpdateOne) SetNillableGlobal(v *bool) *RoleUpdateOne {
 	if v != nil {
-		_u.SetPermissions(*v)
+		_u.SetGlobal(*v)
 	}
+	return _u
+}
+
+// SetDeleted sets the "deleted" field.
+func (_u *RoleUpdateOne) SetDeleted(v bool) *RoleUpdateOne {
+	_u.mutation.SetDeleted(v)
+	return _u
+}
+
+// SetNillableDeleted sets the "deleted" field if the given value is not nil.
+func (_u *RoleUpdateOne) SetNillableDeleted(v *bool) *RoleUpdateOne {
+	if v != nil {
+		_u.SetDeleted(*v)
+	}
+	return _u
+}
+
+// SetDisabled sets the "disabled" field.
+func (_u *RoleUpdateOne) SetDisabled(v bool) *RoleUpdateOne {
+	_u.mutation.SetDisabled(v)
+	return _u
+}
+
+// SetNillableDisabled sets the "disabled" field if the given value is not nil.
+func (_u *RoleUpdateOne) SetNillableDisabled(v *bool) *RoleUpdateOne {
+	if v != nil {
+		_u.SetDisabled(*v)
+	}
+	return _u
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (_u *RoleUpdateOne) SetDeletedAt(v time.Time) *RoleUpdateOne {
+	_u.mutation.SetDeletedAt(v)
+	return _u
+}
+
+// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
+func (_u *RoleUpdateOne) SetNillableDeletedAt(v *time.Time) *RoleUpdateOne {
+	if v != nil {
+		_u.SetDeletedAt(*v)
+	}
+	return _u
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (_u *RoleUpdateOne) ClearDeletedAt() *RoleUpdateOne {
+	_u.mutation.ClearDeletedAt()
+	return _u
+}
+
+// SetDisabledAt sets the "disabled_at" field.
+func (_u *RoleUpdateOne) SetDisabledAt(v time.Time) *RoleUpdateOne {
+	_u.mutation.SetDisabledAt(v)
+	return _u
+}
+
+// SetNillableDisabledAt sets the "disabled_at" field if the given value is not nil.
+func (_u *RoleUpdateOne) SetNillableDisabledAt(v *time.Time) *RoleUpdateOne {
+	if v != nil {
+		_u.SetDisabledAt(*v)
+	}
+	return _u
+}
+
+// ClearDisabledAt clears the value of the "disabled_at" field.
+func (_u *RoleUpdateOne) ClearDisabledAt() *RoleUpdateOne {
+	_u.mutation.ClearDisabledAt()
 	return _u
 }
 
@@ -357,19 +595,9 @@ func (_u *RoleUpdateOne) check() error {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Role.name": %w`, err)}
 		}
 	}
-	if v, ok := _u.mutation.Description(); ok {
-		if err := role.DescriptionValidator(v); err != nil {
-			return &ValidationError{Name: "description", err: fmt.Errorf(`ent: validator failed for field "Role.description": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.OrganizationID(); ok {
-		if err := role.OrganizationIDValidator(v); err != nil {
-			return &ValidationError{Name: "organization_id", err: fmt.Errorf(`ent: validator failed for field "Role.organization_id": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.Permissions(); ok {
-		if err := role.PermissionsValidator(v); err != nil {
-			return &ValidationError{Name: "permissions", err: fmt.Errorf(`ent: validator failed for field "Role.permissions": %w`, err)}
+	if v, ok := _u.mutation.Slug(); ok {
+		if err := role.SlugValidator(v); err != nil {
+			return &ValidationError{Name: "slug", err: fmt.Errorf(`ent: validator failed for field "Role.slug": %w`, err)}
 		}
 	}
 	return nil
@@ -407,14 +635,49 @@ func (_u *RoleUpdateOne) sqlSave(ctx context.Context) (_node *Role, err error) {
 	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(role.FieldName, field.TypeString, value)
 	}
+	if value, ok := _u.mutation.Slug(); ok {
+		_spec.SetField(role.FieldSlug, field.TypeString, value)
+	}
 	if value, ok := _u.mutation.Description(); ok {
 		_spec.SetField(role.FieldDescription, field.TypeString, value)
+	}
+	if _u.mutation.DescriptionCleared() {
+		_spec.ClearField(role.FieldDescription, field.TypeString)
 	}
 	if value, ok := _u.mutation.OrganizationID(); ok {
 		_spec.SetField(role.FieldOrganizationID, field.TypeString, value)
 	}
+	if _u.mutation.OrganizationIDCleared() {
+		_spec.ClearField(role.FieldOrganizationID, field.TypeString)
+	}
 	if value, ok := _u.mutation.Permissions(); ok {
-		_spec.SetField(role.FieldPermissions, field.TypeString, value)
+		_spec.SetField(role.FieldPermissions, field.TypeJSON, value)
+	}
+	if value, ok := _u.mutation.AppendedPermissions(); ok {
+		_spec.AddModifier(func(u *sql.UpdateBuilder) {
+			sqljson.Append(u, role.FieldPermissions, value)
+		})
+	}
+	if value, ok := _u.mutation.Global(); ok {
+		_spec.SetField(role.FieldGlobal, field.TypeBool, value)
+	}
+	if value, ok := _u.mutation.Deleted(); ok {
+		_spec.SetField(role.FieldDeleted, field.TypeBool, value)
+	}
+	if value, ok := _u.mutation.Disabled(); ok {
+		_spec.SetField(role.FieldDisabled, field.TypeBool, value)
+	}
+	if value, ok := _u.mutation.DeletedAt(); ok {
+		_spec.SetField(role.FieldDeletedAt, field.TypeTime, value)
+	}
+	if _u.mutation.DeletedAtCleared() {
+		_spec.ClearField(role.FieldDeletedAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.DisabledAt(); ok {
+		_spec.SetField(role.FieldDisabledAt, field.TypeTime, value)
+	}
+	if _u.mutation.DisabledAtCleared() {
+		_spec.ClearField(role.FieldDisabledAt, field.TypeTime)
 	}
 	if value, ok := _u.mutation.CreatedAt(); ok {
 		_spec.SetField(role.FieldCreatedAt, field.TypeTime, value)

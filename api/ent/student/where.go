@@ -100,9 +100,29 @@ func Deleted(v bool) predicate.Student {
 	return predicate.Student(sql.FieldEQ(FieldDeleted, v))
 }
 
+// Disabled applies equality check predicate on the "disabled" field. It's identical to DisabledEQ.
+func Disabled(v bool) predicate.Student {
+	return predicate.Student(sql.FieldEQ(FieldDisabled, v))
+}
+
 // DeletedAt applies equality check predicate on the "deleted_at" field. It's identical to DeletedAtEQ.
 func DeletedAt(v time.Time) predicate.Student {
 	return predicate.Student(sql.FieldEQ(FieldDeletedAt, v))
+}
+
+// DisabledAt applies equality check predicate on the "disabled_at" field. It's identical to DisabledAtEQ.
+func DisabledAt(v time.Time) predicate.Student {
+	return predicate.Student(sql.FieldEQ(FieldDisabledAt, v))
+}
+
+// LastSignedInAt applies equality check predicate on the "last_signed_in_at" field. It's identical to LastSignedInAtEQ.
+func LastSignedInAt(v time.Time) predicate.Student {
+	return predicate.Student(sql.FieldEQ(FieldLastSignedInAt, v))
+}
+
+// PhoneConfirmedAt applies equality check predicate on the "phone_confirmed_at" field. It's identical to PhoneConfirmedAtEQ.
+func PhoneConfirmedAt(v time.Time) predicate.Student {
+	return predicate.Student(sql.FieldEQ(FieldPhoneConfirmedAt, v))
 }
 
 // CreatedAt applies equality check predicate on the "created_at" field. It's identical to CreatedAtEQ.
@@ -555,6 +575,16 @@ func DeletedNEQ(v bool) predicate.Student {
 	return predicate.Student(sql.FieldNEQ(FieldDeleted, v))
 }
 
+// DisabledEQ applies the EQ predicate on the "disabled" field.
+func DisabledEQ(v bool) predicate.Student {
+	return predicate.Student(sql.FieldEQ(FieldDisabled, v))
+}
+
+// DisabledNEQ applies the NEQ predicate on the "disabled" field.
+func DisabledNEQ(v bool) predicate.Student {
+	return predicate.Student(sql.FieldNEQ(FieldDisabled, v))
+}
+
 // DeletedAtEQ applies the EQ predicate on the "deleted_at" field.
 func DeletedAtEQ(v time.Time) predicate.Student {
 	return predicate.Student(sql.FieldEQ(FieldDeletedAt, v))
@@ -603,6 +633,156 @@ func DeletedAtIsNil() predicate.Student {
 // DeletedAtNotNil applies the NotNil predicate on the "deleted_at" field.
 func DeletedAtNotNil() predicate.Student {
 	return predicate.Student(sql.FieldNotNull(FieldDeletedAt))
+}
+
+// DisabledAtEQ applies the EQ predicate on the "disabled_at" field.
+func DisabledAtEQ(v time.Time) predicate.Student {
+	return predicate.Student(sql.FieldEQ(FieldDisabledAt, v))
+}
+
+// DisabledAtNEQ applies the NEQ predicate on the "disabled_at" field.
+func DisabledAtNEQ(v time.Time) predicate.Student {
+	return predicate.Student(sql.FieldNEQ(FieldDisabledAt, v))
+}
+
+// DisabledAtIn applies the In predicate on the "disabled_at" field.
+func DisabledAtIn(vs ...time.Time) predicate.Student {
+	return predicate.Student(sql.FieldIn(FieldDisabledAt, vs...))
+}
+
+// DisabledAtNotIn applies the NotIn predicate on the "disabled_at" field.
+func DisabledAtNotIn(vs ...time.Time) predicate.Student {
+	return predicate.Student(sql.FieldNotIn(FieldDisabledAt, vs...))
+}
+
+// DisabledAtGT applies the GT predicate on the "disabled_at" field.
+func DisabledAtGT(v time.Time) predicate.Student {
+	return predicate.Student(sql.FieldGT(FieldDisabledAt, v))
+}
+
+// DisabledAtGTE applies the GTE predicate on the "disabled_at" field.
+func DisabledAtGTE(v time.Time) predicate.Student {
+	return predicate.Student(sql.FieldGTE(FieldDisabledAt, v))
+}
+
+// DisabledAtLT applies the LT predicate on the "disabled_at" field.
+func DisabledAtLT(v time.Time) predicate.Student {
+	return predicate.Student(sql.FieldLT(FieldDisabledAt, v))
+}
+
+// DisabledAtLTE applies the LTE predicate on the "disabled_at" field.
+func DisabledAtLTE(v time.Time) predicate.Student {
+	return predicate.Student(sql.FieldLTE(FieldDisabledAt, v))
+}
+
+// DisabledAtIsNil applies the IsNil predicate on the "disabled_at" field.
+func DisabledAtIsNil() predicate.Student {
+	return predicate.Student(sql.FieldIsNull(FieldDisabledAt))
+}
+
+// DisabledAtNotNil applies the NotNil predicate on the "disabled_at" field.
+func DisabledAtNotNil() predicate.Student {
+	return predicate.Student(sql.FieldNotNull(FieldDisabledAt))
+}
+
+// LastSignedInAtEQ applies the EQ predicate on the "last_signed_in_at" field.
+func LastSignedInAtEQ(v time.Time) predicate.Student {
+	return predicate.Student(sql.FieldEQ(FieldLastSignedInAt, v))
+}
+
+// LastSignedInAtNEQ applies the NEQ predicate on the "last_signed_in_at" field.
+func LastSignedInAtNEQ(v time.Time) predicate.Student {
+	return predicate.Student(sql.FieldNEQ(FieldLastSignedInAt, v))
+}
+
+// LastSignedInAtIn applies the In predicate on the "last_signed_in_at" field.
+func LastSignedInAtIn(vs ...time.Time) predicate.Student {
+	return predicate.Student(sql.FieldIn(FieldLastSignedInAt, vs...))
+}
+
+// LastSignedInAtNotIn applies the NotIn predicate on the "last_signed_in_at" field.
+func LastSignedInAtNotIn(vs ...time.Time) predicate.Student {
+	return predicate.Student(sql.FieldNotIn(FieldLastSignedInAt, vs...))
+}
+
+// LastSignedInAtGT applies the GT predicate on the "last_signed_in_at" field.
+func LastSignedInAtGT(v time.Time) predicate.Student {
+	return predicate.Student(sql.FieldGT(FieldLastSignedInAt, v))
+}
+
+// LastSignedInAtGTE applies the GTE predicate on the "last_signed_in_at" field.
+func LastSignedInAtGTE(v time.Time) predicate.Student {
+	return predicate.Student(sql.FieldGTE(FieldLastSignedInAt, v))
+}
+
+// LastSignedInAtLT applies the LT predicate on the "last_signed_in_at" field.
+func LastSignedInAtLT(v time.Time) predicate.Student {
+	return predicate.Student(sql.FieldLT(FieldLastSignedInAt, v))
+}
+
+// LastSignedInAtLTE applies the LTE predicate on the "last_signed_in_at" field.
+func LastSignedInAtLTE(v time.Time) predicate.Student {
+	return predicate.Student(sql.FieldLTE(FieldLastSignedInAt, v))
+}
+
+// LastSignedInAtIsNil applies the IsNil predicate on the "last_signed_in_at" field.
+func LastSignedInAtIsNil() predicate.Student {
+	return predicate.Student(sql.FieldIsNull(FieldLastSignedInAt))
+}
+
+// LastSignedInAtNotNil applies the NotNil predicate on the "last_signed_in_at" field.
+func LastSignedInAtNotNil() predicate.Student {
+	return predicate.Student(sql.FieldNotNull(FieldLastSignedInAt))
+}
+
+// PhoneConfirmedAtEQ applies the EQ predicate on the "phone_confirmed_at" field.
+func PhoneConfirmedAtEQ(v time.Time) predicate.Student {
+	return predicate.Student(sql.FieldEQ(FieldPhoneConfirmedAt, v))
+}
+
+// PhoneConfirmedAtNEQ applies the NEQ predicate on the "phone_confirmed_at" field.
+func PhoneConfirmedAtNEQ(v time.Time) predicate.Student {
+	return predicate.Student(sql.FieldNEQ(FieldPhoneConfirmedAt, v))
+}
+
+// PhoneConfirmedAtIn applies the In predicate on the "phone_confirmed_at" field.
+func PhoneConfirmedAtIn(vs ...time.Time) predicate.Student {
+	return predicate.Student(sql.FieldIn(FieldPhoneConfirmedAt, vs...))
+}
+
+// PhoneConfirmedAtNotIn applies the NotIn predicate on the "phone_confirmed_at" field.
+func PhoneConfirmedAtNotIn(vs ...time.Time) predicate.Student {
+	return predicate.Student(sql.FieldNotIn(FieldPhoneConfirmedAt, vs...))
+}
+
+// PhoneConfirmedAtGT applies the GT predicate on the "phone_confirmed_at" field.
+func PhoneConfirmedAtGT(v time.Time) predicate.Student {
+	return predicate.Student(sql.FieldGT(FieldPhoneConfirmedAt, v))
+}
+
+// PhoneConfirmedAtGTE applies the GTE predicate on the "phone_confirmed_at" field.
+func PhoneConfirmedAtGTE(v time.Time) predicate.Student {
+	return predicate.Student(sql.FieldGTE(FieldPhoneConfirmedAt, v))
+}
+
+// PhoneConfirmedAtLT applies the LT predicate on the "phone_confirmed_at" field.
+func PhoneConfirmedAtLT(v time.Time) predicate.Student {
+	return predicate.Student(sql.FieldLT(FieldPhoneConfirmedAt, v))
+}
+
+// PhoneConfirmedAtLTE applies the LTE predicate on the "phone_confirmed_at" field.
+func PhoneConfirmedAtLTE(v time.Time) predicate.Student {
+	return predicate.Student(sql.FieldLTE(FieldPhoneConfirmedAt, v))
+}
+
+// PhoneConfirmedAtIsNil applies the IsNil predicate on the "phone_confirmed_at" field.
+func PhoneConfirmedAtIsNil() predicate.Student {
+	return predicate.Student(sql.FieldIsNull(FieldPhoneConfirmedAt))
+}
+
+// PhoneConfirmedAtNotNil applies the NotNil predicate on the "phone_confirmed_at" field.
+func PhoneConfirmedAtNotNil() predicate.Student {
+	return predicate.Student(sql.FieldNotNull(FieldPhoneConfirmedAt))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.

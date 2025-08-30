@@ -19,7 +19,11 @@ var (
 		{Name: "phone_number", Type: field.TypeString, Unique: true},
 		{Name: "email", Type: field.TypeString, Nullable: true},
 		{Name: "deleted", Type: field.TypeBool, Default: false},
+		{Name: "disabled", Type: field.TypeBool, Default: false},
 		{Name: "deleted_at", Type: field.TypeTime, Nullable: true},
+		{Name: "disabled_at", Type: field.TypeTime, Nullable: true},
+		{Name: "last_signed_in_at", Type: field.TypeTime, Nullable: true},
+		{Name: "phone_confirmed_at", Type: field.TypeTime, Nullable: true},
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "updated_at", Type: field.TypeTime},
 	}
@@ -29,13 +33,48 @@ var (
 		Columns:    GuardiansColumns,
 		PrimaryKey: []*schema.Column{GuardiansColumns[0]},
 	}
+	// OrganizationsColumns holds the columns for the "organizations" table.
+	OrganizationsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeString},
+		{Name: "name", Type: field.TypeString},
+		{Name: "description", Type: field.TypeString, Nullable: true},
+		{Name: "logo_url", Type: field.TypeString, Nullable: true},
+		{Name: "email", Type: field.TypeString, Nullable: true},
+		{Name: "website", Type: field.TypeString, Nullable: true},
+		{Name: "phone_number", Type: field.TypeString, Nullable: true},
+		{Name: "address", Type: field.TypeString, Nullable: true},
+		{Name: "city", Type: field.TypeString, Nullable: true},
+		{Name: "state", Type: field.TypeString, Nullable: true},
+		{Name: "zip_code", Type: field.TypeString, Nullable: true},
+		{Name: "country", Type: field.TypeString, Nullable: true},
+		{Name: "language", Type: field.TypeEnum, Nullable: true, Enums: []string{"en", "es"}, Default: "en"},
+		{Name: "timezone", Type: field.TypeString, Nullable: true, Default: "UTC"},
+		{Name: "deleted", Type: field.TypeBool, Default: false},
+		{Name: "disabled", Type: field.TypeBool, Default: false},
+		{Name: "deleted_at", Type: field.TypeTime, Nullable: true},
+		{Name: "disabled_at", Type: field.TypeTime, Nullable: true},
+		{Name: "created_at", Type: field.TypeTime},
+		{Name: "updated_at", Type: field.TypeTime},
+	}
+	// OrganizationsTable holds the schema information for the "organizations" table.
+	OrganizationsTable = &schema.Table{
+		Name:       "organizations",
+		Columns:    OrganizationsColumns,
+		PrimaryKey: []*schema.Column{OrganizationsColumns[0]},
+	}
 	// RolesColumns holds the columns for the "roles" table.
 	RolesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeString},
 		{Name: "name", Type: field.TypeString},
-		{Name: "description", Type: field.TypeString},
-		{Name: "organization_id", Type: field.TypeString},
-		{Name: "permissions", Type: field.TypeString, Default: "message.create,message.read,message.update,message.delete"},
+		{Name: "slug", Type: field.TypeString},
+		{Name: "description", Type: field.TypeString, Nullable: true},
+		{Name: "organization_id", Type: field.TypeString, Nullable: true},
+		{Name: "permissions", Type: field.TypeJSON},
+		{Name: "global", Type: field.TypeBool, Default: false},
+		{Name: "deleted", Type: field.TypeBool, Default: false},
+		{Name: "disabled", Type: field.TypeBool, Default: false},
+		{Name: "deleted_at", Type: field.TypeTime, Nullable: true},
+		{Name: "disabled_at", Type: field.TypeTime, Nullable: true},
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "updated_at", Type: field.TypeTime},
 	}
@@ -55,7 +94,11 @@ var (
 		{Name: "phone_number", Type: field.TypeString, Unique: true},
 		{Name: "email", Type: field.TypeString, Nullable: true},
 		{Name: "deleted", Type: field.TypeBool, Default: false},
+		{Name: "disabled", Type: field.TypeBool, Default: false},
 		{Name: "deleted_at", Type: field.TypeTime, Nullable: true},
+		{Name: "disabled_at", Type: field.TypeTime, Nullable: true},
+		{Name: "last_signed_in_at", Type: field.TypeTime, Nullable: true},
+		{Name: "phone_confirmed_at", Type: field.TypeTime, Nullable: true},
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "updated_at", Type: field.TypeTime},
 	}
@@ -93,6 +136,7 @@ var (
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
 		GuardiansTable,
+		OrganizationsTable,
 		RolesTable,
 		StudentsTable,
 		GuardianStudentsTable,

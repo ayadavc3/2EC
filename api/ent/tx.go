@@ -14,6 +14,8 @@ type Tx struct {
 	config
 	// Guardian is the client for interacting with the Guardian builders.
 	Guardian *GuardianClient
+	// Organization is the client for interacting with the Organization builders.
+	Organization *OrganizationClient
 	// Role is the client for interacting with the Role builders.
 	Role *RoleClient
 	// Student is the client for interacting with the Student builders.
@@ -150,6 +152,7 @@ func (tx *Tx) Client() *Client {
 
 func (tx *Tx) init() {
 	tx.Guardian = NewGuardianClient(tx.config)
+	tx.Organization = NewOrganizationClient(tx.config)
 	tx.Role = NewRoleClient(tx.config)
 	tx.Student = NewStudentClient(tx.config)
 }

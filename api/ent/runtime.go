@@ -4,6 +4,7 @@ package ent
 
 import (
 	"goapi/ent/guardian"
+	"goapi/ent/organization"
 	"goapi/ent/role"
 	"goapi/ent/schema"
 	"goapi/ent/student"
@@ -34,12 +35,16 @@ func init() {
 	guardianDescDeleted := guardianFields[8].Descriptor()
 	// guardian.DefaultDeleted holds the default value on creation for the deleted field.
 	guardian.DefaultDeleted = guardianDescDeleted.Default.(bool)
+	// guardianDescDisabled is the schema descriptor for disabled field.
+	guardianDescDisabled := guardianFields[9].Descriptor()
+	// guardian.DefaultDisabled holds the default value on creation for the disabled field.
+	guardian.DefaultDisabled = guardianDescDisabled.Default.(bool)
 	// guardianDescCreatedAt is the schema descriptor for created_at field.
-	guardianDescCreatedAt := guardianFields[10].Descriptor()
+	guardianDescCreatedAt := guardianFields[14].Descriptor()
 	// guardian.DefaultCreatedAt holds the default value on creation for the created_at field.
 	guardian.DefaultCreatedAt = guardianDescCreatedAt.Default.(func() time.Time)
 	// guardianDescUpdatedAt is the schema descriptor for updated_at field.
-	guardianDescUpdatedAt := guardianFields[11].Descriptor()
+	guardianDescUpdatedAt := guardianFields[15].Descriptor()
 	// guardian.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	guardian.DefaultUpdatedAt = guardianDescUpdatedAt.Default.(func() time.Time)
 	// guardian.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
@@ -48,32 +53,70 @@ func init() {
 	guardianDescID := guardianFields[0].Descriptor()
 	// guardian.DefaultID holds the default value on creation for the id field.
 	guardian.DefaultID = guardianDescID.Default.(func() string)
+	organizationFields := schema.Organization{}.Fields()
+	_ = organizationFields
+	// organizationDescName is the schema descriptor for name field.
+	organizationDescName := organizationFields[1].Descriptor()
+	// organization.NameValidator is a validator for the "name" field. It is called by the builders before save.
+	organization.NameValidator = organizationDescName.Validators[0].(func(string) error)
+	// organizationDescTimezone is the schema descriptor for timezone field.
+	organizationDescTimezone := organizationFields[13].Descriptor()
+	// organization.DefaultTimezone holds the default value on creation for the timezone field.
+	organization.DefaultTimezone = organizationDescTimezone.Default.(string)
+	// organizationDescDeleted is the schema descriptor for deleted field.
+	organizationDescDeleted := organizationFields[14].Descriptor()
+	// organization.DefaultDeleted holds the default value on creation for the deleted field.
+	organization.DefaultDeleted = organizationDescDeleted.Default.(bool)
+	// organizationDescDisabled is the schema descriptor for disabled field.
+	organizationDescDisabled := organizationFields[15].Descriptor()
+	// organization.DefaultDisabled holds the default value on creation for the disabled field.
+	organization.DefaultDisabled = organizationDescDisabled.Default.(bool)
+	// organizationDescCreatedAt is the schema descriptor for created_at field.
+	organizationDescCreatedAt := organizationFields[18].Descriptor()
+	// organization.DefaultCreatedAt holds the default value on creation for the created_at field.
+	organization.DefaultCreatedAt = organizationDescCreatedAt.Default.(func() time.Time)
+	// organizationDescUpdatedAt is the schema descriptor for updated_at field.
+	organizationDescUpdatedAt := organizationFields[19].Descriptor()
+	// organization.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	organization.DefaultUpdatedAt = organizationDescUpdatedAt.Default.(func() time.Time)
+	// organization.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	organization.UpdateDefaultUpdatedAt = organizationDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// organizationDescID is the schema descriptor for id field.
+	organizationDescID := organizationFields[0].Descriptor()
+	// organization.DefaultID holds the default value on creation for the id field.
+	organization.DefaultID = organizationDescID.Default.(func() string)
 	roleFields := schema.Role{}.Fields()
 	_ = roleFields
 	// roleDescName is the schema descriptor for name field.
 	roleDescName := roleFields[1].Descriptor()
 	// role.NameValidator is a validator for the "name" field. It is called by the builders before save.
 	role.NameValidator = roleDescName.Validators[0].(func(string) error)
-	// roleDescDescription is the schema descriptor for description field.
-	roleDescDescription := roleFields[2].Descriptor()
-	// role.DescriptionValidator is a validator for the "description" field. It is called by the builders before save.
-	role.DescriptionValidator = roleDescDescription.Validators[0].(func(string) error)
-	// roleDescOrganizationID is the schema descriptor for organization_id field.
-	roleDescOrganizationID := roleFields[3].Descriptor()
-	// role.OrganizationIDValidator is a validator for the "organization_id" field. It is called by the builders before save.
-	role.OrganizationIDValidator = roleDescOrganizationID.Validators[0].(func(string) error)
+	// roleDescSlug is the schema descriptor for slug field.
+	roleDescSlug := roleFields[2].Descriptor()
+	// role.SlugValidator is a validator for the "slug" field. It is called by the builders before save.
+	role.SlugValidator = roleDescSlug.Validators[0].(func(string) error)
 	// roleDescPermissions is the schema descriptor for permissions field.
-	roleDescPermissions := roleFields[4].Descriptor()
+	roleDescPermissions := roleFields[5].Descriptor()
 	// role.DefaultPermissions holds the default value on creation for the permissions field.
-	role.DefaultPermissions = roleDescPermissions.Default.(string)
-	// role.PermissionsValidator is a validator for the "permissions" field. It is called by the builders before save.
-	role.PermissionsValidator = roleDescPermissions.Validators[0].(func(string) error)
+	role.DefaultPermissions = roleDescPermissions.Default.(func() []string)
+	// roleDescGlobal is the schema descriptor for global field.
+	roleDescGlobal := roleFields[6].Descriptor()
+	// role.DefaultGlobal holds the default value on creation for the global field.
+	role.DefaultGlobal = roleDescGlobal.Default.(bool)
+	// roleDescDeleted is the schema descriptor for deleted field.
+	roleDescDeleted := roleFields[7].Descriptor()
+	// role.DefaultDeleted holds the default value on creation for the deleted field.
+	role.DefaultDeleted = roleDescDeleted.Default.(bool)
+	// roleDescDisabled is the schema descriptor for disabled field.
+	roleDescDisabled := roleFields[8].Descriptor()
+	// role.DefaultDisabled holds the default value on creation for the disabled field.
+	role.DefaultDisabled = roleDescDisabled.Default.(bool)
 	// roleDescCreatedAt is the schema descriptor for created_at field.
-	roleDescCreatedAt := roleFields[5].Descriptor()
+	roleDescCreatedAt := roleFields[11].Descriptor()
 	// role.DefaultCreatedAt holds the default value on creation for the created_at field.
 	role.DefaultCreatedAt = roleDescCreatedAt.Default.(func() time.Time)
 	// roleDescUpdatedAt is the schema descriptor for updated_at field.
-	roleDescUpdatedAt := roleFields[6].Descriptor()
+	roleDescUpdatedAt := roleFields[12].Descriptor()
 	// role.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	role.DefaultUpdatedAt = roleDescUpdatedAt.Default.(func() time.Time)
 	// role.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
@@ -96,12 +139,16 @@ func init() {
 	studentDescDeleted := studentFields[7].Descriptor()
 	// student.DefaultDeleted holds the default value on creation for the deleted field.
 	student.DefaultDeleted = studentDescDeleted.Default.(bool)
+	// studentDescDisabled is the schema descriptor for disabled field.
+	studentDescDisabled := studentFields[8].Descriptor()
+	// student.DefaultDisabled holds the default value on creation for the disabled field.
+	student.DefaultDisabled = studentDescDisabled.Default.(bool)
 	// studentDescCreatedAt is the schema descriptor for created_at field.
-	studentDescCreatedAt := studentFields[9].Descriptor()
+	studentDescCreatedAt := studentFields[13].Descriptor()
 	// student.DefaultCreatedAt holds the default value on creation for the created_at field.
 	student.DefaultCreatedAt = studentDescCreatedAt.Default.(func() time.Time)
 	// studentDescUpdatedAt is the schema descriptor for updated_at field.
-	studentDescUpdatedAt := studentFields[10].Descriptor()
+	studentDescUpdatedAt := studentFields[14].Descriptor()
 	// student.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	student.DefaultUpdatedAt = studentDescUpdatedAt.Default.(func() time.Time)
 	// student.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.

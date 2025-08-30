@@ -9,6 +9,9 @@ import (
 // Guardian is the predicate function for guardian builders.
 type Guardian func(*sql.Selector)
 
+// Organization is the predicate function for organization builders.
+type Organization func(*sql.Selector)
+
 // Role is the predicate function for role builders.
 type Role func(*sql.Selector)
 

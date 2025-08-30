@@ -103,6 +103,20 @@ func (_c *StudentCreate) SetNillableDeleted(v *bool) *StudentCreate {
 	return _c
 }
 
+// SetDisabled sets the "disabled" field.
+func (_c *StudentCreate) SetDisabled(v bool) *StudentCreate {
+	_c.mutation.SetDisabled(v)
+	return _c
+}
+
+// SetNillableDisabled sets the "disabled" field if the given value is not nil.
+func (_c *StudentCreate) SetNillableDisabled(v *bool) *StudentCreate {
+	if v != nil {
+		_c.SetDisabled(*v)
+	}
+	return _c
+}
+
 // SetDeletedAt sets the "deleted_at" field.
 func (_c *StudentCreate) SetDeletedAt(v time.Time) *StudentCreate {
 	_c.mutation.SetDeletedAt(v)
@@ -113,6 +127,48 @@ func (_c *StudentCreate) SetDeletedAt(v time.Time) *StudentCreate {
 func (_c *StudentCreate) SetNillableDeletedAt(v *time.Time) *StudentCreate {
 	if v != nil {
 		_c.SetDeletedAt(*v)
+	}
+	return _c
+}
+
+// SetDisabledAt sets the "disabled_at" field.
+func (_c *StudentCreate) SetDisabledAt(v time.Time) *StudentCreate {
+	_c.mutation.SetDisabledAt(v)
+	return _c
+}
+
+// SetNillableDisabledAt sets the "disabled_at" field if the given value is not nil.
+func (_c *StudentCreate) SetNillableDisabledAt(v *time.Time) *StudentCreate {
+	if v != nil {
+		_c.SetDisabledAt(*v)
+	}
+	return _c
+}
+
+// SetLastSignedInAt sets the "last_signed_in_at" field.
+func (_c *StudentCreate) SetLastSignedInAt(v time.Time) *StudentCreate {
+	_c.mutation.SetLastSignedInAt(v)
+	return _c
+}
+
+// SetNillableLastSignedInAt sets the "last_signed_in_at" field if the given value is not nil.
+func (_c *StudentCreate) SetNillableLastSignedInAt(v *time.Time) *StudentCreate {
+	if v != nil {
+		_c.SetLastSignedInAt(*v)
+	}
+	return _c
+}
+
+// SetPhoneConfirmedAt sets the "phone_confirmed_at" field.
+func (_c *StudentCreate) SetPhoneConfirmedAt(v time.Time) *StudentCreate {
+	_c.mutation.SetPhoneConfirmedAt(v)
+	return _c
+}
+
+// SetNillablePhoneConfirmedAt sets the "phone_confirmed_at" field if the given value is not nil.
+func (_c *StudentCreate) SetNillablePhoneConfirmedAt(v *time.Time) *StudentCreate {
+	if v != nil {
+		_c.SetPhoneConfirmedAt(*v)
 	}
 	return _c
 }
@@ -213,6 +269,10 @@ func (_c *StudentCreate) defaults() {
 		v := student.DefaultDeleted
 		_c.mutation.SetDeleted(v)
 	}
+	if _, ok := _c.mutation.Disabled(); !ok {
+		v := student.DefaultDisabled
+		_c.mutation.SetDisabled(v)
+	}
 	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := student.DefaultCreatedAt()
 		_c.mutation.SetCreatedAt(v)
@@ -247,6 +307,9 @@ func (_c *StudentCreate) check() error {
 	}
 	if _, ok := _c.mutation.Deleted(); !ok {
 		return &ValidationError{Name: "deleted", err: errors.New(`ent: missing required field "Student.deleted"`)}
+	}
+	if _, ok := _c.mutation.Disabled(); !ok {
+		return &ValidationError{Name: "disabled", err: errors.New(`ent: missing required field "Student.disabled"`)}
 	}
 	if _, ok := _c.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "Student.created_at"`)}
@@ -317,9 +380,25 @@ func (_c *StudentCreate) createSpec() (*Student, *sqlgraph.CreateSpec) {
 		_spec.SetField(student.FieldDeleted, field.TypeBool, value)
 		_node.Deleted = value
 	}
+	if value, ok := _c.mutation.Disabled(); ok {
+		_spec.SetField(student.FieldDisabled, field.TypeBool, value)
+		_node.Disabled = value
+	}
 	if value, ok := _c.mutation.DeletedAt(); ok {
 		_spec.SetField(student.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = value
+	}
+	if value, ok := _c.mutation.DisabledAt(); ok {
+		_spec.SetField(student.FieldDisabledAt, field.TypeTime, value)
+		_node.DisabledAt = value
+	}
+	if value, ok := _c.mutation.LastSignedInAt(); ok {
+		_spec.SetField(student.FieldLastSignedInAt, field.TypeTime, value)
+		_node.LastSignedInAt = value
+	}
+	if value, ok := _c.mutation.PhoneConfirmedAt(); ok {
+		_spec.SetField(student.FieldPhoneConfirmedAt, field.TypeTime, value)
+		_node.PhoneConfirmedAt = value
 	}
 	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(student.FieldCreatedAt, field.TypeTime, value)

@@ -3,6 +3,7 @@
 package ent
 
 import (
+	"encoding/json"
 	"fmt"
 	"goapi/ent/role"
 	"strings"
@@ -19,12 +20,24 @@ type Role struct {
 	ID string `json:"id,omitempty"`
 	// Name holds the value of the "name" field.
 	Name string `json:"name,omitempty"`
+	// Slug holds the value of the "slug" field.
+	Slug string `json:"slug,omitempty"`
 	// Description holds the value of the "description" field.
 	Description string `json:"description,omitempty"`
 	// OrganizationID holds the value of the "organization_id" field.
 	OrganizationID string `json:"organization_id,omitempty"`
 	// Permissions holds the value of the "permissions" field.
-	Permissions string `json:"permissions,omitempty"`
+	Permissions []string `json:"permissions,omitempty"`
+	// Global holds the value of the "global" field.
+	Global bool `json:"global,omitempty"`
+	// Deleted holds the value of the "deleted" field.
+	Deleted bool `json:"deleted,omitempty"`
+	// Disabled holds the value of the "disabled" field.
+	Disabled bool `json:"disabled,omitempty"`
+	// DeletedAt holds the value of the "deleted_at" field.
+	DeletedAt time.Time `json:"deleted_at,omitempty"`
+	// DisabledAt holds the value of the "disabled_at" field.
+	DisabledAt time.Time `json:"disabled_at,omitempty"`
 	// CreatedAt holds the value of the "created_at" field.
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	// UpdatedAt holds the value of the "updated_at" field.
@@ -37,9 +50,13 @@ func (*Role) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case role.FieldID, role.FieldName, role.FieldDescription, role.FieldOrganizationID, role.FieldPermissions:
+		case role.FieldPermissions:
+			values[i] = new([]byte)
+		case role.FieldGlobal, role.FieldDeleted, role.FieldDisabled:
+			values[i] = new(sql.NullBool)
+		case role.FieldID, role.FieldName, role.FieldSlug, role.FieldDescription, role.FieldOrganizationID:
 			values[i] = new(sql.NullString)
-		case role.FieldCreatedAt, role.FieldUpdatedAt:
+		case role.FieldDeletedAt, role.FieldDisabledAt, role.FieldCreatedAt, role.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -68,6 +85,12 @@ func (_m *Role) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.Name = value.String
 			}
+		case role.FieldSlug:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field slug", values[i])
+			} else if value.Valid {
+				_m.Slug = value.String
+			}
 		case role.FieldDescription:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field description", values[i])
@@ -81,10 +104,42 @@ func (_m *Role) assignValues(columns []string, values []any) error {
 				_m.OrganizationID = value.String
 			}
 		case role.FieldPermissions:
-			if value, ok := values[i].(*sql.NullString); !ok {
+			if value, ok := values[i].(*[]byte); !ok {
 				return fmt.Errorf("unexpected type %T for field permissions", values[i])
+			} else if value != nil && len(*value) > 0 {
+				if err := json.Unmarshal(*value, &_m.Permissions); err != nil {
+					return fmt.Errorf("unmarshal field permissions: %w", err)
+				}
+			}
+		case role.FieldGlobal:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field global", values[i])
 			} else if value.Valid {
-				_m.Permissions = value.String
+				_m.Global = value.Bool
+			}
+		case role.FieldDeleted:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field deleted", values[i])
+			} else if value.Valid {
+				_m.Deleted = value.Bool
+			}
+		case role.FieldDisabled:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field disabled", values[i])
+			} else if value.Valid {
+				_m.Disabled = value.Bool
+			}
+		case role.FieldDeletedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
+			} else if value.Valid {
+				_m.DeletedAt = value.Time
+			}
+		case role.FieldDisabledAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field disabled_at", values[i])
+			} else if value.Valid {
+				_m.DisabledAt = value.Time
 			}
 		case role.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -137,6 +192,9 @@ func (_m *Role) String() string {
 	builder.WriteString("name=")
 	builder.WriteString(_m.Name)
 	builder.WriteString(", ")
+	builder.WriteString("slug=")
+	builder.WriteString(_m.Slug)
+	builder.WriteString(", ")
 	builder.WriteString("description=")
 	builder.WriteString(_m.Description)
 	builder.WriteString(", ")
@@ -144,7 +202,22 @@ func (_m *Role) String() string {
 	builder.WriteString(_m.OrganizationID)
 	builder.WriteString(", ")
 	builder.WriteString("permissions=")
-	builder.WriteString(_m.Permissions)
+	builder.WriteString(fmt.Sprintf("%v", _m.Permissions))
+	builder.WriteString(", ")
+	builder.WriteString("global=")
+	builder.WriteString(fmt.Sprintf("%v", _m.Global))
+	builder.WriteString(", ")
+	builder.WriteString("deleted=")
+	builder.WriteString(fmt.Sprintf("%v", _m.Deleted))
+	builder.WriteString(", ")
+	builder.WriteString("disabled=")
+	builder.WriteString(fmt.Sprintf("%v", _m.Disabled))
+	builder.WriteString(", ")
+	builder.WriteString("deleted_at=")
+	builder.WriteString(_m.DeletedAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("disabled_at=")
+	builder.WriteString(_m.DisabledAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("created_at=")
 	builder.WriteString(_m.CreatedAt.Format(time.ANSIC))

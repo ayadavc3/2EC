@@ -151,6 +151,20 @@ func (_u *StudentUpdate) SetNillableDeleted(v *bool) *StudentUpdate {
 	return _u
 }
 
+// SetDisabled sets the "disabled" field.
+func (_u *StudentUpdate) SetDisabled(v bool) *StudentUpdate {
+	_u.mutation.SetDisabled(v)
+	return _u
+}
+
+// SetNillableDisabled sets the "disabled" field if the given value is not nil.
+func (_u *StudentUpdate) SetNillableDisabled(v *bool) *StudentUpdate {
+	if v != nil {
+		_u.SetDisabled(*v)
+	}
+	return _u
+}
+
 // SetDeletedAt sets the "deleted_at" field.
 func (_u *StudentUpdate) SetDeletedAt(v time.Time) *StudentUpdate {
 	_u.mutation.SetDeletedAt(v)
@@ -168,6 +182,66 @@ func (_u *StudentUpdate) SetNillableDeletedAt(v *time.Time) *StudentUpdate {
 // ClearDeletedAt clears the value of the "deleted_at" field.
 func (_u *StudentUpdate) ClearDeletedAt() *StudentUpdate {
 	_u.mutation.ClearDeletedAt()
+	return _u
+}
+
+// SetDisabledAt sets the "disabled_at" field.
+func (_u *StudentUpdate) SetDisabledAt(v time.Time) *StudentUpdate {
+	_u.mutation.SetDisabledAt(v)
+	return _u
+}
+
+// SetNillableDisabledAt sets the "disabled_at" field if the given value is not nil.
+func (_u *StudentUpdate) SetNillableDisabledAt(v *time.Time) *StudentUpdate {
+	if v != nil {
+		_u.SetDisabledAt(*v)
+	}
+	return _u
+}
+
+// ClearDisabledAt clears the value of the "disabled_at" field.
+func (_u *StudentUpdate) ClearDisabledAt() *StudentUpdate {
+	_u.mutation.ClearDisabledAt()
+	return _u
+}
+
+// SetLastSignedInAt sets the "last_signed_in_at" field.
+func (_u *StudentUpdate) SetLastSignedInAt(v time.Time) *StudentUpdate {
+	_u.mutation.SetLastSignedInAt(v)
+	return _u
+}
+
+// SetNillableLastSignedInAt sets the "last_signed_in_at" field if the given value is not nil.
+func (_u *StudentUpdate) SetNillableLastSignedInAt(v *time.Time) *StudentUpdate {
+	if v != nil {
+		_u.SetLastSignedInAt(*v)
+	}
+	return _u
+}
+
+// ClearLastSignedInAt clears the value of the "last_signed_in_at" field.
+func (_u *StudentUpdate) ClearLastSignedInAt() *StudentUpdate {
+	_u.mutation.ClearLastSignedInAt()
+	return _u
+}
+
+// SetPhoneConfirmedAt sets the "phone_confirmed_at" field.
+func (_u *StudentUpdate) SetPhoneConfirmedAt(v time.Time) *StudentUpdate {
+	_u.mutation.SetPhoneConfirmedAt(v)
+	return _u
+}
+
+// SetNillablePhoneConfirmedAt sets the "phone_confirmed_at" field if the given value is not nil.
+func (_u *StudentUpdate) SetNillablePhoneConfirmedAt(v *time.Time) *StudentUpdate {
+	if v != nil {
+		_u.SetPhoneConfirmedAt(*v)
+	}
+	return _u
+}
+
+// ClearPhoneConfirmedAt clears the value of the "phone_confirmed_at" field.
+func (_u *StudentUpdate) ClearPhoneConfirmedAt() *StudentUpdate {
+	_u.mutation.ClearPhoneConfirmedAt()
 	return _u
 }
 
@@ -328,11 +402,32 @@ func (_u *StudentUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if value, ok := _u.mutation.Deleted(); ok {
 		_spec.SetField(student.FieldDeleted, field.TypeBool, value)
 	}
+	if value, ok := _u.mutation.Disabled(); ok {
+		_spec.SetField(student.FieldDisabled, field.TypeBool, value)
+	}
 	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(student.FieldDeletedAt, field.TypeTime, value)
 	}
 	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(student.FieldDeletedAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.DisabledAt(); ok {
+		_spec.SetField(student.FieldDisabledAt, field.TypeTime, value)
+	}
+	if _u.mutation.DisabledAtCleared() {
+		_spec.ClearField(student.FieldDisabledAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.LastSignedInAt(); ok {
+		_spec.SetField(student.FieldLastSignedInAt, field.TypeTime, value)
+	}
+	if _u.mutation.LastSignedInAtCleared() {
+		_spec.ClearField(student.FieldLastSignedInAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.PhoneConfirmedAt(); ok {
+		_spec.SetField(student.FieldPhoneConfirmedAt, field.TypeTime, value)
+	}
+	if _u.mutation.PhoneConfirmedAtCleared() {
+		_spec.ClearField(student.FieldPhoneConfirmedAt, field.TypeTime)
 	}
 	if value, ok := _u.mutation.CreatedAt(); ok {
 		_spec.SetField(student.FieldCreatedAt, field.TypeTime, value)
@@ -527,6 +622,20 @@ func (_u *StudentUpdateOne) SetNillableDeleted(v *bool) *StudentUpdateOne {
 	return _u
 }
 
+// SetDisabled sets the "disabled" field.
+func (_u *StudentUpdateOne) SetDisabled(v bool) *StudentUpdateOne {
+	_u.mutation.SetDisabled(v)
+	return _u
+}
+
+// SetNillableDisabled sets the "disabled" field if the given value is not nil.
+func (_u *StudentUpdateOne) SetNillableDisabled(v *bool) *StudentUpdateOne {
+	if v != nil {
+		_u.SetDisabled(*v)
+	}
+	return _u
+}
+
 // SetDeletedAt sets the "deleted_at" field.
 func (_u *StudentUpdateOne) SetDeletedAt(v time.Time) *StudentUpdateOne {
 	_u.mutation.SetDeletedAt(v)
@@ -544,6 +653,66 @@ func (_u *StudentUpdateOne) SetNillableDeletedAt(v *time.Time) *StudentUpdateOne
 // ClearDeletedAt clears the value of the "deleted_at" field.
 func (_u *StudentUpdateOne) ClearDeletedAt() *StudentUpdateOne {
 	_u.mutation.ClearDeletedAt()
+	return _u
+}
+
+// SetDisabledAt sets the "disabled_at" field.
+func (_u *StudentUpdateOne) SetDisabledAt(v time.Time) *StudentUpdateOne {
+	_u.mutation.SetDisabledAt(v)
+	return _u
+}
+
+// SetNillableDisabledAt sets the "disabled_at" field if the given value is not nil.
+func (_u *StudentUpdateOne) SetNillableDisabledAt(v *time.Time) *StudentUpdateOne {
+	if v != nil {
+		_u.SetDisabledAt(*v)
+	}
+	return _u
+}
+
+// ClearDisabledAt clears the value of the "disabled_at" field.
+func (_u *StudentUpdateOne) ClearDisabledAt() *StudentUpdateOne {
+	_u.mutation.ClearDisabledAt()
+	return _u
+}
+
+// SetLastSignedInAt sets the "last_signed_in_at" field.
+func (_u *StudentUpdateOne) SetLastSignedInAt(v time.Time) *StudentUpdateOne {
+	_u.mutation.SetLastSignedInAt(v)
+	return _u
+}
+
+// SetNillableLastSignedInAt sets the "last_signed_in_at" field if the given value is not nil.
+func (_u *StudentUpdateOne) SetNillableLastSignedInAt(v *time.Time) *StudentUpdateOne {
+	if v != nil {
+		_u.SetLastSignedInAt(*v)
+	}
+	return _u
+}
+
+// ClearLastSignedInAt clears the value of the "last_signed_in_at" field.
+func (_u *StudentUpdateOne) ClearLastSignedInAt() *StudentUpdateOne {
+	_u.mutation.ClearLastSignedInAt()
+	return _u
+}
+
+// SetPhoneConfirmedAt sets the "phone_confirmed_at" field.
+func (_u *StudentUpdateOne) SetPhoneConfirmedAt(v time.Time) *StudentUpdateOne {
+	_u.mutation.SetPhoneConfirmedAt(v)
+	return _u
+}
+
+// SetNillablePhoneConfirmedAt sets the "phone_confirmed_at" field if the given value is not nil.
+func (_u *StudentUpdateOne) SetNillablePhoneConfirmedAt(v *time.Time) *StudentUpdateOne {
+	if v != nil {
+		_u.SetPhoneConfirmedAt(*v)
+	}
+	return _u
+}
+
+// ClearPhoneConfirmedAt clears the value of the "phone_confirmed_at" field.
+func (_u *StudentUpdateOne) ClearPhoneConfirmedAt() *StudentUpdateOne {
+	_u.mutation.ClearPhoneConfirmedAt()
 	return _u
 }
 
@@ -734,11 +903,32 @@ func (_u *StudentUpdateOne) sqlSave(ctx context.Context) (_node *Student, err er
 	if value, ok := _u.mutation.Deleted(); ok {
 		_spec.SetField(student.FieldDeleted, field.TypeBool, value)
 	}
+	if value, ok := _u.mutation.Disabled(); ok {
+		_spec.SetField(student.FieldDisabled, field.TypeBool, value)
+	}
 	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(student.FieldDeletedAt, field.TypeTime, value)
 	}
 	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(student.FieldDeletedAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.DisabledAt(); ok {
+		_spec.SetField(student.FieldDisabledAt, field.TypeTime, value)
+	}
+	if _u.mutation.DisabledAtCleared() {
+		_spec.ClearField(student.FieldDisabledAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.LastSignedInAt(); ok {
+		_spec.SetField(student.FieldLastSignedInAt, field.TypeTime, value)
+	}
+	if _u.mutation.LastSignedInAtCleared() {
+		_spec.ClearField(student.FieldLastSignedInAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.PhoneConfirmedAt(); ok {
+		_spec.SetField(student.FieldPhoneConfirmedAt, field.TypeTime, value)
+	}
+	if _u.mutation.PhoneConfirmedAtCleared() {
+		_spec.ClearField(student.FieldPhoneConfirmedAt, field.TypeTime)
 	}
 	if value, ok := _u.mutation.CreatedAt(); ok {
 		_spec.SetField(student.FieldCreatedAt, field.TypeTime, value)

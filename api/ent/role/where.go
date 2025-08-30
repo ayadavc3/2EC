@@ -69,6 +69,11 @@ func Name(v string) predicate.Role {
 	return predicate.Role(sql.FieldEQ(FieldName, v))
 }
 
+// Slug applies equality check predicate on the "slug" field. It's identical to SlugEQ.
+func Slug(v string) predicate.Role {
+	return predicate.Role(sql.FieldEQ(FieldSlug, v))
+}
+
 // Description applies equality check predicate on the "description" field. It's identical to DescriptionEQ.
 func Description(v string) predicate.Role {
 	return predicate.Role(sql.FieldEQ(FieldDescription, v))
@@ -79,9 +84,29 @@ func OrganizationID(v string) predicate.Role {
 	return predicate.Role(sql.FieldEQ(FieldOrganizationID, v))
 }
 
-// Permissions applies equality check predicate on the "permissions" field. It's identical to PermissionsEQ.
-func Permissions(v string) predicate.Role {
-	return predicate.Role(sql.FieldEQ(FieldPermissions, v))
+// Global applies equality check predicate on the "global" field. It's identical to GlobalEQ.
+func Global(v bool) predicate.Role {
+	return predicate.Role(sql.FieldEQ(FieldGlobal, v))
+}
+
+// Deleted applies equality check predicate on the "deleted" field. It's identical to DeletedEQ.
+func Deleted(v bool) predicate.Role {
+	return predicate.Role(sql.FieldEQ(FieldDeleted, v))
+}
+
+// Disabled applies equality check predicate on the "disabled" field. It's identical to DisabledEQ.
+func Disabled(v bool) predicate.Role {
+	return predicate.Role(sql.FieldEQ(FieldDisabled, v))
+}
+
+// DeletedAt applies equality check predicate on the "deleted_at" field. It's identical to DeletedAtEQ.
+func DeletedAt(v time.Time) predicate.Role {
+	return predicate.Role(sql.FieldEQ(FieldDeletedAt, v))
+}
+
+// DisabledAt applies equality check predicate on the "disabled_at" field. It's identical to DisabledAtEQ.
+func DisabledAt(v time.Time) predicate.Role {
+	return predicate.Role(sql.FieldEQ(FieldDisabledAt, v))
 }
 
 // CreatedAt applies equality check predicate on the "created_at" field. It's identical to CreatedAtEQ.
@@ -159,6 +184,71 @@ func NameContainsFold(v string) predicate.Role {
 	return predicate.Role(sql.FieldContainsFold(FieldName, v))
 }
 
+// SlugEQ applies the EQ predicate on the "slug" field.
+func SlugEQ(v string) predicate.Role {
+	return predicate.Role(sql.FieldEQ(FieldSlug, v))
+}
+
+// SlugNEQ applies the NEQ predicate on the "slug" field.
+func SlugNEQ(v string) predicate.Role {
+	return predicate.Role(sql.FieldNEQ(FieldSlug, v))
+}
+
+// SlugIn applies the In predicate on the "slug" field.
+func SlugIn(vs ...string) predicate.Role {
+	return predicate.Role(sql.FieldIn(FieldSlug, vs...))
+}
+
+// SlugNotIn applies the NotIn predicate on the "slug" field.
+func SlugNotIn(vs ...string) predicate.Role {
+	return predicate.Role(sql.FieldNotIn(FieldSlug, vs...))
+}
+
+// SlugGT applies the GT predicate on the "slug" field.
+func SlugGT(v string) predicate.Role {
+	return predicate.Role(sql.FieldGT(FieldSlug, v))
+}
+
+// SlugGTE applies the GTE predicate on the "slug" field.
+func SlugGTE(v string) predicate.Role {
+	return predicate.Role(sql.FieldGTE(FieldSlug, v))
+}
+
+// SlugLT applies the LT predicate on the "slug" field.
+func SlugLT(v string) predicate.Role {
+	return predicate.Role(sql.FieldLT(FieldSlug, v))
+}
+
+// SlugLTE applies the LTE predicate on the "slug" field.
+func SlugLTE(v string) predicate.Role {
+	return predicate.Role(sql.FieldLTE(FieldSlug, v))
+}
+
+// SlugContains applies the Contains predicate on the "slug" field.
+func SlugContains(v string) predicate.Role {
+	return predicate.Role(sql.FieldContains(FieldSlug, v))
+}
+
+// SlugHasPrefix applies the HasPrefix predicate on the "slug" field.
+func SlugHasPrefix(v string) predicate.Role {
+	return predicate.Role(sql.FieldHasPrefix(FieldSlug, v))
+}
+
+// SlugHasSuffix applies the HasSuffix predicate on the "slug" field.
+func SlugHasSuffix(v string) predicate.Role {
+	return predicate.Role(sql.FieldHasSuffix(FieldSlug, v))
+}
+
+// SlugEqualFold applies the EqualFold predicate on the "slug" field.
+func SlugEqualFold(v string) predicate.Role {
+	return predicate.Role(sql.FieldEqualFold(FieldSlug, v))
+}
+
+// SlugContainsFold applies the ContainsFold predicate on the "slug" field.
+func SlugContainsFold(v string) predicate.Role {
+	return predicate.Role(sql.FieldContainsFold(FieldSlug, v))
+}
+
 // DescriptionEQ applies the EQ predicate on the "description" field.
 func DescriptionEQ(v string) predicate.Role {
 	return predicate.Role(sql.FieldEQ(FieldDescription, v))
@@ -212,6 +302,16 @@ func DescriptionHasPrefix(v string) predicate.Role {
 // DescriptionHasSuffix applies the HasSuffix predicate on the "description" field.
 func DescriptionHasSuffix(v string) predicate.Role {
 	return predicate.Role(sql.FieldHasSuffix(FieldDescription, v))
+}
+
+// DescriptionIsNil applies the IsNil predicate on the "description" field.
+func DescriptionIsNil() predicate.Role {
+	return predicate.Role(sql.FieldIsNull(FieldDescription))
+}
+
+// DescriptionNotNil applies the NotNil predicate on the "description" field.
+func DescriptionNotNil() predicate.Role {
+	return predicate.Role(sql.FieldNotNull(FieldDescription))
 }
 
 // DescriptionEqualFold applies the EqualFold predicate on the "description" field.
@@ -279,6 +379,16 @@ func OrganizationIDHasSuffix(v string) predicate.Role {
 	return predicate.Role(sql.FieldHasSuffix(FieldOrganizationID, v))
 }
 
+// OrganizationIDIsNil applies the IsNil predicate on the "organization_id" field.
+func OrganizationIDIsNil() predicate.Role {
+	return predicate.Role(sql.FieldIsNull(FieldOrganizationID))
+}
+
+// OrganizationIDNotNil applies the NotNil predicate on the "organization_id" field.
+func OrganizationIDNotNil() predicate.Role {
+	return predicate.Role(sql.FieldNotNull(FieldOrganizationID))
+}
+
 // OrganizationIDEqualFold applies the EqualFold predicate on the "organization_id" field.
 func OrganizationIDEqualFold(v string) predicate.Role {
 	return predicate.Role(sql.FieldEqualFold(FieldOrganizationID, v))
@@ -289,69 +399,134 @@ func OrganizationIDContainsFold(v string) predicate.Role {
 	return predicate.Role(sql.FieldContainsFold(FieldOrganizationID, v))
 }
 
-// PermissionsEQ applies the EQ predicate on the "permissions" field.
-func PermissionsEQ(v string) predicate.Role {
-	return predicate.Role(sql.FieldEQ(FieldPermissions, v))
+// GlobalEQ applies the EQ predicate on the "global" field.
+func GlobalEQ(v bool) predicate.Role {
+	return predicate.Role(sql.FieldEQ(FieldGlobal, v))
 }
 
-// PermissionsNEQ applies the NEQ predicate on the "permissions" field.
-func PermissionsNEQ(v string) predicate.Role {
-	return predicate.Role(sql.FieldNEQ(FieldPermissions, v))
+// GlobalNEQ applies the NEQ predicate on the "global" field.
+func GlobalNEQ(v bool) predicate.Role {
+	return predicate.Role(sql.FieldNEQ(FieldGlobal, v))
 }
 
-// PermissionsIn applies the In predicate on the "permissions" field.
-func PermissionsIn(vs ...string) predicate.Role {
-	return predicate.Role(sql.FieldIn(FieldPermissions, vs...))
+// DeletedEQ applies the EQ predicate on the "deleted" field.
+func DeletedEQ(v bool) predicate.Role {
+	return predicate.Role(sql.FieldEQ(FieldDeleted, v))
 }
 
-// PermissionsNotIn applies the NotIn predicate on the "permissions" field.
-func PermissionsNotIn(vs ...string) predicate.Role {
-	return predicate.Role(sql.FieldNotIn(FieldPermissions, vs...))
+// DeletedNEQ applies the NEQ predicate on the "deleted" field.
+func DeletedNEQ(v bool) predicate.Role {
+	return predicate.Role(sql.FieldNEQ(FieldDeleted, v))
 }
 
-// PermissionsGT applies the GT predicate on the "permissions" field.
-func PermissionsGT(v string) predicate.Role {
-	return predicate.Role(sql.FieldGT(FieldPermissions, v))
+// DisabledEQ applies the EQ predicate on the "disabled" field.
+func DisabledEQ(v bool) predicate.Role {
+	return predicate.Role(sql.FieldEQ(FieldDisabled, v))
 }
 
-// PermissionsGTE applies the GTE predicate on the "permissions" field.
-func PermissionsGTE(v string) predicate.Role {
-	return predicate.Role(sql.FieldGTE(FieldPermissions, v))
+// DisabledNEQ applies the NEQ predicate on the "disabled" field.
+func DisabledNEQ(v bool) predicate.Role {
+	return predicate.Role(sql.FieldNEQ(FieldDisabled, v))
 }
 
-// PermissionsLT applies the LT predicate on the "permissions" field.
-func PermissionsLT(v string) predicate.Role {
-	return predicate.Role(sql.FieldLT(FieldPermissions, v))
+// DeletedAtEQ applies the EQ predicate on the "deleted_at" field.
+func DeletedAtEQ(v time.Time) predicate.Role {
+	return predicate.Role(sql.FieldEQ(FieldDeletedAt, v))
 }
 
-// PermissionsLTE applies the LTE predicate on the "permissions" field.
-func PermissionsLTE(v string) predicate.Role {
-	return predicate.Role(sql.FieldLTE(FieldPermissions, v))
+// DeletedAtNEQ applies the NEQ predicate on the "deleted_at" field.
+func DeletedAtNEQ(v time.Time) predicate.Role {
+	return predicate.Role(sql.FieldNEQ(FieldDeletedAt, v))
 }
 
-// PermissionsContains applies the Contains predicate on the "permissions" field.
-func PermissionsContains(v string) predicate.Role {
-	return predicate.Role(sql.FieldContains(FieldPermissions, v))
+// DeletedAtIn applies the In predicate on the "deleted_at" field.
+func DeletedAtIn(vs ...time.Time) predicate.Role {
+	return predicate.Role(sql.FieldIn(FieldDeletedAt, vs...))
 }
 
-// PermissionsHasPrefix applies the HasPrefix predicate on the "permissions" field.
-func PermissionsHasPrefix(v string) predicate.Role {
-	return predicate.Role(sql.FieldHasPrefix(FieldPermissions, v))
+// DeletedAtNotIn applies the NotIn predicate on the "deleted_at" field.
+func DeletedAtNotIn(vs ...time.Time) predicate.Role {
+	return predicate.Role(sql.FieldNotIn(FieldDeletedAt, vs...))
 }
 
-// PermissionsHasSuffix applies the HasSuffix predicate on the "permissions" field.
-func PermissionsHasSuffix(v string) predicate.Role {
-	return predicate.Role(sql.FieldHasSuffix(FieldPermissions, v))
+// DeletedAtGT applies the GT predicate on the "deleted_at" field.
+func DeletedAtGT(v time.Time) predicate.Role {
+	return predicate.Role(sql.FieldGT(FieldDeletedAt, v))
 }
 
-// PermissionsEqualFold applies the EqualFold predicate on the "permissions" field.
-func PermissionsEqualFold(v string) predicate.Role {
-	return predicate.Role(sql.FieldEqualFold(FieldPermissions, v))
+// DeletedAtGTE applies the GTE predicate on the "deleted_at" field.
+func DeletedAtGTE(v time.Time) predicate.Role {
+	return predicate.Role(sql.FieldGTE(FieldDeletedAt, v))
 }
 
-// PermissionsContainsFold applies the ContainsFold predicate on the "permissions" field.
-func PermissionsContainsFold(v string) predicate.Role {
-	return predicate.Role(sql.FieldContainsFold(FieldPermissions, v))
+// DeletedAtLT applies the LT predicate on the "deleted_at" field.
+func DeletedAtLT(v time.Time) predicate.Role {
+	return predicate.Role(sql.FieldLT(FieldDeletedAt, v))
+}
+
+// DeletedAtLTE applies the LTE predicate on the "deleted_at" field.
+func DeletedAtLTE(v time.Time) predicate.Role {
+	return predicate.Role(sql.FieldLTE(FieldDeletedAt, v))
+}
+
+// DeletedAtIsNil applies the IsNil predicate on the "deleted_at" field.
+func DeletedAtIsNil() predicate.Role {
+	return predicate.Role(sql.FieldIsNull(FieldDeletedAt))
+}
+
+// DeletedAtNotNil applies the NotNil predicate on the "deleted_at" field.
+func DeletedAtNotNil() predicate.Role {
+	return predicate.Role(sql.FieldNotNull(FieldDeletedAt))
+}
+
+// DisabledAtEQ applies the EQ predicate on the "disabled_at" field.
+func DisabledAtEQ(v time.Time) predicate.Role {
+	return predicate.Role(sql.FieldEQ(FieldDisabledAt, v))
+}
+
+// DisabledAtNEQ applies the NEQ predicate on the "disabled_at" field.
+func DisabledAtNEQ(v time.Time) predicate.Role {
+	return predicate.Role(sql.FieldNEQ(FieldDisabledAt, v))
+}
+
+// DisabledAtIn applies the In predicate on the "disabled_at" field.
+func DisabledAtIn(vs ...time.Time) predicate.Role {
+	return predicate.Role(sql.FieldIn(FieldDisabledAt, vs...))
+}
+
+// DisabledAtNotIn applies the NotIn predicate on the "disabled_at" field.
+func DisabledAtNotIn(vs ...time.Time) predicate.Role {
+	return predicate.Role(sql.FieldNotIn(FieldDisabledAt, vs...))
+}
+
+// DisabledAtGT applies the GT predicate on the "disabled_at" field.
+func DisabledAtGT(v time.Time) predicate.Role {
+	return predicate.Role(sql.FieldGT(FieldDisabledAt, v))
+}
+
+// DisabledAtGTE applies the GTE predicate on the "disabled_at" field.
+func DisabledAtGTE(v time.Time) predicate.Role {
+	return predicate.Role(sql.FieldGTE(FieldDisabledAt, v))
+}
+
+// DisabledAtLT applies the LT predicate on the "disabled_at" field.
+func DisabledAtLT(v time.Time) predicate.Role {
+	return predicate.Role(sql.FieldLT(FieldDisabledAt, v))
+}
+
+// DisabledAtLTE applies the LTE predicate on the "disabled_at" field.
+func DisabledAtLTE(v time.Time) predicate.Role {
+	return predicate.Role(sql.FieldLTE(FieldDisabledAt, v))
+}
+
+// DisabledAtIsNil applies the IsNil predicate on the "disabled_at" field.
+func DisabledAtIsNil() predicate.Role {
+	return predicate.Role(sql.FieldIsNull(FieldDisabledAt))
+}
+
+// DisabledAtNotNil applies the NotNil predicate on the "disabled_at" field.
+func DisabledAtNotNil() predicate.Role {
+	return predicate.Role(sql.FieldNotNull(FieldDisabledAt))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.

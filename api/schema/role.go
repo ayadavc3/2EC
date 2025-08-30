@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"github.com/google/uuid"
 )
@@ -38,5 +39,12 @@ func (Role) Fields() []ent.Field {
 
 		field.Time("created_at").Default(time.Now),
 		field.Time("updated_at").Default(time.Now).UpdateDefault(time.Now),
+	}
+}
+
+// Edges of the Role.
+func (Role) Edges() []ent.Edge {
+	return []ent.Edge{
+		edge.From("organization", Organization.Type).Ref("roles").Unique(),
 	}
 }

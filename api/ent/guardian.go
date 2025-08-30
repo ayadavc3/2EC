@@ -33,8 +33,16 @@ type Guardian struct {
 	Email string `json:"email,omitempty"`
 	// Deleted holds the value of the "deleted" field.
 	Deleted bool `json:"deleted,omitempty"`
+	// Disabled holds the value of the "disabled" field.
+	Disabled bool `json:"disabled,omitempty"`
 	// DeletedAt holds the value of the "deleted_at" field.
 	DeletedAt time.Time `json:"deleted_at,omitempty"`
+	// DisabledAt holds the value of the "disabled_at" field.
+	DisabledAt time.Time `json:"disabled_at,omitempty"`
+	// LastSignedInAt holds the value of the "last_signed_in_at" field.
+	LastSignedInAt time.Time `json:"last_signed_in_at,omitempty"`
+	// PhoneConfirmedAt holds the value of the "phone_confirmed_at" field.
+	PhoneConfirmedAt time.Time `json:"phone_confirmed_at,omitempty"`
 	// CreatedAt holds the value of the "created_at" field.
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	// UpdatedAt holds the value of the "updated_at" field.
@@ -68,11 +76,11 @@ func (*Guardian) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case guardian.FieldDeleted:
+		case guardian.FieldDeleted, guardian.FieldDisabled:
 			values[i] = new(sql.NullBool)
 		case guardian.FieldID, guardian.FieldPhotoURL, guardian.FieldTitle, guardian.FieldFirstName, guardian.FieldLastName, guardian.FieldMiddleName, guardian.FieldPhoneNumber, guardian.FieldEmail:
 			values[i] = new(sql.NullString)
-		case guardian.FieldDeletedAt, guardian.FieldCreatedAt, guardian.FieldUpdatedAt:
+		case guardian.FieldDeletedAt, guardian.FieldDisabledAt, guardian.FieldLastSignedInAt, guardian.FieldPhoneConfirmedAt, guardian.FieldCreatedAt, guardian.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -143,11 +151,35 @@ func (_m *Guardian) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.Deleted = value.Bool
 			}
+		case guardian.FieldDisabled:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field disabled", values[i])
+			} else if value.Valid {
+				_m.Disabled = value.Bool
+			}
 		case guardian.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
 			} else if value.Valid {
 				_m.DeletedAt = value.Time
+			}
+		case guardian.FieldDisabledAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field disabled_at", values[i])
+			} else if value.Valid {
+				_m.DisabledAt = value.Time
+			}
+		case guardian.FieldLastSignedInAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field last_signed_in_at", values[i])
+			} else if value.Valid {
+				_m.LastSignedInAt = value.Time
+			}
+		case guardian.FieldPhoneConfirmedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field phone_confirmed_at", values[i])
+			} else if value.Valid {
+				_m.PhoneConfirmedAt = value.Time
 			}
 		case guardian.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -226,8 +258,20 @@ func (_m *Guardian) String() string {
 	builder.WriteString("deleted=")
 	builder.WriteString(fmt.Sprintf("%v", _m.Deleted))
 	builder.WriteString(", ")
+	builder.WriteString("disabled=")
+	builder.WriteString(fmt.Sprintf("%v", _m.Disabled))
+	builder.WriteString(", ")
 	builder.WriteString("deleted_at=")
 	builder.WriteString(_m.DeletedAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("disabled_at=")
+	builder.WriteString(_m.DisabledAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("last_signed_in_at=")
+	builder.WriteString(_m.LastSignedInAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("phone_confirmed_at=")
+	builder.WriteString(_m.PhoneConfirmedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("created_at=")
 	builder.WriteString(_m.CreatedAt.Format(time.ANSIC))

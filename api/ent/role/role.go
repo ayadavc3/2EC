@@ -15,12 +15,24 @@ const (
 	FieldID = "id"
 	// FieldName holds the string denoting the name field in the database.
 	FieldName = "name"
+	// FieldSlug holds the string denoting the slug field in the database.
+	FieldSlug = "slug"
 	// FieldDescription holds the string denoting the description field in the database.
 	FieldDescription = "description"
 	// FieldOrganizationID holds the string denoting the organization_id field in the database.
 	FieldOrganizationID = "organization_id"
 	// FieldPermissions holds the string denoting the permissions field in the database.
 	FieldPermissions = "permissions"
+	// FieldGlobal holds the string denoting the global field in the database.
+	FieldGlobal = "global"
+	// FieldDeleted holds the string denoting the deleted field in the database.
+	FieldDeleted = "deleted"
+	// FieldDisabled holds the string denoting the disabled field in the database.
+	FieldDisabled = "disabled"
+	// FieldDeletedAt holds the string denoting the deleted_at field in the database.
+	FieldDeletedAt = "deleted_at"
+	// FieldDisabledAt holds the string denoting the disabled_at field in the database.
+	FieldDisabledAt = "disabled_at"
 	// FieldCreatedAt holds the string denoting the created_at field in the database.
 	FieldCreatedAt = "created_at"
 	// FieldUpdatedAt holds the string denoting the updated_at field in the database.
@@ -33,9 +45,15 @@ const (
 var Columns = []string{
 	FieldID,
 	FieldName,
+	FieldSlug,
 	FieldDescription,
 	FieldOrganizationID,
 	FieldPermissions,
+	FieldGlobal,
+	FieldDeleted,
+	FieldDisabled,
+	FieldDeletedAt,
+	FieldDisabledAt,
 	FieldCreatedAt,
 	FieldUpdatedAt,
 }
@@ -53,14 +71,16 @@ func ValidColumn(column string) bool {
 var (
 	// NameValidator is a validator for the "name" field. It is called by the builders before save.
 	NameValidator func(string) error
-	// DescriptionValidator is a validator for the "description" field. It is called by the builders before save.
-	DescriptionValidator func(string) error
-	// OrganizationIDValidator is a validator for the "organization_id" field. It is called by the builders before save.
-	OrganizationIDValidator func(string) error
+	// SlugValidator is a validator for the "slug" field. It is called by the builders before save.
+	SlugValidator func(string) error
 	// DefaultPermissions holds the default value on creation for the "permissions" field.
-	DefaultPermissions string
-	// PermissionsValidator is a validator for the "permissions" field. It is called by the builders before save.
-	PermissionsValidator func(string) error
+	DefaultPermissions func() []string
+	// DefaultGlobal holds the default value on creation for the "global" field.
+	DefaultGlobal bool
+	// DefaultDeleted holds the default value on creation for the "deleted" field.
+	DefaultDeleted bool
+	// DefaultDisabled holds the default value on creation for the "disabled" field.
+	DefaultDisabled bool
 	// DefaultCreatedAt holds the default value on creation for the "created_at" field.
 	DefaultCreatedAt func() time.Time
 	// DefaultUpdatedAt holds the default value on creation for the "updated_at" field.
@@ -84,6 +104,11 @@ func ByName(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldName, opts...).ToFunc()
 }
 
+// BySlug orders the results by the slug field.
+func BySlug(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldSlug, opts...).ToFunc()
+}
+
 // ByDescription orders the results by the description field.
 func ByDescription(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDescription, opts...).ToFunc()
@@ -94,9 +119,29 @@ func ByOrganizationID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldOrganizationID, opts...).ToFunc()
 }
 
-// ByPermissions orders the results by the permissions field.
-func ByPermissions(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldPermissions, opts...).ToFunc()
+// ByGlobal orders the results by the global field.
+func ByGlobal(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldGlobal, opts...).ToFunc()
+}
+
+// ByDeleted orders the results by the deleted field.
+func ByDeleted(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDeleted, opts...).ToFunc()
+}
+
+// ByDisabled orders the results by the disabled field.
+func ByDisabled(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDisabled, opts...).ToFunc()
+}
+
+// ByDeletedAt orders the results by the deleted_at field.
+func ByDeletedAt(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDeletedAt, opts...).ToFunc()
+}
+
+// ByDisabledAt orders the results by the disabled_at field.
+func ByDisabledAt(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDisabledAt, opts...).ToFunc()
 }
 
 // ByCreatedAt orders the results by the created_at field.

@@ -28,8 +28,16 @@ const (
 	FieldEmail = "email"
 	// FieldDeleted holds the string denoting the deleted field in the database.
 	FieldDeleted = "deleted"
+	// FieldDisabled holds the string denoting the disabled field in the database.
+	FieldDisabled = "disabled"
 	// FieldDeletedAt holds the string denoting the deleted_at field in the database.
 	FieldDeletedAt = "deleted_at"
+	// FieldDisabledAt holds the string denoting the disabled_at field in the database.
+	FieldDisabledAt = "disabled_at"
+	// FieldLastSignedInAt holds the string denoting the last_signed_in_at field in the database.
+	FieldLastSignedInAt = "last_signed_in_at"
+	// FieldPhoneConfirmedAt holds the string denoting the phone_confirmed_at field in the database.
+	FieldPhoneConfirmedAt = "phone_confirmed_at"
 	// FieldCreatedAt holds the string denoting the created_at field in the database.
 	FieldCreatedAt = "created_at"
 	// FieldUpdatedAt holds the string denoting the updated_at field in the database.
@@ -55,7 +63,11 @@ var Columns = []string{
 	FieldPhoneNumber,
 	FieldEmail,
 	FieldDeleted,
+	FieldDisabled,
 	FieldDeletedAt,
+	FieldDisabledAt,
+	FieldLastSignedInAt,
+	FieldPhoneConfirmedAt,
 	FieldCreatedAt,
 	FieldUpdatedAt,
 }
@@ -83,6 +95,8 @@ var (
 	PhoneNumberValidator func(string) error
 	// DefaultDeleted holds the default value on creation for the "deleted" field.
 	DefaultDeleted bool
+	// DefaultDisabled holds the default value on creation for the "disabled" field.
+	DefaultDisabled bool
 	// DefaultCreatedAt holds the default value on creation for the "created_at" field.
 	DefaultCreatedAt func() time.Time
 	// DefaultUpdatedAt holds the default value on creation for the "updated_at" field.
@@ -136,9 +150,29 @@ func ByDeleted(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDeleted, opts...).ToFunc()
 }
 
+// ByDisabled orders the results by the disabled field.
+func ByDisabled(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDisabled, opts...).ToFunc()
+}
+
 // ByDeletedAt orders the results by the deleted_at field.
 func ByDeletedAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDeletedAt, opts...).ToFunc()
+}
+
+// ByDisabledAt orders the results by the disabled_at field.
+func ByDisabledAt(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDisabledAt, opts...).ToFunc()
+}
+
+// ByLastSignedInAt orders the results by the last_signed_in_at field.
+func ByLastSignedInAt(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldLastSignedInAt, opts...).ToFunc()
+}
+
+// ByPhoneConfirmedAt orders the results by the phone_confirmed_at field.
+func ByPhoneConfirmedAt(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldPhoneConfirmedAt, opts...).ToFunc()
 }
 
 // ByCreatedAt orders the results by the created_at field.
