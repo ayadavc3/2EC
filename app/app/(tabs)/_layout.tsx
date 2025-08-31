@@ -23,7 +23,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: 'Chats',
           tabBarIcon: ({ color }) => <MessagesSquare color={color} />,
           headerRight: () => (
             <Link href="/modal" asChild>
