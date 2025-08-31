@@ -4,18 +4,18 @@ import { ToastControl } from 'components/CurrentToast'
 
 export default function TabOneScreen() {
   return (
-    <YStack flex={1} items="center" gap="$8" px="$10" pt="$5" bg="$background">
+    <YStack flex={1} alignItems="center" gap="$8" px="$10" pt="$5" backgroundColor="$background">
       <H2>Tamagui + Expo</H2>
 
       <ToastControl />
 
       <XStack
-        items="center"
-        justify="center"
+        alignItems="center"
+        justifyContent="center"
         flexWrap="wrap"
         gap="$1.5"
         position="absolute"
-        b="$8"
+        bottom="$8"
       >
         <Paragraph fontSize="$5">Add</Paragraph>
 
@@ -26,11 +26,11 @@ export default function TabOneScreen() {
         <Paragraph fontSize="$5">to root and follow the</Paragraph>
 
         <XStack
-          items="center"
+          alignItems="center"
           gap="$1.5"
           px="$2"
           py="$1"
-          rounded="$3"
+          borderRadius="$3"
           bg="$green5"
           hoverStyle={{ bg: '$green6' }}
           pressStyle={{ bg: '$green4' }}
@@ -46,7 +46,7 @@ export default function TabOneScreen() {
           <ExternalLink size="$1" color="$green10" />
         </XStack>
 
-        <Paragraph fontSize="$5" text="center">
+        <Paragraph fontSize="$5" textAlign="center">
           to configure your themes and tokens.
         </Paragraph>
       </XStack>
