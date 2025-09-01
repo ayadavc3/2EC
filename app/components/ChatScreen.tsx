@@ -1,19 +1,18 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { GiftedChat, IMessage, User } from 'react-native-gifted-chat'
 import { View, StyleSheet } from 'react-native'
-import { Stack } from 'expo-router'
-import { Button, XStack, useTheme } from 'tamagui'
-import { ArrowLeft } from '@tamagui/lucide-icons'
+import { useTheme } from 'tamagui'
+import { useNavigation } from '@react-navigation/native'
 
 interface ChatScreenProps {
   groupId: string
   groupName: string
-  onBack: () => void
 }
 
-export default function ChatScreen({ groupId, groupName, onBack }: ChatScreenProps) {
+export default function ChatScreen({ groupId, groupName }: ChatScreenProps) {
   const [messages, setMessages] = useState<IMessage[]>([])
   const theme = useTheme()
+  const navigation = useNavigation()
 
   const currentUser: User = {
     _id: 1,
@@ -23,6 +22,9 @@ export default function ChatScreen({ groupId, groupName, onBack }: ChatScreenPro
 
   useEffect(() => {
     // Initialize with some sample messages
+    navigation.setOptions({
+      headerTitle: groupName,
+    })
     setMessages([
       {
         _id: Math.random(),
@@ -35,7 +37,7 @@ export default function ChatScreen({ groupId, groupName, onBack }: ChatScreenPro
         },
       },
     ])
-  }, [groupName])
+  }, [groupId, groupName])
 
   const onSend = useCallback((messages: IMessage[] = []) => {
     setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
@@ -43,22 +45,6 @@ export default function ChatScreen({ groupId, groupName, onBack }: ChatScreenPro
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background.val }]}>
-      <XStack 
-        alignItems="center" 
-        p="$4" 
-        borderBottomWidth={1} 
-        borderBottomColor="$borderColor"
-        backgroundColor="$background"
-      >
-        <Button
-          size="$3"
-          chromeless
-          icon={ArrowLeft}
-          onPress={onBack}
-          mr="$3"
-        />
-      </XStack>
-      
       <GiftedChat
         messages={messages}
         onSend={onSend}
@@ -66,31 +52,15 @@ export default function ChatScreen({ groupId, groupName, onBack }: ChatScreenPro
         renderAvatar={null}
         showUserAvatar={true}
         showAvatarForEveryMessage={false}
-        textInputStyle={{
-          backgroundColor: theme.background.val,
-          color: theme.color.val,
-          borderRadius: 20,
-          paddingHorizontal: 12,
-          paddingTop: 8,
-          paddingBottom: 8,
-        }}
-        inputToolbarStyle={{
-          backgroundColor: theme.background.val,
-          borderTopColor: theme.borderColor.val,
-        }}
-        bubbleTextStyle={{
-          right: {
-            color: '#fff',
-          },
-          left: {
+        textInputProps={{
+          style: {
+            backgroundColor: theme.background.val,
             color: theme.color.val,
+            borderRadius: 20,
+            paddingHorizontal: 12,
+            paddingTop: 8,
+            paddingBottom: 8,
           },
-        }}
-        rightBubbleTextStyle={{
-          color: '#fff',
-        }}
-        leftBubbleTextStyle={{
-          color: theme.color.val,
         }}
         timeTextStyle={{
           left: {

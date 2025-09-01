@@ -78,6 +78,13 @@ function RootLayoutNav() {
             },
           }}
         />
+
+        <Stack.Screen
+          name="chats"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
     </ThemeProvider>
   )

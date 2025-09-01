@@ -58,6 +58,7 @@ export default function TabLayout() {
         name="more"
         options={{
           title: 'More',
+          headerShown: false,
           tabBarIcon: ({ color }) => <Menu color={color} />,
         }}
       />

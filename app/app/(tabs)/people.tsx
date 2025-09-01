@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { FlatList } from 'react-native';
-import { YStack, XStack, Text, Input, Button, Card, Avatar, H2, Paragraph, Circle } from 'tamagui';
+import { YStack, XStack, Text, Input, Button, Card, Avatar, H2, Paragraph, Circle, Separator, Spacer } from 'tamagui';
 
 interface Person {
   id: string;
   name: string;
-  email: string;
+  phone_number: string;
   status: 'online' | 'offline' | 'away';
 }
 
 const mockPeople: Person[] = [
-  { id: '1', name: 'John Doe', email: 'john@example.com', status: 'online' },
-  { id: '2', name: 'Jane Smith', email: 'jane@example.com', status: 'away' },
-  { id: '3', name: 'Bob Johnson', email: 'bob@example.com', status: 'offline' },
-  { id: '4', name: 'Alice Brown', email: 'alice@example.com', status: 'online' },
+  { id: '1', name: 'John Doe', phone_number: '+1 234 567 890', status: 'online' },
+  { id: '2', name: 'Jane Smith', phone_number: '+1 234 567 890', status: 'away' },
+  { id: '3', name: 'Bob Johnson', phone_number: '+1 234 567 890', status: 'offline' },
+  { id: '4', name: 'Alice Brown', phone_number: '+1 234 567 890', status: 'online' },
 ];
 
 export default function PeopleScreen() {
@@ -22,7 +22,7 @@ export default function PeopleScreen() {
 
   const filteredPeople = people.filter(person =>
     person.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    person.email.toLowerCase().includes(searchQuery.toLowerCase())
+    person.phone_number.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const getStatusColor = (status: string) => {
@@ -35,20 +35,24 @@ export default function PeopleScreen() {
   };
 
   const renderPerson = ({ item }: { item: Person }) => (
-    <Card size="$4" backgroundColor="$background" marginVertical="$1.5" pressStyle={{ scale: 0.975 }}>
+    <Card size="$4" backgroundColor="$background" pressStyle={{ scale: 0.975 }}>
       <Card.Header padding="$4">
         <XStack alignItems="center" justifyContent="space-between">
           <XStack alignItems="center" flex={1} gap="$3">
             <Avatar circular size="$5" backgroundColor="$blue9">
+              <Avatar.Image
+                accessibilityLabel={item.name}
+                src={`https://api.dicebear.com/9.x/initials/png?seed=${item.name}`}
+              />
               <Avatar.Fallback>
-                <Text color="white" fontWeight="bold" fontSize="$4">
+                <Text fontSize={16}>
                   {item.name.split(' ').map(n => n[0]).join('')}
                 </Text>
               </Avatar.Fallback>
             </Avatar>
             <YStack flex={1}>
               <Text fontWeight="600" fontSize="$4" color="$color">{item.name}</Text>
-              <Text fontSize="$3" color="$color11">{item.email}</Text>
+              <Text fontSize="$3" color="$color11">{item.phone_number}</Text>
             </YStack>
           </XStack>
           <Circle size="$1" backgroundColor={getStatusColor(item.status)} />
@@ -60,10 +64,11 @@ export default function PeopleScreen() {
   return (
     <YStack flex={1} backgroundColor="$background">
       <FlatList
-        data={filteredPeople}
+        data={people}
         keyExtractor={(item) => item.id}
         renderItem={renderPerson}
-        contentContainerStyle={{ padding: 20 }}
+        ItemSeparatorComponent={Spacer}
+        contentContainerStyle={{ padding: 16 }}
         showsVerticalScrollIndicator={false}
       />
     </YStack>

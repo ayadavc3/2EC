@@ -13,7 +13,7 @@ import {
   Text,
   Separator,
 } from "tamagui";
-import ChatScreen from "../../components/ChatScreen";
+import { router } from "expo-router";
 
 interface ChatGroup {
   id: string;
@@ -73,11 +73,23 @@ const mockGroups: ChatGroup[] = [
   },
 ];
 
-export default function TabOneScreen() {
-  const [selectedGroup, setSelectedGroup] = useState<ChatGroup | null>(null);
-
+export default function ChatGroupsScreen() {
   const renderGroupItem = ({ item }: { item: ChatGroup }) => (
-    <XStack onPress={() => setSelectedGroup(item)} padding={12} alignItems="center" gap="$3" flex={1}>
+    <XStack
+      onPress={() =>
+        router.push({
+          pathname: `/chats/chat`,
+          params: {
+            groupId: item.id,
+            groupName: item.name,
+          },
+        })
+      }
+      padding={12}
+      alignItems="center"
+      gap="$3"
+      flex={1}
+    >
       <YStack alignItems="center" position="relative">
         <Avatar circular size={40} backgroundColor="$blue5">
           <Avatar.Fallback>
@@ -141,16 +153,6 @@ export default function TabOneScreen() {
       </YStack>
     </XStack>
   );
-
-  if (selectedGroup) {
-    return (
-      <ChatScreen
-        groupId={selectedGroup.id}
-        groupName={selectedGroup.name}
-        onBack={() => setSelectedGroup(null)}
-      />
-    );
-  }
 
   return (
     <YStack flex={1} backgroundColor="$background">
