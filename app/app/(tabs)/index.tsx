@@ -1,19 +1,7 @@
-import React, { useState } from "react";
-import { FlatList } from "react-native";
-import { MessagesSquare, Users, Clock } from "@tamagui/lucide-icons";
-import {
-  Button,
-  Card,
-  H2,
-  H4,
-  Paragraph,
-  XStack,
-  YStack,
-  Avatar,
-  Text,
-  Separator,
-} from "tamagui";
+import { Clock } from "@tamagui/lucide-icons";
 import { router } from "expo-router";
+import { FlatList } from "react-native";
+import { Avatar, Paragraph, Separator, Text, XStack, YStack } from "tamagui";
 
 interface ChatGroup {
   id: string;

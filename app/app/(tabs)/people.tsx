@@ -1,36 +1,61 @@
-import React, { useState } from 'react';
-import { FlatList } from 'react-native';
-import { YStack, XStack, Text, Input, Button, Card, Avatar, H2, Paragraph, Circle, Separator, Spacer } from 'tamagui';
+import { useState } from "react";
+import { FlatList } from "react-native";
+import { Avatar, Card, Circle, Spacer, Text, XStack, YStack } from "tamagui";
 
 interface Person {
   id: string;
   name: string;
   phone_number: string;
-  status: 'online' | 'offline' | 'away';
+  status: "online" | "offline" | "away";
 }
 
 const mockPeople: Person[] = [
-  { id: '1', name: 'John Doe', phone_number: '+1 234 567 890', status: 'online' },
-  { id: '2', name: 'Jane Smith', phone_number: '+1 234 567 890', status: 'away' },
-  { id: '3', name: 'Bob Johnson', phone_number: '+1 234 567 890', status: 'offline' },
-  { id: '4', name: 'Alice Brown', phone_number: '+1 234 567 890', status: 'online' },
+  {
+    id: "1",
+    name: "John Doe",
+    phone_number: "+1 234 567 890",
+    status: "online",
+  },
+  {
+    id: "2",
+    name: "Jane Smith",
+    phone_number: "+1 234 567 890",
+    status: "away",
+  },
+  {
+    id: "3",
+    name: "Bob Johnson",
+    phone_number: "+1 234 567 890",
+    status: "offline",
+  },
+  {
+    id: "4",
+    name: "Alice Brown",
+    phone_number: "+1 234 567 890",
+    status: "online",
+  },
 ];
 
 export default function PeopleScreen() {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [people] = useState<Person[]>(mockPeople);
 
-  const filteredPeople = people.filter(person =>
-    person.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    person.phone_number.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredPeople = people.filter(
+    (person) =>
+      person.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      person.phone_number.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'online': return '#4CAF50';
-      case 'away': return '#FF9800';
-      case 'offline': return '#9E9E9E';
-      default: return '#9E9E9E';
+      case "online":
+        return "#4CAF50";
+      case "away":
+        return "#FF9800";
+      case "offline":
+        return "#9E9E9E";
+      default:
+        return "#9E9E9E";
     }
   };
 
@@ -46,13 +71,20 @@ export default function PeopleScreen() {
               />
               <Avatar.Fallback>
                 <Text fontSize={16}>
-                  {item.name.split(' ').map(n => n[0]).join('')}
+                  {item.name
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")}
                 </Text>
               </Avatar.Fallback>
             </Avatar>
             <YStack flex={1}>
-              <Text fontWeight="600" fontSize="$4" color="$color">{item.name}</Text>
-              <Text fontSize="$3" color="$color11">{item.phone_number}</Text>
+              <Text fontWeight="600" fontSize="$4" color="$color">
+                {item.name}
+              </Text>
+              <Text fontSize="$3" color="$color11">
+                {item.phone_number}
+              </Text>
             </YStack>
           </XStack>
           <Circle size="$1" backgroundColor={getStatusColor(item.status)} />
@@ -74,5 +106,3 @@ export default function PeopleScreen() {
     </YStack>
   );
 }
-
-

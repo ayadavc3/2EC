@@ -1,6 +1,6 @@
-import { View, Text } from "tamagui";
 import { useLocalSearchParams } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { View } from "tamagui";
 import ChatScreen from "../../components/ChatScreen";
 
 export default function ChatingScreen() {
@@ -13,10 +13,7 @@ export default function ChatingScreen() {
   console.log(groupId, groupName);
   return (
     <View flex={1} paddingBottom={bottom + 2}>
-      <ChatScreen
-        groupId={groupId || ""}
-        groupName={groupName || ""}
-      />
+      <ChatScreen groupId={groupId || ""} groupName={groupName || ""} />
     </View>
   );
 }

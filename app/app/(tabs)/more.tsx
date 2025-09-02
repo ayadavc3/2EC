@@ -1,55 +1,61 @@
-import React from 'react';
-import { ScrollView, Alert } from 'react-native';
-import { 
-  YStack, 
-  XStack, 
-  Text, 
-  Avatar, 
-  ListItem, 
-  YGroup, 
-  Separator,
-  Button,
-  Card,
-  Switch
-} from 'tamagui';
-import { 
-  User, 
-  CreditCard, 
-  FileText, 
-  Shield, 
-  Bell, 
-  Scan, 
-  Key, 
-  Moon, 
-  Smartphone, 
-  Globe, 
+import {
   AlertCircle,
-  ChevronRight 
-} from '@tamagui/lucide-icons';
-import { useRouter } from 'expo-router';
+  Bell,
+  ChevronRight,
+  CreditCard,
+  FileText,
+  Globe,
+  Key,
+  Moon,
+  Scan,
+  Shield,
+  Smartphone,
+  User,
+} from "@tamagui/lucide-icons";
+import { useRouter } from "expo-router";
+import { Alert, ScrollView } from "react-native";
+import {
+  Avatar,
+  Card,
+  ListItem,
+  Separator,
+  Switch,
+  Text,
+  XStack,
+  YGroup,
+  YStack,
+} from "tamagui";
 
 export default function MoreScreen() {
   const router = useRouter();
 
   const handleLogout = () => {
-    Alert.alert(
-      'Logout',
-      'Are you sure you want to logout?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'Logout', style: 'destructive', onPress: () => router.replace('/auth/welcome') },
-      ]
-    );
+    Alert.alert("Logout", "Are you sure you want to logout?", [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Logout",
+        style: "destructive",
+        onPress: () => router.replace("/auth/welcome"),
+      },
+    ]);
   };
 
   return (
-    <ScrollView style={{ flex: 1, paddingTop: 60 }} contentContainerStyle={{ padding: 12 }} showsVerticalScrollIndicator={false}>
+    <ScrollView
+      style={{ flex: 1, paddingTop: 60 }}
+      contentContainerStyle={{ padding: 12 }}
+      showsVerticalScrollIndicator={false}
+    >
       {/* User Profile Section */}
       <Card marginBottom={24} padding={16}>
         <XStack alignItems="center" gap={16}>
           <YStack flex={1} gap={4}>
-            <Text fontSize={18} fontWeight="800" color="$color">Lukas Hodzic</Text>
-            <Text fontSize={14} color="$color9">+1 234 567 890</Text>
+            <Text fontSize={18} fontWeight="800" color="$color">
+              Lukas Hodzic
+            </Text>
+            <Text fontSize={14} color="$color9">
+              +1 234 567 890
+            </Text>
           </YStack>
           <Avatar circular size={60} backgroundColor="$blue9">
             <Avatar.Image
@@ -65,7 +71,13 @@ export default function MoreScreen() {
 
       {/* Account Section */}
       <YStack marginBottom={16}>
-        <Text fontSize={12} fontWeight="600" color="$color11" marginBottom={8} marginLeft={16}>
+        <Text
+          fontSize={12}
+          fontWeight="600"
+          color="$color11"
+          marginBottom={8}
+          marginLeft={16}
+        >
           ACCOUNT
         </Text>
         <YGroup borderRadius={8} bordered size={48} separator={<Separator />}>
@@ -76,7 +88,7 @@ export default function MoreScreen() {
               title="Personal informations"
               icon={User}
               iconAfter={ChevronRight}
-              onPress={() => console.log('Personal informations pressed')}
+              onPress={() => console.log("Personal informations pressed")}
             />
           </YGroup.Item>
           <YGroup.Item>
@@ -86,7 +98,7 @@ export default function MoreScreen() {
               title="Payment details"
               icon={CreditCard}
               iconAfter={ChevronRight}
-              onPress={() => console.log('Payment details pressed')}
+              onPress={() => console.log("Payment details pressed")}
             />
           </YGroup.Item>
           <YGroup.Item>
@@ -96,7 +108,7 @@ export default function MoreScreen() {
               title="Documents"
               icon={FileText}
               iconAfter={ChevronRight}
-              onPress={() => console.log('Documents pressed')}
+              onPress={() => console.log("Documents pressed")}
             />
           </YGroup.Item>
         </YGroup>
@@ -104,7 +116,13 @@ export default function MoreScreen() {
 
       {/* Security Section */}
       <YStack marginBottom={16}>
-        <Text fontSize={13} fontWeight="600" color="$color11" marginBottom={8} marginLeft={16}>
+        <Text
+          fontSize={13}
+          fontWeight="600"
+          color="$color11"
+          marginBottom={8}
+          marginLeft={16}
+        >
           SECURITY
         </Text>
         <YGroup borderRadius={8} bordered size={48} separator={<Separator />}>
@@ -115,7 +133,7 @@ export default function MoreScreen() {
               title="Privacy"
               icon={Shield}
               iconAfter={ChevronRight}
-              onPress={() => console.log('Privacy pressed')}
+              onPress={() => console.log("Privacy pressed")}
             />
           </YGroup.Item>
           <YGroup.Item>
@@ -129,7 +147,7 @@ export default function MoreScreen() {
                   <Switch.Thumb animation="quicker" />
                 </Switch>
               }
-              onPress={() => console.log('Notifications pressed')}
+              onPress={() => console.log("Notifications pressed")}
             />
           </YGroup.Item>
           <YGroup.Item>
@@ -143,7 +161,7 @@ export default function MoreScreen() {
                   <Switch.Thumb animation="quicker" />
                 </Switch>
               }
-              onPress={() => console.log('Face ID pressed')}
+              onPress={() => console.log("Face ID pressed")}
             />
           </YGroup.Item>
           <YGroup.Item>
@@ -153,7 +171,7 @@ export default function MoreScreen() {
               title="Authorisations"
               icon={Key}
               iconAfter={ChevronRight}
-              onPress={() => console.log('Authorisations pressed')}
+              onPress={() => console.log("Authorisations pressed")}
             />
           </YGroup.Item>
         </YGroup>
@@ -161,7 +179,13 @@ export default function MoreScreen() {
 
       {/* Settings Section */}
       <YStack marginBottom={16}>
-        <Text fontSize={13} fontWeight="600" color="$color11" marginBottom={8} marginLeft={16}>
+        <Text
+          fontSize={13}
+          fontWeight="600"
+          color="$color11"
+          marginBottom={8}
+          marginLeft={16}
+        >
           SETTINGS
         </Text>
         <YGroup borderRadius={8} bordered size={48} separator={<Separator />}>
@@ -172,7 +196,7 @@ export default function MoreScreen() {
               title="Theme"
               icon={Moon}
               iconAfter={<Text>Dark</Text>}
-              onPress={() => console.log('Theme pressed')}
+              onPress={() => console.log("Theme pressed")}
             />
           </YGroup.Item>
           <YGroup.Item>
@@ -182,7 +206,7 @@ export default function MoreScreen() {
               title="App Icon"
               icon={Smartphone}
               iconAfter={ChevronRight}
-              onPress={() => console.log('App Icon pressed')}
+              onPress={() => console.log("App Icon pressed")}
             />
           </YGroup.Item>
           <YGroup.Item>
@@ -192,7 +216,7 @@ export default function MoreScreen() {
               title="Language"
               icon={Globe}
               iconAfter={ChevronRight}
-              onPress={() => console.log('Language pressed')}
+              onPress={() => console.log("Language pressed")}
             />
           </YGroup.Item>
         </YGroup>
@@ -200,7 +224,13 @@ export default function MoreScreen() {
 
       {/* Support Section */}
       <YStack marginBottom={24}>
-        <Text fontSize={13} fontWeight="600" color="$color11" marginBottom={8} marginLeft={16}>
+        <Text
+          fontSize={13}
+          fontWeight="600"
+          color="$color11"
+          marginBottom={8}
+          marginLeft={16}
+        >
           SUPPORT
         </Text>
         <YGroup bordered borderRadius={8} size={48}>
@@ -211,7 +241,7 @@ export default function MoreScreen() {
               title="Report an issue"
               icon={AlertCircle}
               iconAfter={ChevronRight}
-              onPress={() => console.log('Report an issue pressed')}
+              onPress={() => console.log("Report an issue pressed")}
             />
           </YGroup.Item>
         </YGroup>
@@ -219,10 +249,10 @@ export default function MoreScreen() {
 
       {/* Version Footer */}
       <YStack alignItems="center" paddingBottom={20}>
-        <Text fontSize={12} color="$color11">Version 1.0.0</Text>
+        <Text fontSize={12} color="$color11">
+          Version 1.0.0
+        </Text>
       </YStack>
     </ScrollView>
   );
 }
-
-

@@ -1,16 +1,15 @@
-import { Stack } from 'expo-router';
+import { Stack } from "expo-router";
 
 export default function AuthLayout() {
   return (
     <Stack
       screenOptions={{
         headerShown: false,
-        presentation: 'modal',
       }}
     >
-      <Stack.Screen name="welcome" />
-      <Stack.Screen name="phone-auth" />
-      <Stack.Screen name="verification" />
+      <Stack.Screen name="welcome" options={{ headerShown: false }} />
+      <Stack.Screen name="phone-auth" options={{ headerShown: false }} />
+      <Stack.Screen name="verification" options={{ headerShown: false }} />
     </Stack>
   );
 }

@@ -1,11 +1,11 @@
-import { Stack } from 'expo-router';
+import { Stack } from "expo-router";
 
 export default function AuthLayout() {
   return (
     <Stack
       screenOptions={{
         headerShown: true,
-        presentation: 'modal',
+        presentation: "modal",
         headerTitleStyle: {
           fontSize: 16,
         },
