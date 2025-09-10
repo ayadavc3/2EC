@@ -25,6 +25,7 @@ func main() {
 		fx.Provide(handlers.NewAuditHandler),
 		fx.Provide(handlers.NewGeolocationHandler),
 		fx.Provide(handlers.NewGroupHandler),
+		fx.Provide(handlers.NewImportHandler),
 		fx.Provide(handlers.NewMessageHandler),
 		fx.Provide(handlers.NewStudentHandler),
 		fx.Provide(handlers.NewDashboardHandler),
