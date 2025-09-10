@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { Button, H2, Input, Paragraph, YStack } from "tamagui";
+import { Button, H4, Input, Paragraph, Spacer, YStack } from "tamagui";
 
 export default function PhoneAuthScreen() {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -18,22 +18,17 @@ export default function PhoneAuthScreen() {
       flex={1}
       backgroundColor="$background"
       padding="$4"
-      justifyContent="center"
+      borderTopWidth={0.5}
+      borderTopColor="lightgray"
     >
-      <YStack marginBottom="$8" alignItems="center">
-        <H2 marginBottom="$2" textAlign="center" color="$color">
-          Enter your phone number
-        </H2>
-        <Paragraph
-          textAlign="center"
-          color="$color11"
-          lineHeight="$6"
-          paddingHorizontal="$4"
-        >
-          We'll send you a verification code to confirm your number
+      <YStack>
+        <H4 color="$color">Enter your phone number</H4>
+        <Paragraph color="$color11">
+          We&apos;ll send you a verification code to confirm your number
         </Paragraph>
       </YStack>
-
+      <Spacer />
+      <Spacer />
       <YStack gap="$4">
         <Input
           placeholder="Phone number"
@@ -52,7 +47,7 @@ export default function PhoneAuthScreen() {
           disabled={phoneNumber.length < 10}
           opacity={phoneNumber.length >= 10 ? 1 : 0.6}
         >
-          Send OTP
+          Send Verification Code
         </Button>
       </YStack>
     </YStack>

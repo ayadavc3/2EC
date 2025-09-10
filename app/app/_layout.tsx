@@ -4,7 +4,6 @@ import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { Provider } from "components/Provider";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
 import { useTheme } from "tamagui";
@@ -56,7 +55,6 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={DefaultTheme}>
-      <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
       <Stack>
         <Stack.Screen
           name="index"
