@@ -18,11 +18,13 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.ec2.app"
+      "bundleIdentifier": "com.ec2.app",
+      "googleServicesFile": "./ios/GoogleService-Info.plist"
     },
     "android": {
       "package": "com.ec2.app",
       "edgeToEdgeEnabled": true,
+      "googleServicesFile": "./android/app/google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -36,6 +38,7 @@
     "plugins": [
       "expo-router",
       "expo-font",
+      "@react-native-firebase/app",
       [
         "expo-build-properties",
         {

@@ -1,16 +1,17 @@
-import "../tamagui-web.css";
-
 import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
-import { Provider } from "components/Provider";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useColorScheme } from "react-native";
 import { useTheme } from "tamagui";
+import "../tamagui-web.css";
+
+import { Provider } from "components/Provider";
+import { Analytics, RemoteConfig } from "services/firebase";
 
 export {
   // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
+  ErrorBoundary
 } from "expo-router";
 
 export const unstable_settings = {
@@ -26,6 +27,13 @@ export default function RootLayout() {
     Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
     InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
   });
+
+  const initializeApp = useCallback(async () => {
+    await Promise.all([Analytics.initialize(), RemoteConfig.initialize()]);
+    await Analytics.logAppOpen();
+  }, []);
+
+  useEffect(() => {initializeApp();}, []);
 
   useEffect(() => {
     if (interLoaded || interError) {
