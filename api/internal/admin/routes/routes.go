@@ -65,10 +65,11 @@ func (r *AdminRoutes) SetupRoutes(app *fiber.App) {
 	group.Get("/health", r.groupHandler.Health)
 
 	// Import routes
-	csImport := app.Group("/import")
+	csImport := app.Group("/imports")
 	csImport.Get("/", r.importHandler.GetAll)
 	csImport.Post("/students", r.importHandler.StudentImport)
 	csImport.Post("/guardians", r.importHandler.GuardianImport)
+	csImport.Get("/status/:sessionId", r.importHandler.SSEStatus)
 
 	// Messaging routes
 	messaging := app.Group("/messages")
