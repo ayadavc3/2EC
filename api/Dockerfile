@@ -43,7 +43,7 @@ RUN chown -R appuser:appgroup /app
 USER appuser
 
 # Expose port (default 3000)
-EXPOSE 3000
+EXPOSE 4000
 
 # Run the admin API
 CMD ["doppler", "run", "--", "./admin-api"]
