@@ -12,7 +12,8 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "lint": "expo lint"
   },
   "jest": {
     "preset": "jest-expo"
@@ -64,6 +65,11 @@
     "@tamagui/metro-plugin": "^1.132.23",
     "@types/react": "~19.0.10",
     "@types/react-native": "^0.73.0",
+    "eslint": "^9.0.0",
+    "eslint-config-expo": "~9.2.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "prettier": "^3.6.2",
     "typescript": "~5.8.3"
   }
 }

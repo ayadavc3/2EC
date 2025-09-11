@@ -1,10 +1,19 @@
-import React, { useState, useRef } from 'react';
-import { TextInput } from 'react-native';
-import { YStack, XStack, Text, Input, Button, H2, Paragraph } from 'tamagui';
-import { useRouter } from 'expo-router';
+import { useRouter } from "expo-router";
+import { useRef, useState } from "react";
+import { TextInput } from "react-native";
+import {
+  Button,
+  H4,
+  Input,
+  Paragraph,
+  Spacer,
+  Text,
+  XStack,
+  YStack,
+} from "tamagui";
 
 export default function VerificationScreen() {
-  const [otp, setOTP] = useState(['', '', '', '', '', '']);
+  const [otp, setOTP] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef<(TextInput | null)[]>([]);
   const router = useRouter();
 
@@ -20,34 +29,35 @@ export default function VerificationScreen() {
   };
 
   const handleVerify = () => {
-    const otpCode = otp.join('');
+    const otpCode = otp.join("");
     if (otpCode.length === 6) {
       // Navigate to main app
-      router.replace('/(tabs)');
+      router.replace("/(tabs)");
     }
   };
 
   const handleResendOTP = () => {
     // Logic to resend OTP
-    console.log('Resending OTP...');
+    console.log("Resending OTP...");
   };
 
   return (
-    <YStack flex={1} backgroundColor="$background" padding="$4" justifyContent="center">
-      <YStack marginBottom="$8" alignItems="center">
-        <H2 marginBottom="$2" textAlign="center" color="$color">
-          Enter verification code
-        </H2>
-        <Paragraph 
-          textAlign="center" 
-          color="$color11" 
-          lineHeight="$6"
-          paddingHorizontal="$4"
-        >
-          We've sent a 6-digit code to your phone number
+    <YStack
+      flex={1}
+      backgroundColor="$background"
+      padding="$4"
+      borderTopWidth={0.5}
+      borderTopColor="lightgray"
+    >
+      <YStack>
+        <H4 color="$color">Enter verification code</H4>
+        <Paragraph color="$color11">
+          We&apos;ve sent a 6-digit varification code {"\n"}on{" "}
+          <Text color="$blue10">+91 9876543210</Text>
         </Paragraph>
       </YStack>
-
+      <Spacer />
+      <Spacer />
       <XStack justifyContent="space-between" marginBottom="$6" gap="$2">
         {otp.map((digit, index) => (
           <Input
@@ -70,24 +80,18 @@ export default function VerificationScreen() {
       <YStack gap="$4">
         <Button
           size="$4"
-          theme={otp.join('').length === 6 ? "blue" : "gray"}
+          theme={otp.join("").length === 6 ? "blue" : "gray"}
           onPress={handleVerify}
-          disabled={otp.join('').length !== 6}
-          opacity={otp.join('').length === 6 ? 1 : 0.6}
+          disabled={otp.join("").length !== 6}
+          opacity={otp.join("").length === 6 ? 1 : 0.6}
         >
           Verify
         </Button>
 
-        <Button
-          variant="outlined"
-          onPress={handleResendOTP}
-          chromeless
-        >
+        <Button variant="outlined" onPress={handleResendOTP} chromeless>
           <Text color="$blue10">Didn't receive code? Resend</Text>
         </Button>
       </YStack>
     </YStack>
   );
 }
-
-

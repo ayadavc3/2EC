@@ -13,19 +13,21 @@ type AdminRoutes struct {
 	auditHandler       *handlers.AuditHandler
 	geolocationHandler *handlers.GeolocationHandler
 	groupHandler       *handlers.GroupHandler
+	importHandler      *handlers.ImportHandler
 	studentHandler     *handlers.StudentHandler
 	dashboardHandler   *handlers.DashboardHandler
 	messageHandler     *handlers.MessageHandler
 }
 
 // NewUserRoutes creates a new user routes instance
-func NewAdminRoutes(adminHandler *handlers.AdminHandler, adminAPIHandler *handlers.AdminAPIHandler, auditHandler *handlers.AuditHandler, geolocationHandler *handlers.GeolocationHandler, groupHandler *handlers.GroupHandler, studentHandler *handlers.StudentHandler, dashboardHandler *handlers.DashboardHandler, messageHandler *handlers.MessageHandler) *AdminRoutes {
+func NewAdminRoutes(adminHandler *handlers.AdminHandler, adminAPIHandler *handlers.AdminAPIHandler, auditHandler *handlers.AuditHandler, geolocationHandler *handlers.GeolocationHandler, groupHandler *handlers.GroupHandler, importHandler *handlers.ImportHandler, studentHandler *handlers.StudentHandler, dashboardHandler *handlers.DashboardHandler, messageHandler *handlers.MessageHandler) *AdminRoutes {
 	return &AdminRoutes{
 		adminHandler:       adminHandler,
 		adminAPIHandler:    adminAPIHandler,
 		auditHandler:       auditHandler,
 		geolocationHandler: geolocationHandler,
 		groupHandler:       groupHandler,
+		importHandler:      importHandler,
 		studentHandler:     studentHandler,
 		dashboardHandler:   dashboardHandler,
 		messageHandler:     messageHandler,
@@ -61,6 +63,13 @@ func (r *AdminRoutes) SetupRoutes(app *fiber.App) {
 	group := app.Group("/groups")
 	group.Get("/", r.groupHandler.Home)
 	group.Get("/health", r.groupHandler.Health)
+
+	// Import routes
+	csImport := app.Group("/imports")
+	csImport.Get("/", r.importHandler.GetAll)
+	csImport.Post("/students", r.importHandler.StudentImport)
+	csImport.Post("/guardians", r.importHandler.GuardianImport)
+	csImport.Get("/status/:sessionId", r.importHandler.SSEStatus)
 
 	// Messaging routes
 	messaging := app.Group("/messages")

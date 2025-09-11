@@ -35,7 +35,6 @@ WORKDIR /app
 
 # Copy the binary from builder stage
 COPY --from=builder /app/admin-api .
-COPY --from=builder /app/.env .
 
 # Change ownership to non-root user
 RUN chown -R appuser:appgroup /app
@@ -44,7 +43,7 @@ RUN chown -R appuser:appgroup /app
 USER appuser
 
 # Expose port (default 3000)
-EXPOSE 3000
+EXPOSE 4000
 
 # Run the admin API
 CMD ["doppler", "run", "--", "./admin-api"]

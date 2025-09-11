@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "543568290806",
+    "project_id": "eec-mobile-app",
+    "storage_bucket": "eec-mobile-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:543568290806:android:238662b4a948405103ddd7",
+        "android_client_info": {
+          "package_name": "com.ec2.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuX41qJp5tCvQ32PqSE_vy4I_xVpqNhZY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

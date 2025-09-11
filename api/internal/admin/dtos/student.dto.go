@@ -99,3 +99,32 @@ func ToStudentResponses(students []*ent.Student) []StudentResponse {
 	}
 	return responses
 }
+
+// StudentCSVRecord represents a CSV row for student import
+type StudentCSVRecord struct {
+	FirstName   string `csv:"first_name" validate:"required"`
+	LastName    string `csv:"last_name" validate:"required"`
+	MiddleName  string `csv:"middle_name"`
+	PhoneNumber string `csv:"phone_number" validate:"required"`
+	Email       string `csv:"email"`
+	PhotoURL    string `csv:"photo_url"`
+}
+
+// ImportStatus represents the status of import process
+type ImportStatus struct {
+	Status      string   `json:"status"`
+	Message     string   `json:"message"`
+	Progress    int      `json:"progress"`
+	Total       int      `json:"total"`
+	ProcessedAt string   `json:"processed_at"`
+	Errors      []string `json:"errors,omitempty"`
+}
+
+// ImportResult represents the final result of import process
+type ImportResult struct {
+	TotalRecords     int      `json:"total_records"`
+	SuccessfulImport int      `json:"successful_import"`
+	FailedImport     int      `json:"failed_import"`
+	Errors           []string `json:"errors"`
+	CompletedAt      string   `json:"completed_at"`
+}

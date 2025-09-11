@@ -1,163 +1,258 @@
-import React from 'react';
-import { ScrollView, Alert } from 'react-native';
-import { YStack, XStack, Text, Card, Avatar, H2, Paragraph, Separator } from 'tamagui';
-import { useRouter } from 'expo-router';
-
-interface MenuItem {
-  id: string;
-  title: string;
-  icon: string;
-  action: () => void;
-  color?: string;
-}
+import {
+  AlertCircle,
+  Bell,
+  ChevronRight,
+  CreditCard,
+  FileText,
+  Globe,
+  Key,
+  Moon,
+  Scan,
+  Shield,
+  Smartphone,
+  User,
+} from "@tamagui/lucide-icons";
+import { useRouter } from "expo-router";
+import { Alert, ScrollView } from "react-native";
+import {
+  Avatar,
+  Card,
+  ListItem,
+  Separator,
+  Switch,
+  Text,
+  XStack,
+  YGroup,
+  YStack,
+} from "tamagui";
 
 export default function MoreScreen() {
   const router = useRouter();
 
   const handleLogout = () => {
-    Alert.alert(
-      'Logout',
-      'Are you sure you want to logout?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'Logout', style: 'destructive', onPress: () => router.replace('/auth/welcome') },
-      ]
-    );
+    Alert.alert("Logout", "Are you sure you want to logout?", [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Logout",
+        style: "destructive",
+        onPress: () => router.replace("/auth/welcome"),
+      },
+    ]);
   };
 
-  const menuItems: MenuItem[] = [
-    {
-      id: 'profile',
-      title: 'Profile Settings',
-      icon: '👤',
-      action: () => console.log('Profile pressed'),
-    },
-    {
-      id: 'notifications',
-      title: 'Notification Settings',
-      icon: '🔔',
-      action: () => console.log('Notifications pressed'),
-    },
-    {
-      id: 'privacy',
-      title: 'Privacy & Security',
-      icon: '🔒',
-      action: () => console.log('Privacy pressed'),
-    },
-    {
-      id: 'theme',
-      title: 'Theme & Appearance',
-      icon: '🎨',
-      action: () => console.log('Theme pressed'),
-    },
-    {
-      id: 'language',
-      title: 'Language',
-      icon: '🌍',
-      action: () => console.log('Language pressed'),
-    },
-    {
-      id: 'storage',
-      title: 'Storage & Data',
-      icon: '💾',
-      action: () => console.log('Storage pressed'),
-    },
-    {
-      id: 'help',
-      title: 'Help & Support',
-      icon: '❓',
-      action: () => console.log('Help pressed'),
-    },
-    {
-      id: 'about',
-      title: 'About',
-      icon: 'ℹ️',
-      action: () => console.log('About pressed'),
-    },
-    {
-      id: 'feedback',
-      title: 'Send Feedback',
-      icon: '📝',
-      action: () => console.log('Feedback pressed'),
-    },
-    {
-      id: 'logout',
-      title: 'Logout',
-      icon: '🚪',
-      action: handleLogout,
-      color: '#FF3B30',
-    },
-  ];
-
-  const renderMenuItem = (item: MenuItem) => (
-    <Card.Header 
-      key={item.id}
-      pressStyle={{ scale: 0.98, opacity: 0.8 }}
-      onPress={item.action}
-      borderBottomWidth={1}
-      borderBottomColor="$borderColor"
-    >
-      <XStack alignItems="center" justifyContent="space-between">
-        <XStack alignItems="center" gap="$3" flex={1}>
-          <Text fontSize="$5" width="$3" textAlign="center">{item.icon}</Text>
-          <Text fontSize="$4" color={item.color || "$color"}>
-            {item.title}
-          </Text>
-        </XStack>
-        <Text fontSize="$5" color="$color9" fontWeight="bold">›</Text>
-      </XStack>
-    </Card.Header>
-  );
-
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: '$background' }}>
-      <Card size="$4" margin="$4">
-        <Card.Header>
-          <XStack alignItems="center" gap="$4">
-            <Avatar circular size="$6" backgroundColor="$blue9">
-              <Avatar.Fallback>
-                <Text color="white" fontSize="$6" fontWeight="bold">JD</Text>
-              </Avatar.Fallback>
-            </Avatar>
-            <YStack flex={1}>
-              <Text fontSize="$5" fontWeight="600" color="$color">John Doe</Text>
-              <Text fontSize="$3" color="$color11">john.doe@example.com</Text>
-            </YStack>
-            <Text color="$blue10" fontSize="$4" fontWeight="500">Edit</Text>
-          </XStack>
-        </Card.Header>
+    <ScrollView
+      style={{ flex: 1, paddingTop: 60 }}
+      contentContainerStyle={{ padding: 12 }}
+      showsVerticalScrollIndicator={false}
+    >
+      {/* User Profile Section */}
+      <Card marginBottom={24} padding={16}>
+        <XStack alignItems="center" gap={16}>
+          <YStack flex={1} gap={4}>
+            <Text fontSize={18} fontWeight="800" color="$color">
+              Lukas Hodzic
+            </Text>
+            <Text fontSize={14} color="$color9">
+              +1 234 567 890
+            </Text>
+          </YStack>
+          <Avatar circular size={60} backgroundColor="$blue9">
+            <Avatar.Image
+              accessibilityLabel="Lukas Hodzic"
+              src="https://api.dicebear.com/9.x/initials/png?seed=Lukas Hodzic"
+            />
+            <Avatar.Fallback>
+              <Text fontSize={16}>LH</Text>
+            </Avatar.Fallback>
+          </Avatar>
+        </XStack>
       </Card>
 
-      <Card margin="$4">
-        <Card.Header backgroundColor="$gray2">
-          <Text fontSize="$4" fontWeight="600" color="$color11">Account</Text>
-        </Card.Header>
-        {menuItems.slice(0, 3).map(renderMenuItem)}
-      </Card>
+      {/* Account Section */}
+      <YStack marginBottom={16}>
+        <Text
+          fontSize={12}
+          fontWeight="600"
+          color="$color11"
+          marginBottom={8}
+          marginLeft={16}
+        >
+          ACCOUNT
+        </Text>
+        <YGroup borderRadius={8} bordered size={48} separator={<Separator />}>
+          <YGroup.Item>
+            <ListItem
+              hoverTheme
+              pressTheme
+              title="Personal informations"
+              icon={User}
+              iconAfter={ChevronRight}
+              onPress={() => console.log("Personal informations pressed")}
+            />
+          </YGroup.Item>
+          <YGroup.Item>
+            <ListItem
+              hoverTheme
+              pressTheme
+              title="Payment details"
+              icon={CreditCard}
+              iconAfter={ChevronRight}
+              onPress={() => console.log("Payment details pressed")}
+            />
+          </YGroup.Item>
+          <YGroup.Item>
+            <ListItem
+              hoverTheme
+              pressTheme
+              title="Documents"
+              icon={FileText}
+              iconAfter={ChevronRight}
+              onPress={() => console.log("Documents pressed")}
+            />
+          </YGroup.Item>
+        </YGroup>
+      </YStack>
 
-      <Card margin="$4">
-        <Card.Header backgroundColor="$gray2">
-          <Text fontSize="$4" fontWeight="600" color="$color11">Preferences</Text>
-        </Card.Header>
-        {menuItems.slice(3, 6).map(renderMenuItem)}
-      </Card>
+      {/* Security Section */}
+      <YStack marginBottom={16}>
+        <Text
+          fontSize={13}
+          fontWeight="600"
+          color="$color11"
+          marginBottom={8}
+          marginLeft={16}
+        >
+          SECURITY
+        </Text>
+        <YGroup borderRadius={8} bordered size={48} separator={<Separator />}>
+          <YGroup.Item>
+            <ListItem
+              hoverTheme
+              pressTheme
+              title="Privacy"
+              icon={Shield}
+              iconAfter={ChevronRight}
+              onPress={() => console.log("Privacy pressed")}
+            />
+          </YGroup.Item>
+          <YGroup.Item>
+            <ListItem
+              hoverTheme
+              pressTheme
+              title="Notifications"
+              icon={Bell}
+              iconAfter={
+                <Switch id="notifications" size="$2" defaultChecked={true}>
+                  <Switch.Thumb animation="quicker" />
+                </Switch>
+              }
+              onPress={() => console.log("Notifications pressed")}
+            />
+          </YGroup.Item>
+          <YGroup.Item>
+            <ListItem
+              hoverTheme
+              pressTheme
+              title="Face ID"
+              icon={Scan}
+              iconAfter={
+                <Switch id="face-id" size="$2" defaultChecked={true}>
+                  <Switch.Thumb animation="quicker" />
+                </Switch>
+              }
+              onPress={() => console.log("Face ID pressed")}
+            />
+          </YGroup.Item>
+          <YGroup.Item>
+            <ListItem
+              hoverTheme
+              pressTheme
+              title="Authorisations"
+              icon={Key}
+              iconAfter={ChevronRight}
+              onPress={() => console.log("Authorisations pressed")}
+            />
+          </YGroup.Item>
+        </YGroup>
+      </YStack>
 
-      <Card margin="$4">
-        <Card.Header backgroundColor="$gray2">
-          <Text fontSize="$4" fontWeight="600" color="$color11">Support</Text>
-        </Card.Header>
-        {menuItems.slice(6, 9).map(renderMenuItem)}
-      </Card>
+      {/* Settings Section */}
+      <YStack marginBottom={16}>
+        <Text
+          fontSize={13}
+          fontWeight="600"
+          color="$color11"
+          marginBottom={8}
+          marginLeft={16}
+        >
+          SETTINGS
+        </Text>
+        <YGroup borderRadius={8} bordered size={48} separator={<Separator />}>
+          <YGroup.Item>
+            <ListItem
+              hoverTheme
+              pressTheme
+              title="Theme"
+              icon={Moon}
+              iconAfter={<Text>Dark</Text>}
+              onPress={() => console.log("Theme pressed")}
+            />
+          </YGroup.Item>
+          <YGroup.Item>
+            <ListItem
+              hoverTheme
+              pressTheme
+              title="App Icon"
+              icon={Smartphone}
+              iconAfter={ChevronRight}
+              onPress={() => console.log("App Icon pressed")}
+            />
+          </YGroup.Item>
+          <YGroup.Item>
+            <ListItem
+              hoverTheme
+              pressTheme
+              title="Language"
+              icon={Globe}
+              iconAfter={ChevronRight}
+              onPress={() => console.log("Language pressed")}
+            />
+          </YGroup.Item>
+        </YGroup>
+      </YStack>
 
-      <Card margin="$4">
-        {menuItems.slice(9).map(renderMenuItem)}
-      </Card>
+      {/* Support Section */}
+      <YStack marginBottom={24}>
+        <Text
+          fontSize={13}
+          fontWeight="600"
+          color="$color11"
+          marginBottom={8}
+          marginLeft={16}
+        >
+          SUPPORT
+        </Text>
+        <YGroup bordered borderRadius={8} size={48}>
+          <YGroup.Item>
+            <ListItem
+              hoverTheme
+              pressTheme
+              title="Report an issue"
+              icon={AlertCircle}
+              iconAfter={ChevronRight}
+              onPress={() => console.log("Report an issue pressed")}
+            />
+          </YGroup.Item>
+        </YGroup>
+      </YStack>
 
-      <YStack padding="$4" alignItems="center">
-        <Text fontSize="$2" color="$color11">Version 1.0.0</Text>
+      {/* Version Footer */}
+      <YStack alignItems="center" paddingBottom={20}>
+        <Text fontSize={12} color="$color11">
+          Version 1.0.0
+        </Text>
       </YStack>
     </ScrollView>
   );
 }
-
-

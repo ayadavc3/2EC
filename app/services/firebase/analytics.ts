@@ -1,10 +1,10 @@
 import {
-  getAnalytics,
-  logEvent,
-  setAnalyticsCollectionEnabled,
-  setUserProperties as setUserPropertiesFirebase,
-  setUserId,
-  setUserProperty,
+    getAnalytics,
+    logEvent,
+    setAnalyticsCollectionEnabled,
+    setUserId,
+    setUserProperties as setUserPropertiesFirebase,
+    setUserProperty,
 } from "@react-native-firebase/analytics";
 
 const analytics = getAnalytics();

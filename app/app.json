@@ -19,19 +19,12 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.ec2.app",
-      "infoPlist": {
-          "UIBackgroundModes": ["remote-notification"]
-        },
-        "entitlements": {
-          "aps-environment": "development",
-          "com.apple.security.application-groups": [
-            "group.${ios.bundleIdentifier}.onesignal"
-          ]
-        }
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "package": "com.ec2.app",
       "edgeToEdgeEnabled": true,
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -49,6 +42,7 @@
       },
       "expo-router",
       "expo-font",
+      "@react-native-firebase/app",
       [
         "expo-build-properties",
         {

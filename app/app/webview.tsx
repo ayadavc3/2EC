@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
-import { ActivityIndicator, Alert } from 'react-native';
-import { WebView } from 'react-native-webview';
-import { YStack, XStack, Text, Button, H3, Spinner } from 'tamagui';
-import { useRouter, useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from "expo-router";
+import React, { useState } from "react";
+import { Alert } from "react-native";
+import { WebView } from "react-native-webview";
+import { Button, Spinner, Text, XStack, YStack } from "tamagui";
 
 export default function WebViewScreen() {
   const router = useRouter();
-  const { url, title } = useLocalSearchParams<{ url?: string; title?: string }>();
-  
+  const { url, title } = useLocalSearchParams<{
+    url?: string;
+    title?: string;
+  }>();
+
   const [loading, setLoading] = useState(true);
-  const [currentUrl, setCurrentUrl] = useState(url || 'https://example.com');
+  const [currentUrl, setCurrentUrl] = useState(url || "https://example.com");
   const [canGoBack, setCanGoBack] = useState(false);
   const [canGoForward, setCanGoForward] = useState(false);
 
@@ -37,11 +40,11 @@ export default function WebViewScreen() {
 
   const handleError = () => {
     Alert.alert(
-      'Error',
-      'Failed to load the webpage. Please check your internet connection and try again.',
+      "Error",
+      "Failed to load the webpage. Please check your internet connection and try again.",
       [
-        { text: 'Retry', onPress: handleRefresh },
-        { text: 'Close', onPress: handleClose },
+        { text: "Retry", onPress: handleRefresh },
+        { text: "Close", onPress: handleClose },
       ]
     );
   };
@@ -49,42 +52,46 @@ export default function WebViewScreen() {
   return (
     <YStack flex={1} backgroundColor="$background">
       {/* Header */}
-      <XStack 
-        backgroundColor="$background" 
-        paddingTop="$12" 
-        paddingHorizontal="$4" 
-        paddingBottom="$3" 
-        alignItems="center" 
-        borderBottomWidth={1} 
+      <XStack
+        backgroundColor="$background"
+        paddingTop="$12"
+        paddingHorizontal="$4"
+        paddingBottom="$3"
+        alignItems="center"
+        borderBottomWidth={1}
         borderBottomColor="$borderColor"
       >
-        <Button 
-          size="$3" 
-          circular 
-          backgroundColor="$gray5" 
+        <Button
+          size="$3"
+          circular
+          backgroundColor="$gray5"
           onPress={handleClose}
           chromeless
         >
-          <Text fontSize="$4" fontWeight="bold" color="$color11">✕</Text>
+          <Text fontSize="$4" fontWeight="bold" color="$color11">
+            ✕
+          </Text>
         </Button>
-        
+
         <YStack flex={1} marginHorizontal="$3">
           <Text fontSize="$4" fontWeight="600" color="$color" numberOfLines={1}>
-            {title || 'WebView'}
+            {title || "WebView"}
           </Text>
           <Text fontSize="$2" color="$color11" numberOfLines={1}>
             {currentUrl}
           </Text>
         </YStack>
 
-        <Button 
-          size="$3" 
-          circular 
-          backgroundColor="$gray5" 
+        <Button
+          size="$3"
+          circular
+          backgroundColor="$gray5"
           onPress={handleRefresh}
           chromeless
         >
-          <Text fontSize="$5" color="$color11">↻</Text>
+          <Text fontSize="$5" color="$color11">
+            ↻
+          </Text>
         </Button>
       </XStack>
 
@@ -107,31 +114,33 @@ export default function WebViewScreen() {
           startInLoadingState={true}
           scalesPageToFit={true}
         />
-        
+
         {loading && (
-          <YStack 
-            position="absolute" 
-            top={0} 
-            left={0} 
-            right={0} 
-            bottom={0} 
-            backgroundColor="rgba(255, 255, 255, 0.9)" 
-            alignItems="center" 
+          <YStack
+            position="absolute"
+            top={0}
+            left={0}
+            right={0}
+            bottom={0}
+            backgroundColor="rgba(255, 255, 255, 0.9)"
+            alignItems="center"
             justifyContent="center"
           >
             <Spinner size="large" color="$blue9" />
-            <Text marginTop="$3" fontSize="$4" color="$color11">Loading...</Text>
+            <Text marginTop="$3" fontSize="$4" color="$color11">
+              Loading...
+            </Text>
           </YStack>
         )}
       </YStack>
 
       {/* Navigation Bar */}
-      <XStack 
-        backgroundColor="$background" 
-        paddingHorizontal="$4" 
-        paddingVertical="$3" 
-        borderTopWidth={1} 
-        borderTopColor="$borderColor" 
+      <XStack
+        backgroundColor="$background"
+        paddingHorizontal="$4"
+        paddingVertical="$3"
+        borderTopWidth={1}
+        borderTopColor="$borderColor"
         justifyContent="space-around"
       >
         <Button
@@ -142,9 +151,9 @@ export default function WebViewScreen() {
           disabled={!canGoBack}
           chromeless
         >
-          <Text 
-            fontSize="$5" 
-            color={canGoBack ? "$blue10" : "$color9"} 
+          <Text
+            fontSize="$5"
+            color={canGoBack ? "$blue10" : "$color9"}
             fontWeight="bold"
           >
             ←
@@ -159,27 +168,27 @@ export default function WebViewScreen() {
           disabled={!canGoForward}
           chromeless
         >
-          <Text 
-            fontSize="$5" 
-            color={canGoForward ? "$blue10" : "$color9"} 
+          <Text
+            fontSize="$5"
+            color={canGoForward ? "$blue10" : "$color9"}
             fontWeight="bold"
           >
             →
           </Text>
         </Button>
 
-        <Button 
-          size="$4" 
-          circular 
-          backgroundColor="$gray5" 
+        <Button
+          size="$4"
+          circular
+          backgroundColor="$gray5"
           onPress={handleRefresh}
           chromeless
         >
-          <Text fontSize="$5" color="$blue10" fontWeight="bold">↻</Text>
+          <Text fontSize="$5" color="$blue10" fontWeight="bold">
+            ↻
+          </Text>
         </Button>
       </XStack>
     </YStack>
   );
 }
-
-

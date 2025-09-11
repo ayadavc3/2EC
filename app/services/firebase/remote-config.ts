@@ -1,9 +1,9 @@
 import {
-  getAll,
-  setDefaults,
-  getRemoteConfig,
-  fetchAndActivate,
-  setConfigSettings,
+    fetchAndActivate,
+    getAll,
+    getRemoteConfig,
+    setConfigSettings,
+    setDefaults,
 } from "@react-native-firebase/remote-config";
 
 // import { Sentry } from "@/services/sentry";
