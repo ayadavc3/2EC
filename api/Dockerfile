@@ -17,7 +17,8 @@ RUN go mod download
 COPY . .
 
 # Build the admin API binary
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o admin-api ./cmd/admin-api
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o admin ./cmd/admin-api
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o user ./cmd/user-api
 
 # Final stage
 FROM alpine:latest
@@ -34,7 +35,11 @@ RUN addgroup -g 1001 -S appgroup && \
 WORKDIR /app
 
 # Copy the binary from builder stage
-COPY --from=builder /app/admin-api .
+COPY --from=builder /app/admin .
+COPY --from=builder /app/user .
+
+# Create uploads directory
+RUN mkdir -p /app/uploads
 
 # Change ownership to non-root user
 RUN chown -R appuser:appgroup /app
@@ -42,8 +47,11 @@ RUN chown -R appuser:appgroup /app
 # Switch to non-root user
 USER appuser
 
-# Expose port (default 3000)
+# Expose port (default 4000)
 EXPOSE 4000
 
-# Run the admin API
-CMD ["doppler", "run", "--", "./admin-api"]
+# Run the API
+ENTRYPOINT ["doppler", "run", "--"]
+
+# Run the admin API by default
+CMD ["./admin"]

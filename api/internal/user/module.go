@@ -31,7 +31,7 @@ func NewUserServer(lc fx.Lifecycle, cfg *config.Config, userRoutes *routes.UserR
 	lc.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
 			go func() {
-				if err := app.Listen("0.0.0.0:3000"); err != nil {
+				if err := app.Listen("0.0.0.0:4000"); err != nil {
 					panic(err)
 				}
 			}()
