@@ -14,6 +14,7 @@ import (
 
 	"goapi/internal/admin/dtos"
 	"goapi/internal/shared/database"
+	"goapi/pkg/utils/jsend"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
@@ -394,13 +395,53 @@ func (h *ImportHandler) sendStatus(sessionID string, status dtos.ImportStatus) {
 func (h *ImportHandler) GuardianImport(c *fiber.Ctx) error {
 	file, err := c.FormFile("document")
 	if err != nil {
-		return err
-	}
-	// Save file inside uploads folder under current working directory:
-	err = c.SaveFile(file, fmt.Sprintf("./uploads/guardian-import-%d.csv", time.Now().Unix()))
-	if err != nil {
-		return err
+		return c.Status(fiber.StatusBadRequest).JSON(
+			jsend.Fail(fiber.Map{
+				"document": "A CSV file is required",
+			}),
+		)
 	}
 
-	return c.SendString("File saved successfully")
+	// validate the file
+	if !strings.HasSuffix(strings.ToLower(file.Filename), ".csv") {
+		return c.Status(fiber.StatusBadRequest).JSON(
+			jsend.Fail(fiber.Map{
+				"document": "Only csv file is supported",
+			}),
+		)
+	}
+
+	// Save file inside uploads folder under current working directory:
+	filename := fmt.Sprintf("./uploads/guardian-import-%d.csv", time.Now().Unix())
+	err = c.SaveFile(file, filename)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(
+			jsend.Error("Failed to save uploaded file"),
+		)
+	}
+
+	// read the file
+	src, err := file.Open()
+	if err != nil {
+		h.logger.Error("Failed to open uploaded file", "error", err)
+		return c.Status(fiber.StatusInternalServerError).JSON(
+			jsend.Error("Failed to process uploaded file"),
+		)
+	}
+	defer src.Close()
+
+	// parse the file and start the import process in a goroutine later
+	records, err := h.parseStudentCSV(src)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(
+			jsend.Error("Failed to parse uploaded csv file"),
+		)
+	}
+
+	// Start validation process and collect errors
+	// Start creating students in the database and collect errors
+	// Save reports in a separate file
+	// Update import request with the results and status
+
+	return c.JSON(jsend.Success("records", records))
 }

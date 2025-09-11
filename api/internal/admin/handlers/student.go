@@ -1,10 +1,10 @@
 package handlers
 
 import (
-	"fmt"
 	"goapi/ent/student"
 	"goapi/internal/admin/dtos"
 	"goapi/internal/shared/database"
+	"goapi/pkg/utils/jsend"
 	"log/slog"
 	"time"
 
@@ -15,19 +15,19 @@ import (
 
 // UserHandler handles user-specific endpoints
 type StudentHandler struct {
-	db     *database.Database
-	logger *slog.Logger
+	db       *database.Database
+	logger   *slog.Logger
+	validate *validator.Validate
 }
 
 // NewUserHandler creates a new user handler
 func NewStudentHandler(db *database.Database, logger *slog.Logger) *StudentHandler {
 	return &StudentHandler{
-		db:     db,
-		logger: logger,
+		db:       db,
+		logger:   logger,
+		validate: validator.New(),
 	}
 }
-
-var validate *validator.Validate = validator.New()
 
 // Home returns welcome message for user API
 func (h *StudentHandler) GetAll(c *fiber.Ctx) error {
@@ -38,48 +38,53 @@ func (h *StudentHandler) GetAll(c *fiber.Ctx) error {
 		All(c.Context())
 
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"error": err.Error(),
-		})
+		return c.Status(fiber.StatusInternalServerError).JSON(
+			jsend.Error("Failed to get students data. try again later"),
+		)
 	}
+
 	// Convert to clean DTO response
-	response := dtos.ToStudentResponses(students)
-	return c.JSON(response)
+	result := dtos.ToStudentResponses(students)
+	return c.JSON(jsend.Success("students", result))
 }
 
 // Health check endpoint
 func (h *StudentHandler) GetById(c *fiber.Ctx) error {
 	studentId := c.Params("id")
 	if studentId == "" {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": "Student ID is required",
-		})
+		return c.Status(fiber.StatusBadRequest).JSON(
+			jsend.Fail("Student id is required for this request"),
+		)
 	}
 
-	student, err := h.db.Client.Student.Query().WithGuardians().Where(student.ID(studentId), student.Deleted(false)).First(c.Context())
+	student, err := h.db.Client.Student.
+		Query().
+		WithGuardians().
+		Where(student.ID(studentId), student.Deleted(false)).
+		First(c.Context())
+
 	if err != nil {
-		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
-			"error": "Student record not found",
-		})
+		return c.Status(fiber.StatusNotFound).JSON(
+			jsend.Error("Student record not found"),
+		)
 	}
 
-	return c.JSON(dtos.ToStudentResponse(student))
+	result := dtos.ToStudentResponse(student)
+	return c.JSON(jsend.Success("student", result))
 }
 
 func (h *StudentHandler) Create(c *fiber.Ctx) error {
 	var args dtos.StudentCreateArgs
 	if err := c.BodyParser(&args); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": "Invalid request body",
-		})
+		return c.Status(fiber.StatusBadRequest).JSON(
+			jsend.Fail("Invalid request body"),
+		)
 	}
 
-	fmt.Println(args)
-
-	if err := validate.Struct(&args); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": "Validation failed",
-		})
+	if err := h.validate.Struct(&args); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(
+			jsend.Fail("Data validation failed. check the request body"),
+		)
 	}
 
 	student, err := h.db.Client.Student.Create().
@@ -92,26 +97,27 @@ func (h *StudentHandler) Create(c *fiber.Ctx) error {
 		Save(c.Context())
 
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"error": "Failed to create student",
-		})
+		return c.Status(fiber.StatusInternalServerError).JSON(
+			jsend.Error("Failed to create student"),
+		)
 	}
 
-	return c.JSON(dtos.ToStudentResponse(student))
+	result := dtos.ToStudentResponse(student)
+	return c.JSON(jsend.Success("student", result))
 }
 
 func (h *StudentHandler) Update(c *fiber.Ctx) error {
 	var args dtos.StudentUpdateArgs
 	if err := c.BodyParser(&args); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": "Invalid request body",
-		})
+		return c.Status(fiber.StatusBadRequest).JSON(
+			jsend.Fail("Invalid request body"),
+		)
 	}
 
-	if err := validate.Struct(args); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": "Validation failed",
-		})
+	if err := h.validate.Struct(&args); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(
+			jsend.Fail("Data validation failed. check the request body"),
+		)
 	}
 
 	student, err := h.db.Client.Student.UpdateOneID(c.Params("id")).
@@ -122,20 +128,21 @@ func (h *StudentHandler) Update(c *fiber.Ctx) error {
 		Save(c.Context())
 
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"error": "Failed to update student",
-		})
+		return c.Status(fiber.StatusInternalServerError).JSON(
+			jsend.Error("Failed to update student"),
+		)
 	}
 
-	return c.JSON(dtos.ToStudentResponse(student))
+	result := dtos.ToStudentResponse(student)
+	return c.JSON(jsend.Success("student", result))
 }
 
 func (h *StudentHandler) Delete(c *fiber.Ctx) error {
 	studentId := c.Params("id")
 	if studentId == "" {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": "Student ID is required",
-		})
+		return c.Status(fiber.StatusBadRequest).JSON(
+			jsend.Fail("Student ID is required"),
+		)
 	}
 
 	_, err := h.db.Client.Student.UpdateOneID(studentId).
@@ -144,12 +151,10 @@ func (h *StudentHandler) Delete(c *fiber.Ctx) error {
 		Save(c.Context())
 
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"error": "Failed to delete student",
-		})
+		return c.Status(fiber.StatusInternalServerError).JSON(
+			jsend.Error("Failed to delete student record. or it is already deleted"),
+		)
 	}
 
-	return c.JSON(fiber.Map{
-		"message": "Student deleted successfully",
-	})
+	return c.JSON(jsend.Success("student", nil))
 }
