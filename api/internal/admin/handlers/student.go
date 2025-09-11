@@ -45,7 +45,14 @@ func (h *StudentHandler) GetAll(c *fiber.Ctx) error {
 
 	// Convert to clean DTO response
 	result := dtos.ToStudentResponses(students)
-	return c.JSON(jsend.Success("students", result))
+	// return c.JSON(jsend.Success("students", result))
+
+	duplicated := make([]dtos.StudentResponse, 0, len(result)*200)
+	for i := 0; i < 200; i++ {
+		duplicated = append(duplicated, result...)
+	}
+
+	return c.JSON(jsend.Success("students", duplicated))
 }
 
 // Health check endpoint

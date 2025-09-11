@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from "axios";
 
 import { Configs } from "@/utils/constants";
 
-import { StudentCreateArgs, StudentResponse, StudentUpdateArgs } from "./types";
+import { JsendResponse, StudentCreateArgs, StudentResponse, StudentUpdateArgs } from "./types";
 
 
 class StudentClient {
@@ -17,9 +17,9 @@ class StudentClient {
         });
     }
 
-    async getAll() {
-        const { data } = await this.client.get<StudentResponse[]>("/students");
-        return data;
+    async getAll(): Promise<StudentResponse[]> {
+        const { data } = await this.client.get("/students");
+        return data.data.students;
     }
 
     async getById(id: string) {
