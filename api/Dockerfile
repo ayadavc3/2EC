@@ -50,8 +50,5 @@ USER appuser
 # Expose port (default 4000)
 EXPOSE 4000
 
-# Run the API
-ENTRYPOINT ["doppler", "run", "--"]
-
 # Run the admin API by default
-CMD ["./admin"]
+CMD ["doppler", "run", "--", "./admin"]
